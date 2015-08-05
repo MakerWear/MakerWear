@@ -1,0 +1,12 @@
+#define Note_C  239
+#define Note_CS 225
+#define Note_D  213
+#define Note_DS 201
+#define Note_E  190
+#define Note_F  179
+#define Note_FS 169
+#define Note_G  159
+#define Note_GS 150
+#define Note_A  142
+#define Note_AS 134
+#define Note_B  127
