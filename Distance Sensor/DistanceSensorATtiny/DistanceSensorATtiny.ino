@@ -17,7 +17,7 @@ void loop() {
   
   int input_value = analogRead(input_pin);
   
-  int out_value = map(y, 7, 41, input_value/4, 0);
+  int out_value = map(y, 8, 41, input_value/4, 0);
 
   if (out_value < 9)
     out_value = 0;
