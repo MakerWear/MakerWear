@@ -7,21 +7,23 @@ int output_pin = 1;          //Pin 6 on ATtiny
 
 
 void setup() {
-  // put your setup code here, to run once:
-  //Serial.begin(9600);
 }
 
 void loop() {
-  int x = analogRead(ir_receiver_pin);
-  float y = .000003*x*x*x - 0.0007*x*x + 0.1079*x + 8.2076;
+  int ir_value = analogRead(ir_receiver_pin);
+  float metric_value = 0.000003 * pow(ir_value, 3) - 0.0007 * pow(ir_value, 2)
+            + 0.1079 * ir_value + 8.2076;
   
   int input_value = analogRead(input_pin);
   
+<<<<<<< HEAD:Distance Sensor/DistanceSensorATtiny/DistanceSensorATtiny.ino
   int out_value = map(y, 8, 41, input_value/4, 0);
+=======
+  int out_value = map(metric_value, 7, 41, input_value/4, 0);
+>>>>>>> origin/master:Sensor Modules/Distance Sensor/DistanceSensorATtiny/DistanceSensorATtiny.ino
 
   if (out_value < 9)
     out_value = 0;
   
   analogWrite(output_pin, out_value);
-  //Serial.println(out_value);
 }
