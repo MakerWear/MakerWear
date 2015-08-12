@@ -1,3 +1,7 @@
+//Getting good values with a 4.7K resistor
+//Between 900 (adc output) in room lighting and around 10-20 in total darkness
+//Making a shade using your hand would also get it to around ~450
+
 //Pin Configurations
 int input_pin = 3;           //Pin 2 on ATtiny
 int photoresistor_pin = 2;   //Pin 3 on ATtiny

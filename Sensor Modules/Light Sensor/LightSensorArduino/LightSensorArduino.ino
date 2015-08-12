@@ -10,18 +10,18 @@ int output_pin = 11;         //module output
 
 void setup() {
   //Just for debugging:
-  //Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop() {
   int photoresistor_value = analogRead(photoresistor_pin);
-  int input_value = analogRead(input_pin);
+  int input_value = 1023;//analogRead(input_pin);
   
   //We are only mapping 0-1023 from ADC to 0-255
-  int output_value = map(photoresistor_value, 0, 1023, input_value/4, 0);
+  int output_value = map(photoresistor_value, 0, 1023, 255, 0);
   
   //Just for debugging:
-  //Serial.println(output_value);
+  Serial.println(output_value);
   
   analogWrite(output_pin, output_value);
 }
