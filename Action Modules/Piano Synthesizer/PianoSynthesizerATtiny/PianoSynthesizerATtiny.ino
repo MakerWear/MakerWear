@@ -28,7 +28,7 @@ void loop() {
   } else if (input_value <= 896 && input_value > 768){
     tinyTone(Note_B, 6);
   } else if (input_value <= 1024 && input_value > 896){
-    tinyTone(Note_E, 7);
+    tinyTone(Note_C, 7);
   }
     
   //Just For Debugging:
