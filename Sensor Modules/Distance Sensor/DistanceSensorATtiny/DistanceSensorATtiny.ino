@@ -5,7 +5,6 @@ int input_pin = 3;           //Pin 2 on ATtiny
 int ir_receiver_pin = 2;   //Pin 3 on ATtiny
 int output_pin = 1;          //Pin 6 on ATtiny
 
-
 void setup() {
 }
 
