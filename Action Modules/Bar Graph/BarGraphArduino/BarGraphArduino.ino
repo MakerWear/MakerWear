@@ -1,6 +1,6 @@
 /*
 **  BarGraphATtiny.ino
-**  MakerWear Bar Graph Module's ATtiny Program.
+**  MakerWear Bar Graph Module's Arduino Program.
 **
 **  Lights up the LEDS proportional to voltage input.
 **  Could be used for all sorts of things from serving as a visualization
@@ -30,10 +30,10 @@
 #include <FilteredAnalogInput.h>
 
 //Pin Configurations
-int input_pin = A0;                          //module input
-const int LED_COUNT = 4;                     //number of LEDs
-int filter_size = 15;                        //noise reduction filter size
-int bargraph_led[LED_COUNT] = {2, 3, 4, 5};  //LED pin numbers
+int input_pin = A0;                            //module input
+const int LED_COUNT = 4;                       //number of LEDs
+int filter_size = 15;                          //noise reduction filter size
+int bargraph_led[LED_COUNT] = {2, 3, 4, 5};    //LED pin numbers
 
 FilteredAnalogInput input(input_pin, filter_size);
 
