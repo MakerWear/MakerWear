@@ -9,9 +9,9 @@
 **
 **  Arduino Pin Configurations:  
 **
-**  Arduino Pin 3: RGB-LED(R) 100Ω
-**  Arduino Pin 4: RGB-LED(G) 680Ω
-**  Arduino Pin 5: RGB-LED(B) 100Ω
+**  Arduino Pin 3: RGB-LED(R) + 100Ω
+**  Arduino Pin 4: RGB-LED(G) + 680Ω
+**  Arduino Pin 5: RGB-LED(B) + 100Ω
 **  Arduino Pin A0: Module Input
 **
 **

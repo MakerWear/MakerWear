@@ -10,9 +10,9 @@
 **  ATtiny85 Pin Configurations:  
 **
 **  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
-**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   RGB-LED(B)  100Ω
-**  Pin 3 (D4/A2): N/U                   Pin 6 (D1/PWM/MISO): RGB-LED(G)  680Ω
-**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): RGB-LED(R)  100Ω
+**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   RGB-LED(B) + 100Ω
+**  Pin 3 (D4/A2): N/U                   Pin 6 (D1/PWM/MISO): RGB-LED(G) + 680Ω
+**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): RGB-LED(R) + 100Ω
 **
 **
 **  Created on 8/10/15.
