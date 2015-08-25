@@ -1,20 +1,18 @@
 /*
 **  PulseArduino.ino
-**  MakerWear Pulse Module's Arduino Program.
+**  MakerWear Potentiomete Module's Arduino Program.
 **
-**  Pulses 5V in a frequency proportional to voltage input (higher voltage
-**  equals higher pulse rate)
+**  Changes the strength of the input signal depending on the setting
 **
 **
 **  Arduino Pin Configurations:  
 **
 **  Arduino Pin 11: Module Output
 **  Arduino Pin A0: Module Input
+**  Arduino Pin A1: Potentiometer
 **
 **
-**  Created on 8/10/15.
-**  By Majeed Kazemitabaar
-**  Modified on 8/25/15.
+**  Created on 8/25/15.
 **  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
@@ -25,38 +23,30 @@
 #include <FilteredAnalogInput.h>
  
 int input_pin = A0;
-int output_pin = 13;
+int potentiometer_pin = A1;
+int output_pin = 11;
 int filter_size = 15;                        //Noise reduction filter size
-int min_period = 25;
-int max_period = 1000;
 
 FilteredAnalogInput input(input_pin, filter_size);
 
-void setup() {
-
+void setup()
+{
   pinMode(output_pin, OUTPUT);
   
   //Just For Debugging:
-  Serial.begin(9600);
-
+  //Serial.begin(9600);
 }
 
-void loop() {
+void loop() 
+{
   int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int period;
   
   if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;
-
-  period = map(input_val, 0, 1023, max_period, min_period);
-  digitalWrite(output_pin, HIGH);
-
-  delay(period);
-
-  period = map(input_val, 0, 1023, max_period, min_period);
-  digitalWrite(output_pin, LOW);
-
-  delay(period);
+    
+  int pot_val = analogRead(potentiometer_pin);
+  
+  analogWrite(output_pin, map(pot_val, 0, 1023, 0, input_val/4));
 }
