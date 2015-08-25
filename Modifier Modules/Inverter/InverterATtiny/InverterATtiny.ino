@@ -1,6 +1,6 @@
 /*
 **  InverterATtiny.ino
-**  MakerWear Inverter Module's Arduino Program.
+**  MakerWear Inverter Module's ATtiny Program.
 **
 **  For any input voltage, this module will output 5V - input voltage.
 **

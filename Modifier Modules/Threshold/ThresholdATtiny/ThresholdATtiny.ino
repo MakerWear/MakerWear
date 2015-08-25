@@ -1,6 +1,6 @@
 /*
 **  ThresholdATtiny.ino
-**  MakerWear Threhsold Module's Arduino Program.
+**  MakerWear Threhsold Module's ATtiny Program.
 **
 **  Outputs 0V if under set threshold or 5V if over threshold. To help with
 **  transparency, maybe the module should also have a small bargraph that lets
