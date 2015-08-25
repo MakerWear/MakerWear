@@ -10,7 +10,7 @@
 **
 **  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
 **  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   N/U
-**  Pin 3 (D4/A2): N/U                   Pin 6 (D1/PWM/MISO): Module Output
+**  Pin 3 (D4/A2): Potentiometer         Pin 6 (D1/PWM/MISO): Module Output
 **  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
 **
 **
@@ -46,7 +46,7 @@ void loop()
 {
   int pot_value = analogRead(potentiometer_pin);
   int fading_delay = map(pot_value, 0, 1023, 2, 30);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023)/4;
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
   if(input_val < 0)
     input_val = 0;
@@ -57,7 +57,9 @@ void loop()
     on_trigger = 1;
   else
     on_trigger = 0;
-    
+  
+  input_val /= 4;
+  
   int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
     

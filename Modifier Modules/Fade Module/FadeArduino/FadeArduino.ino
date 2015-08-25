@@ -10,6 +10,7 @@
 **
 **  Arduino Pin 11: Module Output
 **  Arduino Pin A0: Module Input
+**  Arduino Pin A1: Potentiometer
 **
 **
 **  Created on 8/10/15.
@@ -45,7 +46,7 @@ void setup()
 void loop() {
   int pot_value = analogRead(potentiometer_pin);
   int fading_delay = map(pot_value, 0, 1023, 2, 30);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023)/4;
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
   if(input_val < 0)
     input_val = 0;
@@ -56,7 +57,9 @@ void loop() {
     on_trigger = 1;
   else
     on_trigger = 0;
-    
+  
+  input_val /= 4;
+  
   int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
     
