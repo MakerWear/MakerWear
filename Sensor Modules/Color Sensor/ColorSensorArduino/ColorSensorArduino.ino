@@ -1,15 +1,40 @@
+/*
+**  ColorSensorArduino.ino
+**  MakerWear Color Sensor Module's Arduino Program.
+**
+**  Senses color in red, green & blue but creates a single output using 8-bit representation of color. This is the same color representation used by the RGB LED action module.
+**
+**
+**  Arduino Pin Configurations:  
+**
+**  Arduino Pin SDA: Color Sensor SDA
+**  Arduino Pin SCK: Color Sensor SCK
+**  Arduino Pin D: Button
+**
+**
+**  Created on 8/26/15.
+**  By Majeed Kazemitabaar
+**
+**  MakerWear Link:
+**  Github Link:      github.com/myjeeed/MakerWear
+**
+*/
+
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
- 
-// our RGB -> eye-recognized gamma color
-byte gammatable[256];
- 
+#include <FilteredAnalogInput.h>
+
+int input_pin = A0;
+int output_pin = 11;
+byte gammatable[256];                        //gamma correction table
+int filter_size = 15;                        //Noise reduction filter size
+uint16_t clear, red, green, blue;
+
+FilteredAnalogInput input = FilteredAnalogInput(input_pin, filter_size);
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
  
-
-  uint16_t clear, red, green, blue; 
- 
-void setup() {
+void setup() 
+{
   Serial.begin(9600);
   Serial.println("Color View Test!");
   
@@ -20,8 +45,7 @@ void setup() {
     while (1); // halt!
   }
   
-  // thanks PhilB for this gamma table!
-  // it helps convert RGB colors to what humans see
+  //initialize RGB Gamma conversion table:
   for (int i=0; i<256; i++) {
     float x = i;
     x /= 255;
@@ -29,17 +53,15 @@ void setup() {
     x *= 255;
       
     gammatable[i] = x;      
-    //Serial.println(gammatable[i]);
   }
-  
  
-  tcs.setInterrupt(false);      // turn on LED
+  tcs.setInterrupt(false);                 // turn on LED
  
-  delay(60);  // takes 50ms to read 
+  delay(60);                               // takes 50ms to read 
   
   tcs.getRawData(&red, &green, &blue, &clear);
  
-  tcs.setInterrupt(true);  // turn off LED
+  tcs.setInterrupt(true);                  // turn off LED
   
   Serial.print("C:\t"); Serial.print(clear);
   Serial.print("\tR:\t"); Serial.print(red);
@@ -67,9 +89,24 @@ void setup() {
 void loop() {
   
   //loop is empty because it only takes the color reading once on power up! Turn the scarf off and on again to change the color.
-    tcs.getRawData(&red, &green, &blue, &clear);
+  tcs.getRawData(&red, &green, &blue, &clear);
+  
+  //TODO: read filtered input
+  //TODO: convert RGB to 8 bit color representation
+  /*
+  
+  byte red = (originalColor.red * 8) / 256;
+  byte green = (originalColor.green * 8) / 256;
+  byte blue = (originalColor.blue * 4) / 256;
+  
+  byte eightBitColor = (red << 5) | (green << 2) | blue;
+  
+  https://en.wikipedia.org/wiki/8-bit_color
+  
+  */
+  
     
-    uint32_t sum = red;
+  uint32_t sum = red;
   sum += green;
   sum += blue;
   sum += clear;
@@ -83,6 +120,5 @@ void loop() {
   Serial.println();
  
   Serial.print((int)r ); Serial.print(" "); Serial.print((int)g);Serial.print(" ");  Serial.println((int)b );
-    
 }
 
