@@ -2,7 +2,7 @@
 **  ButtonArduino.ino
 **  MakerWear Button Module's Arduino Program.
 **
-**  A physical button when pressed outputs 5V, otherwise 0V
+**  A physical button when pressed connects input to output, otherwise 0V
 **
 **
 **  Arduino Pin Configurations:  

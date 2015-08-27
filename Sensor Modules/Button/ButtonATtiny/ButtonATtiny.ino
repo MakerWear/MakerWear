@@ -2,7 +2,7 @@
 **  ButtonATtiny.ino
 **  MakerWear Button Module's ATtiny Program.
 **
-**  Changes the strength of the input signal depending on the setting
+**  A physical button when pressed connects input to output, otherwise 0V
 **
 **
 **  ATtiny85 Pin Configurations:  
