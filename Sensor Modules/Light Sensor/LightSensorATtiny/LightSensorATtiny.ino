@@ -1,21 +1,53 @@
-//Getting good values with a 4.7K resistor
-//Between 900 (adc output) in room lighting and around 10-20 in total darkness
-//Making a shade using your hand would also get it to around ~450
+/*
+**  LightSensorATtiny.ino
+**  MakerWear Light Sensor Module's ATtiny Program.
+**
+**  Changes voltage output proportionality response to light (higher voltage
+**  means brighter light)
+**
+**
+**  ATtiny Pin Configurations:  
+**
+**  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
+**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   N/U
+**  Pin 3 (D4/A2): Photoresistor         Pin 6 (D1/PWM/MISO): Module Output
+**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
+**
+**
+**  Created on 8/10/15.
+**  By Majeed Kazemitabaar
+**  Modified on 8/26/15
+**  By Majeed Kazemitabaar
+**
+**  MakerWear Link:
+**  Github Link:      github.com/myjeeed/MakerWear
+**
+*/
 
-//Pin Configurations
-int input_pin = 3;           //Pin 2 on ATtiny
-int photoresistor_pin = 2;   //Pin 3 on ATtiny
-int output_pin = 1;          //Pin 6 on ATtiny
+#include <FilteredAnalogInput.h>
 
-void setup() {
+int input_pin = 3;
+int photoresistor_pin = 2;
+int output_pin = 6;
+int filter_size = 15;                        //Noise reduction filter size
+
+FilteredAnalogInput input(input_pin, filter_size);
+
+void setup() 
+{
 }
 
 void loop() {
   int photoresistor_value = analogRead(photoresistor_pin);
-  int input_value = analogRead(input_pin);
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  
+  if(input_val < 0)
+    input_val = 0;
+  else if(input_val > 1023)
+    input_val = 1023;
   
   //We are only mapping 0-1023 from ADC to 0-255
-  int output_value = map(photoresistor_value, 0, 1023, input_value/4, 0);
+  int output_value = map(photoresistor_value, 0, 1023, input_val, 0);
   
   analogWrite(output_pin, output_value);
 }
