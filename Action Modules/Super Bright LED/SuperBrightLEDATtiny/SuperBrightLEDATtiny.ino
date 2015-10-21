@@ -37,6 +37,8 @@ FilteredAnalogInput input(input_pin, filter_size);
 void setup() 
 {  
   pinMode(led_pin, OUTPUT);
+  pinMode(input_pin, INPUT);
+  digitalWrite(input_pin, LOW);
 }
 
 void loop() 
@@ -47,7 +49,7 @@ void loop()
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;
-    
+     
   analogWrite(led_pin, input_val/4);
 }
 
