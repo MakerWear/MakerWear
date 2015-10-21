@@ -32,7 +32,7 @@
 int input_pin = 3;                           //module input, pin 2 on ATtiny
 const int LED_COUNT = 4;                     //number of LEDs
 int filter_size = 15;                        //noise reduction filter size
-int bargraph_led[LED_COUNT] = {4, 0, 1, 2};  //LED pin numbers pin {3, 5, 6, 7} on ATtiny
+int bargraph_led[LED_COUNT] = {0, 4, 1, 2};  //LED pin numbers pin {3, 5, 6, 7} on ATtiny
 
 
 FilteredAnalogInput input(input_pin, filter_size);
