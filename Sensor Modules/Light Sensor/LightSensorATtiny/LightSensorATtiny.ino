@@ -24,14 +24,14 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+//#include <FilteredAnalogInput.h>
 
-int input_pin = 3;
+//int input_pin = 3;
 int photoresistor_pin = 2;
-int output_pin = 6;
-int filter_size = 15;                        //Noise reduction filter size
+int output_pin = 1;
+//int filter_size = 15;                        //Noise reduction filter size
 
-FilteredAnalogInput input(input_pin, filter_size);
+//FilteredAnalogInput input(input_pin, filter_size);
 
 void setup() 
 {
@@ -39,15 +39,15 @@ void setup()
 
 void loop() {
   int photoresistor_value = analogRead(photoresistor_pin);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  //int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
-  if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;
-  
+  if(photoresistor_value < 150)
+    photoresistor_value = 150;
+  else if(photoresistor_value > 800)
+    photoresistor_value = 800;
+    
   //We are only mapping 0-1023 from ADC to 0-255
-  int output_value = map(photoresistor_value, 0, 1023, input_val, 0);
+  int output_value = map(photoresistor_value, 150, 800, 0, 255);
   
   analogWrite(output_pin, output_value);
 }
