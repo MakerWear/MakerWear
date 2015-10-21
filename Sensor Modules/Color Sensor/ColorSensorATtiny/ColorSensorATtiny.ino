@@ -25,10 +25,6 @@
 #include <ATtinyColorSensor.h>
 #include <FilteredAnalogInput.h>
 
-
-//const int redpin = 3;
-const int greenpin = 1;
-//const int bluepin = 6;
 int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
 int filter_size = 15;                        //Noise reduction filter size
@@ -80,7 +76,7 @@ void loop() {
   r *= 256; g *= 256; b *= 256;
 
   //analogWrite(redpin, gammatable[(int)r]);
-  analogWrite(greenpin, gammatable[(int)g]);
+  //analogWrite(greenpin, gammatable[(int)g]);
   //analogWrite(bluepin, gammatable[(int)b]);
   
   //TODO: read filtered input
@@ -96,5 +92,8 @@ void loop() {
   https://en.wikipedia.org/wiki/8-bit_color
   
   */
-
+  
+  byte output_value = ((int)r << 5) | ((int)g << 2) | (int)b;
+  
+  analogWrite(output_pin, output_value);
 }
