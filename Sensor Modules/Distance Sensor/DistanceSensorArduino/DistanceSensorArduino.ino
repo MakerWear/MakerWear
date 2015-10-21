@@ -1,45 +1,61 @@
 /*
-Resistor for reciever: 10M
-Resistor ir sender: 10
+**  DistanceSensorArduino.ino
+**  MakerWear Distance Sensor Module's Arduino Program.
+**
+**  Changes voltage output proportional to distance of any obstacle that is
+**  in front of the sensor. Outputs 0 when very far or there are no obstacles
+**  near and outputs 5V when there is something very close.
+**
+**
+**  Arduino Pin Configurations:  
+**
+**  Arduino Pin 11: Module Output
+**  Arduino Pin A0: Module Input
+**  Arduino Pin A1: IR Receiver
+**
+**
+**  Created on 8/26/15.
+**  By Majeed Kazemitabaar
+**
+**  MakerWear Link:
+**  Github Link:      github.com/myjeeed/MakerWear
+**
 */
 
-//Pin Configurations
-int input_pin = A3;           //Pin 2 on ATtiny
-int ir_receiver_pin = A0;   //Pin 3 on ATtiny
-int knob_pin = 12;
-int output_pin = 11;          //Pin 6 on ATtiny
-int intervals = 10;            // controls intensity of change between loops
-float distance, knob;
+#include <FilteredAnalogInput.h>
 
-void setup() {
-  Serial.begin(9600);
-  pinMode(output_pin, OUTPUT);
-  pinMode(ir_receiver_pin, INPUT);
-  pinMode(input_pin, INPUT);
-  pinMode(knob_pin, OUTPUT);
+int input_pin = A0;
+int ir_pin = A1;
+int output_pin = 11;
+int filter_size = 15;                        //Noise reduction filter size
+
+FilteredAnalogInput input(input_pin, filter_size);
+
+void setup() 
+{
 }
 
-float process() {
-  float x = analogRead(ir_receiver_pin);
-  float y = 0.0008*x*x - 0.6421*x + 134.31;
-  Serial.println(x);
-  return y;
-}
-
-void loop() {
+void loop() 
+{
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
-  distance = process();
-  digitalWrite(knob_pin, HIGH);
-    knob = analogRead(input_pin)/4;
-  digitalWrite(knob_pin, LOW);
-
-  int out_value = map(distance, 5, 22.5, knob, 0);
+  if(input_val < 0)
+    input_val = 0;
+  else if(input_val > 1023)
+    input_val = 1023;
     
-  if (out_value < 0) {
-    out_value = 0;
-  } else if (out_value > knob) {
-    out_value = knob;   
-  }
+  //TODO:
+  //These values are very inaccurate. When the hardware is finalized
+  //and the 3D-Printed case for the IR transmitter/receivers are ready,
+  //we need to calculate a non-linear mapping function for a more accuare
+  //conversion.
+  int ir_value = analogRead(ir_pin);
+  int output_value = map(ir_value, 400, 1000, input_val/4, 0);
   
-  analogWrite(output_pin, out_value);
+  if(ir_value < 450)
+    output_value = input_val;
+  else if(ir_value > 950)
+    output_value = 0;
+  
+  analogWrite(output_pin, output_value); 
 }
