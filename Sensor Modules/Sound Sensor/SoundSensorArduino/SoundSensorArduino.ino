@@ -1,20 +1,48 @@
-@@ -1,48 +0,0 @@
-//int input_pin = null;      //won't be using right now.
-int output_pin = 11;
+/*
+**  SoundSensorArduino.ino
+**  MakerWear Sound Sensor Module's Arduino Program.
+**
+**  Changes voltage output proportional to sound magnitude (higher voltage
+**  means higher sound)
+**
+**
+**  Arduino Pin Configurations:  
+**
+**  Arduino Pin 11: Module Output
+**  Arduino Pin A0: Module Input
+**  Arduino Pin A1: Sound Sensor
+**
+**
+**  Created on 8/12/15.
+**  By Majeed Kazemitabaar
+**  Modified on 8/27/15
+**  By Majeed Kazemitabaar
+**
+**  MakerWear Link:
+**  Github Link:      github.com/myjeeed/MakerWear
+**
+*/
+
+#include <FilteredAnalogInput.h>
+
+int input_pin = A0;
 int sound_sensor_pin = A0;
+int output_pin = 11;
+int filter_size = 15;                        //Noise reduction filter size
+
+FilteredAnalogInput input(input_pin, filter_size);
 
 const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
 
-void setup() {
+void setup()
+{
   //Just for debugging:
-  Serial.begin(9600);
-
+  //Serial.begin(9600);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  
+void loop()
+{
   unsigned long startMillis = millis();  // Start of sample window
   unsigned int peakToPeak = 0;   // peak-to-peak level
    
@@ -41,10 +69,18 @@ void loop() {
   
   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
   double volts = (peakToPeak * 10) / 1024;  // convert to volts
-   
-  int out_value = map(volts, 0.0, 10, 0, 255);
+  
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  
+  if(input_val < 0)
+    input_val = 0;
+  else if(input_val > 1023)
+    input_val = 1023;
+
+  
+  int out_value = map(volts, 0.0, 10, 0, input_val);
   analogWrite(output_pin, out_value);
   
-  Serial.println(volts);
+  //Serial.println(volts);
 }
 
