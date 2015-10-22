@@ -23,25 +23,26 @@
 
 #include <TinyWireM.h>
 #include <ATtinyUVLightSensor.h>
-#include <FilteredAnalogInput.h>
+//#include <FilteredAnalogInput.h>
 
-int input_pin = 3;                           //Pin 2 on ATtiny
+//int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
-int filter_size = 15;                        //Noise reduction filter size
+//int filter_size = 15;                        //Noise reduction filter size
+//int output_value = 0;
 
-FilteredAnalogInput input(input_pin, filter_size);
-
+//FilteredAnalogInput input(input_pin, filter_size);
 
 ATtinyUVLightSensor uv = ATtinyUVLightSensor();
 
 void setup() {
-
+  uv.begin();
 }
 
 void loop() {
-  float UVindex;
+  float UVindex = uv.readUV()/100;
   
-  UVindex = uv.readUV();
+  int output_value = map((int)UVindex, 0, 12, 0, 255);
+  analogWrite(output_pin, output_value);
   
-  analogWrite(output_pin, (int)UVindex);
+  delay(100);
 }
