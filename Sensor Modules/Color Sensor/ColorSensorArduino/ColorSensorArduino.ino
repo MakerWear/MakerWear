@@ -2,14 +2,16 @@
 **  ColorSensorArduino.ino
 **  MakerWear Color Sensor Module's Arduino Program.
 **
-**  Senses color in red, green & blue but creates a single output using 8-bit representation of color. This is the same color representation used by the RGB LED action module.
+**  Senses color in red, green & blue but creates a single output
+**  using 8-bit representation of color. This is the same color 
+**  representation used by the RGB LED action module.
 **
 **
 **  Arduino Pin Configurations:  
 **
 **  Arduino Pin SDA: Color Sensor SDA
 **  Arduino Pin SCK: Color Sensor SCK
-**  Arduino Pin D: Button
+**  Arduino Pin 11: Module Output
 **
 **
 **  Created on 8/26/15.
@@ -104,6 +106,9 @@ void loop() {
   https://en.wikipedia.org/wiki/8-bit_color
   
   */
+  
+  //TODO: need to change the single output value, to a less noisy
+  //bit representation
   
     
   uint32_t sum = red;
