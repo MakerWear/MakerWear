@@ -25,8 +25,8 @@
 
 #include <FilteredAnalogInput.h>
 
-int input_pin = A0;                           
-int vibro_pin = 11;                             
+int input_pin = 3;                             //pin 2 on ATtiny              
+int vibro_pin = 1;                             
 int filter_size = 15;                        //Noise reduction filter size
 
 FilteredAnalogInput input(input_pin, filter_size);
