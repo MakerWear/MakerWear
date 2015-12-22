@@ -51,7 +51,6 @@ void loop() {
     
   int red = LOW, green = LOW, blue = LOW;
   
-  /*
   //We are only mapping 0-1023 from ADC to 0-255
   int color_code = map(input_val, 0, 1023, 0, 7);
 
@@ -91,18 +90,7 @@ void loop() {
       red = HIGH, green = HIGH, blue = HIGH;
     break;
   }
-  */
-  
-  blue = input_val & 0b11;
-  green = (input_val >> 2) & 0b111;
-  red = (input_val >> 5) & 0b111;
-  
-  
-  //if the left-most bit of that color is 1 => HIGH, otherwise => LOW
-  blue = (blue >> 1) & 1;
-  green = (green >> 2) & 1;
-  red = (red >> 2 ) & 1;
-  
+    
   digitalWrite(red_pin, red);
   digitalWrite(green_pin, green);
   digitalWrite(blue_pin, blue);

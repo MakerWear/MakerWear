@@ -19,7 +19,7 @@ void loop() {
     //whenever the vibration sensor is hit
     //the output pin would be as high as the input pin for 100ms and then 0 again.
     analogWrite(output_pin, analogRead(input_pin)/4);
-    delay(200);
+    delay(500);
     analogWrite(output_pin, 0);
   }
 }

@@ -74,26 +74,19 @@ void loop() {
   g = green; g /= sum;
   b = blue; b /= sum;
   r *= 256; g *= 256; b *= 256;
-
-  //analogWrite(redpin, gammatable[(int)r]);
-  //analogWrite(greenpin, gammatable[(int)g]);
-  //analogWrite(bluepin, gammatable[(int)b]);
   
   //TODO: read filtered input
-  //TODO: convert RGB to 8 bit color representation
-  /*
+  int r_bit = 0, g_bit = 0, b_bit = 0;
+  int r_val = (int)r, g_val = (int)g, b_val = (int)b;
   
-  byte red = (originalColor.red * 8) / 256;
-  byte green = (originalColor.green * 8) / 256;
-  byte blue = (originalColor.blue * 4) / 256;
+  if(r_val > g_val && r_val > b_val)
+    r_bit = 1;
+  else if(g_val > r_val && g_val > b_val)
+    g_val = 1;
+  else if(b_val > r_val && b_val > g_val)
+    b_val = 1;
   
-  byte eightBitColor = (red << 5) | (green << 2) | blue;
-  
-  https://en.wikipedia.org/wiki/8-bit_color
-  
-  */
-  
-  byte output_value = ((int)r << 5) | ((int)g << 2) | (int)b;
-  
+  int output_value = b_bit*32 + g_bit*64 + r_bit*128 + 15;
+      
   analogWrite(output_pin, output_value);
 }
