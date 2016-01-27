@@ -52,7 +52,7 @@ void loop() {
   int red = LOW, green = LOW, blue = LOW;
   
   //We are only mapping 0-1023 from ADC to 0-255
-  int color_code = map(input_val, 0, 1023, 0, 7);
+  int color_code = map(input_val, 0, 1023, 0, 6);
 
   
   
@@ -67,11 +67,11 @@ void loop() {
     break;
     
     case 2:
-      red = LOW, green = HIGH, blue = HIGH;
+      red = LOW, green = HIGH, blue = LOW;
     break;
     
     case 3:
-      red = LOW, green = HIGH, blue = LOW;
+      red = LOW, green = HIGH, blue = HIGH;
     break;
     
     case 4:
@@ -83,10 +83,6 @@ void loop() {
     break;
     
     case 6:
-      red = HIGH, green = LOW, blue = HIGH;
-    break;
-    
-    case 7:
       red = HIGH, green = HIGH, blue = HIGH;
     break;
   }
