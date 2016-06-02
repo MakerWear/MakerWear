@@ -43,5 +43,5 @@ void loop()
   else if(input_val > 1023)
     input_val = 1023;
 
-  analogWrite(output_pin, abs(1023 - input_val));
+  analogWrite(output_pin, abs(1023 - input_val)/4);
 }
