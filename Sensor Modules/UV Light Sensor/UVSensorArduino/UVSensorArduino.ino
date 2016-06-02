@@ -22,7 +22,7 @@
 
 #include <Wire.h>
 #include "Adafruit_SI1145.h"
-#include <FilteredAnalogInput.h>
+//#include <FilteredAnalogInput.h>
 
 //int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 11;                          //Pin 6 on ATtiny
@@ -35,15 +35,21 @@ Adafruit_SI1145 uv = Adafruit_SI1145();
 
 void setup() {
   Serial.begin(9600);
-  uv.begin();
+  
+  while (!uv.begin())
+  {
+    Serial.println("Didn't find SI1145 Sensor!");
+    delay(500);
+  }
+  
+  Serial.println("Connected!");
 }
 
 void loop() {
-  float UVindex;
+  float UVindex = uv.readUV()/100;
   
-  UVindex = uv.readUV();
-  
-  analogWrite(output_pin, (int)UVindex);
+  int output_value = map((int)UVindex, 0, 12, 0, 255);
+  analogWrite(output_pin, output_value);
   
   Serial.println(UVindex);
 }

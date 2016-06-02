@@ -24,7 +24,7 @@
 
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
-#include <FilteredAnalogInput.h>
+//#include <FilteredAnalogInput.h>
 
 int input_pin = A0;
 int output_pin = 11;
@@ -32,7 +32,7 @@ byte gammatable[256];                        //gamma correction table
 int filter_size = 15;                        //Noise reduction filter size
 uint16_t clear, red, green, blue;
 
-FilteredAnalogInput input = FilteredAnalogInput(input_pin, filter_size);
+//FilteredAnalogInput input = FilteredAnalogInput(input_pin, filter_size);
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
  
 void setup() 
@@ -120,9 +120,9 @@ void loop() {
   g = green; g /= sum;
   b = blue; b /= sum;
   r *= 256; g *= 256; b *= 256;
-  Serial.print("\t");
-  Serial.print((int)r, HEX); Serial.print((int)g, HEX); Serial.print((int)b, HEX);
-  Serial.println();
+  //Serial.print("\t");
+  //Serial.print((int)r, HEX); Serial.print((int)g, HEX); Serial.print((int)b, HEX);
+  //Serial.println();
  
   Serial.print((int)r ); Serial.print(" "); Serial.print((int)g);Serial.print(" ");  Serial.println((int)b );
 }

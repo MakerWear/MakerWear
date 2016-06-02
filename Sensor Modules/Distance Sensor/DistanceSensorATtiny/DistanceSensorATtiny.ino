@@ -51,12 +51,13 @@ void loop()
   //we need to calculate a non-linear mapping function for a more accuare
   //conversion.
   int ir_value = analogRead(ir_pin);
-  int output_value = map(ir_value, 400, 1000, input_val/4, 0);
   
-  if(ir_value < 450)
-    output_value = input_val;
-  else if(ir_value > 950)
-    output_value = 0;
+  if(ir_value < 250)
+    ir_value = 250;
+  else if(ir_value > 800)
+    ir_value = 800;
+    
+  int output_value = map(ir_value, 250, 800, input_val/4, 0);
   
   analogWrite(output_pin, output_value); 
 }

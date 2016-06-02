@@ -47,7 +47,7 @@ void loop()
   //TODO:
   //These values are very inaccurate. When the hardware is finalized
   //and the 3D-Printed case for the IR transmitter/receivers are ready,
-  //we need to calculate a non-linear mapping function for a more accuare
+  //we need to calculate a polynomial mapping function for a more accuare
   //conversion.
   int ir_value = analogRead(ir_pin);
   int output_value = map(ir_value, 400, 1000, input_val/4, 0);

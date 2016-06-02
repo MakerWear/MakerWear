@@ -29,7 +29,7 @@
 
 int input_pin = 3;                             //pin 2 on ATtiny
 int red_pin = 0, green_pin = 1, blue_pin = 2;  //pin {5, 6, 7} on ATtiny
-int filter_size = 15;                          //noise reduction filter size
+int filter_size = 25;                          //noise reduction filter size
 
 FilteredAnalogInput input(input_pin, filter_size);
 
@@ -51,58 +51,63 @@ void loop() {
     
   int red = LOW, green = LOW, blue = LOW;
   
-  /*
   //We are only mapping 0-1023 from ADC to 0-255
-  int color_code = map(input_val, 0, 1023, 0, 7);
-
+  int color_code = 0;// = map(input_val, 0, 1023, 0, 7);
   
+  //int input_val = analogRead(input_pin);
+  
+  if(input_val < 128)
+    color_code = 0;
+  else if(input_val > 128 && input_val <= 256)
+    color_code = 1;
+  else if(input_val > 256 && input_val <= 384)
+    color_code = 2;
+  else if(input_val > 384 && input_val <= 512)
+    color_code = 3;
+  else if(input_val > 512 && input_val <= 640)
+    color_code = 4;
+  else if(input_val > 640 && input_val <= 768)
+    color_code = 5;
+  else if(input_val > 768 && input_val <= 896)
+    color_code = 6;
+  else if(input_val > 896)
+    color_code = 7;
   
   switch(color_code)
   {
-    case 0:
+    case 0://black
       red = LOW, green = LOW, blue = LOW;
     break;
     
-    case 1:
+    case 1://blue
       red = LOW, green = LOW, blue = HIGH;
     break;
     
-    case 2:
+    case 2://cyan
       red = LOW, green = HIGH, blue = HIGH;
     break;
     
-    case 3:
+    case 3://green
       red = LOW, green = HIGH, blue = LOW;
     break;
     
-    case 4:
+    case 4://yellow
       red = HIGH, green = HIGH, blue = LOW;
     break;
     
-    case 5:
+    case 5://red
       red = HIGH, green = LOW, blue = LOW;
     break;
     
-    case 6:
+    case 6://magenta
       red = HIGH, green = LOW, blue = HIGH;
     break;
     
-    case 7:
+    case 7://white
       red = HIGH, green = HIGH, blue = HIGH;
-    break;
+    break;    
   }
-  */
-  
-  blue = input_val & 0b11;
-  green = (input_val >> 2) & 0b111;
-  red = (input_val >> 5) & 0b111;
-  
-  
-  //if the left-most bit of that color is 1 => HIGH, otherwise => LOW
-  blue = (blue >> 1) & 1;
-  green = (green >> 2) & 1;
-  red = (red >> 2 ) & 1;
-  
+    
   digitalWrite(red_pin, red);
   digitalWrite(green_pin, green);
   digitalWrite(blue_pin, blue);

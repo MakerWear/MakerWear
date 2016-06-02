@@ -12,8 +12,8 @@
 **
 **  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
 **  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   LED4
-**  Pin 3 (D4/A2): LED1                  Pin 6 (D1/PWM/MISO): LED3
-**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): LED2
+**  Pin 3 (D4/A2): LED2                  Pin 6 (D1/PWM/MISO): LED3
+**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): LED1
 **
 **
 **  Created on 8/10/15.

@@ -56,22 +56,22 @@ void loop()
     
   //TODO: Change it to a map function + switch/case to make it more scalable.
   
-  if (input_val <= 128  && input_val > 0){
+  if (input_val < 128){
+     noTinyTone();
+  } else if (input_val > 128 && input_val <= 256){
      tinyTone(Note_C, 6);
-  } else if (input_val <= 256  && input_val > 128){
-     tinyTone(Note_D, 6);
-  } else if (input_val <= 384 && input_val > 256){
+  } else if (input_val > 256 && input_val <= 384){
+    tinyTone(Note_D, 6);
+  } else if (input_val > 384 && input_val <= 512){
     tinyTone(Note_E, 6);
-  } else if (input_val <= 512 && input_val > 384){
+  } else if (input_val > 512 && input_val <= 640){
     tinyTone(Note_F, 6);
-  } else if (input_val <= 640 && input_val > 512){
+  } else if (input_val > 640 && input_val <= 768){
     tinyTone(Note_G, 6);
-  } else if (input_val <= 768 && input_val > 640){
+  } else if (input_val > 768 && input_val <= 896){
     tinyTone(Note_A, 6);
-  } else if (input_val <= 896 && input_val > 768){
+  } else if (input_val > 896){
     tinyTone(Note_B, 6);
-  } else if (input_val <= 1024 && input_val > 896){
-    tinyTone(Note_C, 7);
   }
 }
 

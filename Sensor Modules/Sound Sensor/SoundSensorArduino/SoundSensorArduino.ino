@@ -15,7 +15,7 @@
 **
 **  Created on 8/12/15.
 **  By Majeed Kazemitabaar
-**  Modified on 8/27/15
+**  Modified on 12/22/15
 **  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
@@ -25,12 +25,12 @@
 
 #include <FilteredAnalogInput.h>
 
-int input_pin = A0;
+//int input_pin = A0;
 int sound_sensor_pin = A0;
 int output_pin = 11;
-int filter_size = 15;                        //Noise reduction filter size
+//int filter_size = 15;                 //Noise reduction filter size
 
-FilteredAnalogInput input(input_pin, filter_size);
+//FilteredAnalogInput input(input_pin, filter_size);
 
 const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
@@ -38,7 +38,7 @@ unsigned int sample;
 void setup()
 {
   //Just for debugging:
-  //Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop()
@@ -70,17 +70,17 @@ void loop()
   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
   double volts = (peakToPeak * 10) / 1024;  // convert to volts
   
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+/*  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
   if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;
-
+*/
   
-  int out_value = map(volts, 0.0, 10, 0, input_val);
+  int out_value = map(volts, 0.0, 10, 0, 255);
   analogWrite(output_pin, out_value);
   
-  //Serial.println(volts);
+  Serial.println(volts);
 }
 

@@ -26,7 +26,7 @@
 //#include <FilteredAnalogInput.h>
 
 //int input_pin = 3;                           //Pin 2 on ATtiny
-int output_pin = 1;                          //Pin 6 on ATtiny
+int output_pin = 1;                            //Pin 6 on ATtiny
 //int filter_size = 15;                        //Noise reduction filter size
 //int output_value = 0;
 
@@ -35,14 +35,38 @@ int output_pin = 1;                          //Pin 6 on ATtiny
 ATtinyUVLightSensor uv = ATtinyUVLightSensor();
 
 void setup() {
-  uv.begin();
+
+  while (!uv.begin())
+  {
+    analogWrite(output_pin, 255);
+    delay(1000);
+    analogWrite(output_pin, 0);
+    delay(1000);
+  }
+  
+  for(int i = 0; i < 5; i++)
+  {
+    analogWrite(output_pin, 255);
+    delay(250);
+    analogWrite(output_pin, 0);
+    delay(250);
+  }  
 }
 
 void loop() {
+  
   float UVindex = uv.readUV()/100;
   
   int output_value = map((int)UVindex, 0, 12, 0, 255);
   analogWrite(output_pin, output_value);
   
-  delay(100);
+  /*
+  for(int i = 0; i < 5; i++)
+  {
+    analogWrite(output_pin, 0);
+    delay(250);
+    analogWrite(output_pin, 250);
+    delay(250);
+  }
+  */
 }
