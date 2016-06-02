@@ -48,8 +48,10 @@ void loop()
   if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = (1/(1+exp(((input_val/21)-6)*-1)))*1023;
+    input_val = 1023;
+    
+  int output_val = (1/(1+exp(((input_val/21)-6)*-1)))*1023;
      
-  analogWrite(led_pin, input_val/4);
+  analogWrite(led_pin, output_val);
 }
 
