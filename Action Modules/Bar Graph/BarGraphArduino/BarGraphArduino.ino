@@ -54,19 +54,20 @@ void loop() {
   else if(input_val > 1023)
     input_val = 1023;
   
-  //We are only mapping 0-1023 from ADC to 0-255
-  int on_leds = map(input_val, 0, 1023, 0, LED_COUNT);
-  
-  //Just for debugging:
-  //Serial.print(on_leds);
-  //Serial.print("--");
-  //Serial.println(input_value);
-  
-  for(int i = 0; i < LED_COUNT; i++)
+  if(input_val < 256)
   {
-    if(i < on_leds)
-      digitalWrite(bargraph_led[i], HIGH);
-    else
-      digitalWrite(bargraph_led[i], LOW);
+    analogWrite(bargraph_led[0], (1/(1+exp(((input_val/21)-6)*-1)))*256);
+  }
+  else
+  {
+    int on_leds = map(input_val, 0, 1023, 0, LED_COUNT);
+
+    for(int i = 0; i < LED_COUNT; i++)
+    {
+      if(i < on_leds)
+        digitalWrite(bargraph_led[i], HIGH);
+      else
+        digitalWrite(bargraph_led[i], LOW);
+    }
   }
 }
