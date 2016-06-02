@@ -1,9 +1,10 @@
 /*
-**  PulseATtiny.ino
-**  MakerWear Pulse Module's ATtiny Program.
+**  PulseMakerATtiny.ino
+**  MakerWear PulseMaker Module's ATtiny Program.
 **
-**  Pulses 5V in a frequency proportional to voltage input (higher voltage
-**  equals higher pulse rate)
+**  Pulses in a frequency proportional to voltage input (higher voltage
+**  equals higher pulse rate). The max pulse voltage is also equal to 
+**  the input voltage.
 **
 **
 **  ATtiny85 Pin Configurations:  

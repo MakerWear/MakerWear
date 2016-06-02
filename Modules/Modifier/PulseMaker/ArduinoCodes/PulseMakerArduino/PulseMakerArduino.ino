@@ -1,9 +1,10 @@
 /*
-**  PulseArduino.ino
-**  MakerWear Pulse Module's Arduino Program.
+**  PulseMakerArduino.ino
+**  MakerWear PulseMaker Module's Arduino Program.
 **
-**  Pulses 5V in a frequency proportional to voltage input (higher voltage
-**  equals higher pulse rate)
+**  Pulses in a frequency proportional to voltage input (higher voltage
+**  equals higher pulse rate). The max pulse voltage is also equal to 
+**  the input voltage.
 **
 **
 **  Arduino Pin Configurations:  

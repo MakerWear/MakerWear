@@ -1,6 +1,6 @@
 /*
-**  PulseArduino.ino
-**  MakerWear Potentiomete Module's Arduino Program.
+**  VolumeKnobArduino.ino
+**  MakerWear VolumeKnob Module's Arduino Program.
 **
 **  Changes the strength of the input signal depending on the setting
 **

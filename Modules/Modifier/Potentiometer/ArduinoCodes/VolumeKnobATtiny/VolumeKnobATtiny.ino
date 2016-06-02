@@ -1,6 +1,6 @@
 /*
-**  PulseATtiny.ino
-**  MakerWear Pulse Module's ATtiny Program.
+**  VolumeKnobATtiny.ino
+**  MakerWear VolumeKnob Module's ATtiny Program.
 **
 **  Changes the strength of the input signal depending on the setting
 **
