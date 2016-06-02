@@ -15,7 +15,7 @@
 **  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
 **
 **
-**  Created on 8/25/15.
+**  Created on 4/25/16.
 **  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
@@ -28,7 +28,7 @@
 int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 50;                        //Noise reduction filter size
 
 FilteredAnalogInput input(input_pin, filter_size);
 
@@ -37,6 +37,8 @@ void setup()
   pinMode(output_pin, OUTPUT);
 }
 
+int state = LOW;
+int threshold = 25;
 void loop()
 {
   int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
@@ -47,9 +49,12 @@ void loop()
     input_val = 1023;
     
   int pot_val = analogRead(potentiometer_pin);
+  pot_val = map(pot_val, 0, 1023, 1023, 0);
   
-  if(input_val >= pot_val)
-    digitalWrite(output_pin, HIGH);
-  else
-    digitalWrite(output_pin, LOW);
+  if(state == LOW && input_val > pot_val+threshold)
+    state = HIGH;
+  else if(state == HIGH && input_val < pot_val-threshold)
+    state = LOW;
+  
+  digitalWrite(output_pin, state);
 }

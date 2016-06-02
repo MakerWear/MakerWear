@@ -32,6 +32,9 @@ int filter_size = 15;                        //Noise reduction filter size
 
 FilteredAnalogInput input(input_pin, filter_size);
 
+const float A = 0.051864544;
+const float B = 1.006515842;
+
 void setup() 
 {
 }
@@ -44,20 +47,22 @@ void loop()
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;
+
     
   //TODO:
   //These values are very inaccurate. When the hardware is finalized
   //and the 3D-Printed case for the IR transmitter/receivers are ready,
   //we need to calculate a non-linear mapping function for a more accuare
   //conversion.
-  int ir_value = analogRead(ir_pin);
+  int ir_adc = analogRead(ir_pin );
+  float distance = A*pow(B, ir_adc) - 1; //0-17cm
   
-  if(ir_value < 250)
-    ir_value = 250;
-  else if(ir_value > 800)
-    ir_value = 800;
-    
-  int output_value = map(ir_value, 250, 800, input_val/4, 0);
-  
-  analogWrite(output_pin, output_value); 
+  if(distance < 0)
+    distance = 0;
+  else if(distance > 17)
+    distance = 17;
+
+  int output_val = map(distance, 0, 17, input_val/4, 0);
+
+  analogWrite(output_pin, output_val); 
 }

@@ -34,6 +34,11 @@ int max_period = 1000;
 
 FilteredAnalogInput input(input_pin, filter_size);
 
+unsigned long interval = 1000;
+unsigned long previousMillis = 0;
+
+int ledState = LOW; 
+
 void setup() 
 {
   pinMode(output_pin, OUTPUT);
@@ -42,27 +47,26 @@ void setup()
 void loop()
 {
   int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int period;
   
   if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;
 
-  period = map(input_val, 0, 1023, max_period, min_period);
-  digitalWrite(output_pin, HIGH);
-
-  delay(period);
+  interval = map(input_val, 0, 1023, max_period, min_period);
+  unsigned long currentMillis = millis();
   
-  input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  
-  if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;
+  if (currentMillis - previousMillis >= interval) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
 
-  period = map(input_val, 0, 1023, max_period, min_period);
-  digitalWrite(output_pin, LOW);
-
-  delay(period);
+    // if the LED is off turn it on and vice-versa:
+    if (ledState == LOW) {
+      ledState = HIGH;
+      analogWrite(output_pin, input_val/4);
+    } else {
+      ledState = LOW;
+      analogWrite(output_pin, 0);
+    }
+  }
 }

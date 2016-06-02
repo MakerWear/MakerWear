@@ -46,5 +46,5 @@ void loop()
     
   int pot_val = analogRead(potentiometer_pin);
   
-  analogWrite(output_pin, map(pot_val, 0, 1023, 0, input_val/4));
+  analogWrite(output_pin, map(pot_val, 0, 1023, input_val/4, 0));
 }

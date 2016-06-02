@@ -29,7 +29,9 @@
 int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
+
 int filter_size = 15;                        //Noise reduction filter size
+
 int on_trigger = 0;
 int fading = 0;                              //if it is in fading phase
 int brightness = 0;
@@ -45,7 +47,7 @@ void setup()
 void loop() 
 {
   int pot_value = analogRead(potentiometer_pin);
-  int fading_delay = map(pot_value, 0, 1023, 2, 30);
+  int fading_delay = map(pot_value, 0, 1023, 4, 40);
   int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
   if(input_val < 0)
@@ -62,7 +64,25 @@ void loop()
   
   int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
-    
+  
+  if(fading == 0 && input_val > 25)
+  {
+    fading = 1;
+    brightness = 255;
+  }
+  
+  if(fading == 1)
+  {
+    brightness--;
+    if(brightness == 0)
+      fading = 0;
+  }
+  
+  analogWrite(output_pin, brightness);
+  
+  delay(fading_delay);
+  
+    /*
   if(on_trigger == 1 && fading == 0)
   {
     //TODO: need to add debouncing here:
@@ -81,8 +101,5 @@ void loop()
     brightness = 0;
     fading = 0;
   }
-  
-  analogWrite(output_pin, brightness);
-  
-  delay(fading_delay);
+  */
 }

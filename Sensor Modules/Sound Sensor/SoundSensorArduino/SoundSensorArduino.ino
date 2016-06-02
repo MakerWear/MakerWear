@@ -53,6 +53,7 @@ void loop()
   while (millis() - startMillis < sampleWindow)
   {
      sample = analogRead(sound_sensor_pin);
+     Serial.println(sample);
      
      if (sample < 1024)  // toss out spurious readings
      {
@@ -78,9 +79,11 @@ void loop()
     input_val = 1023;
 */
   
-  int out_value = map(volts, 0.0, 10, 0, 255);
+  
+  
+  int out_value = map(volts, 0.0, 5, 0, 255);
   analogWrite(output_pin, out_value);
   
-  Serial.println(volts);
+  //Serial.println(volts);
 }
 
