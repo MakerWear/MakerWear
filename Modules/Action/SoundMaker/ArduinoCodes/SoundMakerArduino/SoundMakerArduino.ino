@@ -1,0 +1,79 @@
+/*
+**  SoundMakerArduino.ino
+**  MakerWear SoundMaker Module's ATtiny Program.
+**
+**  Similar to Piezzo Buzzer but a more melodic sound (far less cacophonous).
+**  Plays a scale based on input level. If you hooked up more than one, you
+**  could start to play chords. Instead (or in addition to) the piano, could
+**  have other instruments like a saxaphone or flute. The key is it should 
+**  sound nice to the ears in contrast to the piezo.
+**
+**
+**  Arduino Pin Configurations:  
+**
+**  Arduino Pin 11: Buzzer
+**  Arduino Pin A0: Module Input
+**
+**
+**  Created on 8/10/15.
+**  By Majeed Kazemitabaar
+**  Modified on 8/24/15.
+**  By Majeed Kazemitabaar
+**
+**  MakerWear Link:
+**  Github Link:      github.com/myjeeed/MakerWear
+**
+*/
+
+#include <FilteredAnalogInput.h>
+#include "Pitches.h"
+
+//Pin Configurations
+int input_pin = A0;
+int buzzer_pin = 11;
+
+//Piano Notes
+int notes[] = {NOTE_C6, NOTE_D6, NOTE_E6, NOTE_F6, NOTE_G6, NOTE_A6, NOTE_B6, NOTE_C7};
+
+FilteredAnalogInput input(input_pin, filter_size);
+
+void setup()
+{
+  //Just For Debugging:
+  //Serial.begin(9600);
+}
+
+void loop()
+{
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+
+  if(input_val < 0)
+    input_val = 0;
+  else if(input_val > 1023)
+    input_val = 1023;
+
+  int buzzer_value = notes[0];
+  
+  if (input_value <= 128  && input_value > 0){
+    buzzer_value = notes[0];
+  } else if (input_value <= 256  && input_value > 128){
+    buzzer_value = notes[1];
+  } else if (input_value <= 384 && input_value > 256){
+    buzzer_value = notes[2];
+  } else if (input_value <= 512 && input_value > 384){
+    buzzer_value = notes[3];
+  } else if (input_value <= 640 && input_value > 512){
+    buzzer_value = notes[4];
+  } else if (input_value <= 768 && input_value > 640){
+    buzzer_value = notes[5];
+  } else if (input_value <= 896 && input_value > 768){
+    buzzer_value = notes[6];
+  } else if (input_value <= 1024 && input_value > 896){
+    buzzer_value = notes[7];
+  }
+  
+  tone(buzzer_pin, buzzer_value);
+  
+  //Just For Debugging:
+  //Serial.println(buzzer_value);
+}
