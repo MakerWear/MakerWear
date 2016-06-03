@@ -4,6 +4,8 @@
 #define AVERAGE         0
 #define HANNING         1
 
+long mapAndCut(long, long, long, long);                                         //modified map function protoype
+
 class FilteredAnalogInput
 {
   private:
@@ -17,7 +19,7 @@ class FilteredAnalogInput
     float alpha;
     float beta;
     float hanning_sum;
-    
+
     void push(int);
     int pop();
     void calculateHanningWeights();
@@ -26,5 +28,3 @@ class FilteredAnalogInput
     FilteredAnalogInput(int, int);
     int filteredAnalogRead(int);
 };
-
-
