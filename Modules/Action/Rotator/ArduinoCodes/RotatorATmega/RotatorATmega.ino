@@ -1,4 +1,3 @@
-
 /*
 **  RotatorATmega.ino
 **  MakerWear Rotator Module's ATtmega Program.
@@ -32,7 +31,6 @@
 */
 
 #include <FilteredAnalogInput.h>
-#include <Servo.h>
 
 Servo myservo;
 

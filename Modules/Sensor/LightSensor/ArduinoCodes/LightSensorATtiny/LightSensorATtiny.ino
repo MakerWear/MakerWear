@@ -52,8 +52,8 @@ void loop() {
   else if(photoresistor_value > 850)
     photoresistor_value = 850;
     
-  //We are only mapping 0-1023 from ADC to 0-255
-  int output_value = map(photoresistor_value, 150, 850, 0, input_val/4);
+  //We are only mapping 0-1023 from ADC to 255-0
+  int output_value = map(photoresistor_value, 150, 850, input_val/4, 0);
   
   analogWrite(output_pin, output_value);
 }
