@@ -9,7 +9,7 @@
 **
 **  Arduino Pin 11: Module Output
 **  Arduino Pin A0: Module Input
-**  Arduino Pin D: Button
+**  Arduino Pin D2: Button
 **
 **
 **  Created on 8/26/15.
