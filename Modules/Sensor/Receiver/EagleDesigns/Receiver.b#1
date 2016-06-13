@@ -320,7 +320,7 @@
 <text x="10.1069" y="4.188" size="0.5" layer="21">PWR</text>
 <text x="12.6723" y="4.188" size="0.5" layer="21">GND</text>
 <text x="15.0345" y="4.2007" size="0.5" layer="21">SOUT</text>
-<text x="6.9" y="25.3" size="1.778" layer="21">RECEIVER</text>
+<text x="6.9" y="25.3" size="1.778" layer="21">SENDER</text>
 <circle x="12.5" y="10.7" radius="3.124096875" width="0.3048" layer="21"/>
 </plain>
 <libraries>
