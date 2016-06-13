@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.3.0">
+<eagle version="7.4.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -70,6 +70,20 @@
 <wire x1="0.9254" y1="-0.3128" x2="0.9254" y2="-1.2128" width="0.127" layer="52"/>
 <rectangle x1="-0.2246" y1="-0.7128" x2="0.2254" y2="0.6872" layer="16"/>
 </package>
+<package name="NX503">
+<smd name="P$1" x="-2" y="0" dx="2.4" dy="2" layer="1" rot="R90"/>
+<smd name="P$2" x="2" y="0" dx="2.4" dy="2" layer="1" rot="R90"/>
+<wire x1="-2.5" y1="1.6" x2="-2.5" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="-2.5" y1="1.6" x2="2.5" y2="1.6" width="0.127" layer="21"/>
+<wire x1="2.5" y1="1.6" x2="2.5" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="2.5" y1="-1.6" x2="-2.5" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="-2.5" y1="1.6" x2="-3" y2="1.6" width="0.127" layer="21"/>
+<wire x1="-3" y1="1.6" x2="-3" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="-3" y1="-1.6" x2="-2.5" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="2.5" y1="1.6" x2="3" y2="1.6" width="0.127" layer="21"/>
+<wire x1="3" y1="1.6" x2="3" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="3" y1="-1.6" x2="2.5" y2="-1.6" width="0.127" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="SHIELD_FINGER_0820">
@@ -81,6 +95,14 @@
 <pin name="PIN" x="12.7" y="2.54" length="middle" rot="R180"/>
 <text x="-0.254" y="5.842" size="1.778" layer="95">&gt;NAME</text>
 </symbol>
+<symbol name="NX503">
+<wire x1="-5.08" y1="-7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<pin name="P$1" x="0" y="12.7" length="middle" rot="R270"/>
+<pin name="P$2" x="0" y="-12.7" length="middle" rot="R90"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="SHIELD_FINGER">
@@ -91,6 +113,22 @@
 <device name="0820" package="SHIELD_FINGER_PKG">
 <connects>
 <connect gate="G$1" pin="PIN" pad="P1 P2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="NX503">
+<gates>
+<gate name="G$1" symbol="NX503" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="NX503">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
