@@ -23,7 +23,7 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 int input_pin = A0;
 int potentiometer_pin = A1;
@@ -35,7 +35,7 @@ int brightness = 0;
 int on_threshold = 10;                       //from 1023
 int temp = 0;
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup() 
 { 
@@ -47,8 +47,8 @@ void setup()
 void loop() {
   int pot_value = analogRead(potentiometer_pin);
   //int fading_delay = map(pot_value, 0, 1023, 2, 30);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int fading_delay = map(pot_value, 0, 1023, 0, 50000/input_val);           //50000 experimentally determined
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/input_val);           //50000 experimentally determined
   
   if(input_val < 0)
     input_val = 0;

@@ -25,7 +25,7 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
@@ -33,7 +33,7 @@ int filter_size = 2;                        //Noise reduction filter size
 int min_period = 25;
 int max_period = 1000;
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 unsigned long interval = 1000;
 unsigned long previousMillis = 0;
@@ -47,14 +47,14 @@ void setup()
 
 void loop()
 {
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
-  if(input_val < 0)
+  /*if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = 1023;
+    input_val = 1023;*/
 
-  interval = map(input_val, 0, 1023, max_period, min_period);
+  interval = map(input_val, 0, 1023, max_period, min_period);   //need second map because input_val is used below
   unsigned long currentMillis = millis();
   
   if (currentMillis - previousMillis >= interval) {

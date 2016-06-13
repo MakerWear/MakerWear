@@ -25,13 +25,13 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 int input_pin = 3;                             //pin 2 on ATtiny
 int red_pin = 0, green_pin = 1, blue_pin = 2;  //pin {5, 6, 7} on ATtiny
 int filter_size = 25;                          //noise reduction filter size
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup() 
 {  
@@ -42,12 +42,12 @@ void setup()
 }
 
 void loop() {
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  if(input_val < 0)
+  /*if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = 1023;
+    input_val = 1023;*/
     
   int red = LOW, green = LOW, blue = LOW;
   

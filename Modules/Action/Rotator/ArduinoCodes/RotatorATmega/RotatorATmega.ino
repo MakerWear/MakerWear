@@ -1,3 +1,4 @@
+
 /*
 **  RotatorATmega.ino
 **  MakerWear Rotator Module's ATtmega Program.
@@ -29,8 +30,8 @@
 **  Github Link:      github.com/myjeeed/MakerWear
 **
 */
-
-#include <FilteredAnalogInput.h>
+#include <Servo.h>
+#include <SignalProcessing.h>
 
 Servo myservo;
 
@@ -38,7 +39,7 @@ int input_pin = A0;                              //pin 23 on ATmega328
 int filter_size = 15;                        //Noise reduction filter size
 int servo_pin = 10; //D10
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup()
 {
@@ -47,13 +48,13 @@ void setup()
 
 void loop()
 {
-    int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-    if (input_val < 0)
+    int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+    /*if (input_val < 0)
       input_val = 0;
     else if(input_val > 1023)
-      input_val = 1023;
+      input_val = 1023;*/
 
-    int pos = map(input_val, 0, 1023, 0, 180);
+    int pos = cutAndMap(input_val, 0, 1023, 0, 180);
 
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(15);                       // waits 15ms for the servo to reach the position
