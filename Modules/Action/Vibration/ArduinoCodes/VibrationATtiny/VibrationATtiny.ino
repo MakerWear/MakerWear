@@ -23,13 +23,13 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 int input_pin = 3;                             //pin 2 on ATtiny              
 int vibro_pin = 1;                             
 int filter_size = 15;                        //Noise reduction filter size
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup() 
 {  
@@ -38,12 +38,12 @@ void setup()
 
 void loop() 
 {
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  if(input_val < 0)
+  /*if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = 1023;
+    input_val = 1023;*/
     
   analogWrite(vibro_pin, input_val/4);
 }
