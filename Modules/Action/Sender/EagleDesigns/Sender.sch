@@ -9880,7 +9880,7 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <part name="C1" library="adafruit" deviceset="C-US" device="C0603" value="22pF"/>
 <part name="C2" library="adafruit" deviceset="C-US" device="C0603" value="22pF"/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R3" library="adafruit" deviceset="R-US_" device="R0603" value="680"/>
+<part name="R3" library="adafruit" deviceset="R-US_" device="R0603" value="100"/>
 <part name="IRLED" library="SparkFun-LED" deviceset="LED" device="5MM"/>
 </parts>
 <sheets>
@@ -10015,6 +10015,12 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <label x="60.96" y="30.48" size="1.778" layer="95"/>
 <pinref part="R1" gate="G$1" pin="2"/>
 </segment>
+<segment>
+<pinref part="U2" gate="U$1" pin="PC0(ADC0)"/>
+<wire x1="208.28" y1="55.88" x2="228.6" y2="55.88" width="0.1524" layer="91"/>
+<junction x="228.6" y="55.88"/>
+<label x="210.82" y="55.88" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="RESET" class="0">
 <segment>
@@ -10060,14 +10066,6 @@ Standard schematic elements and footprints for 5mm, 3mm, 1206, and 0603 sized LE
 <wire x1="208.28" y1="30.48" x2="220.98" y2="30.48" width="0.1524" layer="91"/>
 <junction x="220.98" y="30.48"/>
 <label x="215.9" y="30.48" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="1X3SIN" class="0">
-<segment>
-<pinref part="U2" gate="U$1" pin="PC0(ADC0)"/>
-<wire x1="208.28" y1="55.88" x2="220.98" y2="55.88" width="0.1524" layer="91"/>
-<junction x="220.98" y="55.88"/>
-<label x="210.82" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$1" class="0">
