@@ -27,7 +27,7 @@
 
 //int input_pin = A0;
 int sound_sensor_pin = A0;
-int output_pin = 11;
+int output_pin = 9;                    //pin 17 on ATtiny
 //int filter_size = 15;                 //Noise reduction filter size
 
 //FilteredAnalogInput input(input_pin, filter_size);
@@ -39,51 +39,42 @@ void setup()
 {
   //Just for debugging:
   Serial.begin(9600);
+  pinMode(output_pin, OUTPUT);
 }
 
 void loop()
 {
-  unsigned long startMillis = millis();  // Start of sample window
-  unsigned int peakToPeak = 0;   // peak-to-peak level
-   
-  unsigned int signalMax = 0;
-  unsigned int signalMin = 1024;
-   
-  // collect data for 50 mS
-  while (millis() - startMillis < sampleWindow)
-  {
-     sample = analogRead(sound_sensor_pin);
-     Serial.println(sample);
-     
-     if (sample < 1024)  // toss out spurious readings
-     {
-        if (sample > signalMax)
-        {
-           signalMax = sample;  // save just the max levels
-        }
-        else if (sample < signalMin)
-        {
-           signalMin = sample;  // save just the min levels
-        }
-     }
-  }
-  
-  peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
-  double volts = (peakToPeak * 10) / 1024;  // convert to volts
-  
-/*  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  
-  if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;
-*/
-  
-  
-  
-  int out_value = map(volts, 0.0, 5, 0, 255);
-  analogWrite(output_pin, out_value);
-  
-  //Serial.println(volts);
+   unsigned long startMillis= millis();  // Start of sample window
+   unsigned int peakToPeak = 0;   // peak-to-peak level
+ 
+   unsigned int signalMax = 0;
+   unsigned int signalMin = 1024;
+ 
+   // collect data for 50 mS
+   while (millis() - startMillis < sampleWindow)
+   {
+      sample = analogRead(0);
+      if (sample < 1024)  // toss out spurious readings
+      {
+         if (sample > signalMax)
+         {
+            signalMax = sample;  // save just the max levels
+         }
+         else if (sample < signalMin)
+         {
+            signalMin = sample;  // save just the min levels
+         }
+      }
+   }
+   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+   if(peakToPeak > 200)
+    peakToPeak = 200;
+   if(peakToPeak < 20)
+    peakToPeak = 20;
+    
+   int out_value = map(peakToPeak, 20, 200, 0, 255);
+   analogWrite(output_pin, out_value);
+
+   Serial.println(out_value);
 }
 

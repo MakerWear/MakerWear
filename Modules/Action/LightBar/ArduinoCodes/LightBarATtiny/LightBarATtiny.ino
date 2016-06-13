@@ -26,7 +26,7 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 //Pin Configurations:
 int input_pin = 3;                           //module input, pin 2 on ATtiny
@@ -35,7 +35,7 @@ int filter_size = 15;                        //noise reduction filter size
 int bargraph_led[LED_COUNT] = {0, 4, 1, 2};  //LED pin numbers pin {3, 5, 6, 7} on ATtiny
 
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup() 
 {
@@ -46,12 +46,12 @@ void setup()
 
 void loop()
 {
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  if(input_val < 0)
+  /*if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = 1023;
+    input_val = 1023;*/
   
   if(input_val < 256)
   {

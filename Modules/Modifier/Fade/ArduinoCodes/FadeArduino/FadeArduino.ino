@@ -23,7 +23,7 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 int input_pin = A0;
 int potentiometer_pin = A1;
@@ -33,8 +33,9 @@ int on_trigger = 0;
 int fading = 0;
 int brightness = 0;
 int on_threshold = 10;                       //from 1023
+int temp = 0;
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup() 
 { 
@@ -45,8 +46,9 @@ void setup()
 
 void loop() {
   int pot_value = analogRead(potentiometer_pin);
-  int fading_delay = map(pot_value, 0, 1023, 2, 30);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  //int fading_delay = map(pot_value, 0, 1023, 2, 30);
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/input_val);           //50000 experimentally determined
   
   if(input_val < 0)
     input_val = 0;
@@ -68,16 +70,21 @@ void loop() {
     fading = 1;
     brightness = input_val;
   }
-  else if(on_trigger == 1 && fading == 1 && brightness > upper_threshold)
+  else if(on_trigger == 1 && fading == 1 && brightness > upper_threshold && temp == 0){
     brightness = input_val;
-  else if(on_trigger == 1 && fading == 1 && brightness < upper_threshold)
+    temp = 1;
+  }
+  else if(on_trigger == 1 && fading == 1 && brightness < upper_threshold && temp == 0)
     brightness += add_value;
-  else if(on_trigger == 0 && fading == 1 && brightness >= 1)
+  else if(on_trigger == 1 && fading == 1 && brightness >= 1 && temp == 1)
     brightness--;
-  else if(on_trigger == 0 && fading == 1 && brightness < 1)
+  else if(on_trigger == 1 && fading == 1 && brightness < 1)
   {
+    on_trigger = 0;
     brightness = 0;
     fading = 0;
+    temp = 0;
+    delay(fading_delay);
   }
   
   /*
@@ -92,7 +99,11 @@ void loop() {
   Serial.print(" add_v: ");
   Serial.print(add_value);
   Serial.print(" inp_v: ");
-  Serial.println(input_value);
+  Serial.print(input_val);
+  Serial.print(" delay: ");
+  Serial.print(fading_delay);
+  Serial.print(" pot: ");
+  Serial.println(pot_value);
   */
   
   analogWrite(output_pin, brightness);
