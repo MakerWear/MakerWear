@@ -17,7 +17,7 @@ class FilteredAnalogInput
     float alpha;
     float beta;
     float hanning_sum;
-    
+
     void push(int);
     int pop();
     void calculateHanningWeights();
@@ -28,3 +28,18 @@ class FilteredAnalogInput
 };
 
 
+
+float mapF()
+{
+
+}
+
+int mapAndCut()
+{
+
+}
+
+int cutAndMap()
+{
+
+}
