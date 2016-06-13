@@ -1,18 +1,18 @@
 /*
-**  ButtonArduino.ino
-**  MakerWear Button Module's Arduino Program.
+**  CounterArduino.ino
+**  MakerWear Counter Module's Arduino Program.
 **
-**  A physical button when pressed connects input to output, otherwise 0V
+**  increases output voltage by a single step (to be read by the Number 
+**  module) upon receiving a rising edge on the input pin.
 **
 **
 **  Arduino Pin Configurations:  
 **
 **  Arduino Pin 11: Module Output
 **  Arduino Pin A0: Module Input
-**  Arduino Pin D2: Button
 **
 **
-**  Created on 8/26/15.
+**  Created on 06/11/16.
 **  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
@@ -23,7 +23,6 @@
 #include <FilteredAnalogInput.h>
  
 int input_pin = A0;
-int button_pin = 2;
 int output_pin = 11;
 int filter_size = 15;                        //Noise reduction filter size
 
@@ -37,7 +36,7 @@ void setup()
   //Serial.begin(9600);
 }
 
-void loop()
+void loop() 
 {
   int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
@@ -45,9 +44,5 @@ void loop()
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;
-    
-  if(digitalRead(button_pin) == HIGH)
-    analogWrite(output_pin, input_val/4);
-  else
-    analogWrite(output_pin, 0);
+
 }

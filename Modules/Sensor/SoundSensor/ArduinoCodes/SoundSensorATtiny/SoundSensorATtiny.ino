@@ -93,18 +93,10 @@ void loop() {
 
 
 
-  // volts *= 100;
+  //int out_value = map(volts, 10, 75, 0, input_val / 4);
+  //analogWrite(output_pin, out_value);
 
-  if (volts > 75)
-    volts = 75;
-  if (volts < 10)
-    volts = 10;
-
-
-  int out_value = map(volts, 10, 75, 0, input_val / 4);
-  analogWrite(output_pin, out_value);
-
-  //serial.println(out_value);
+  serial.println(volts);
   
   delay(100);
 }
