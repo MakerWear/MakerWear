@@ -1,43 +1,46 @@
 /*
-**  ColorDetectorArduino.ino
+**  ColorDetectorATtiny.ino
 **  MakerWear ColorDetector Module's ATtiny Program.
 **
-**  Senses color and finds the nearest color between Black, Blue, Cyan, Lime
-**  Yellow, Red, Magenta, and White. Each color corresponds to a certain
-**  output voltage that could be read by the MultiColorLight (as well as
-**  corresponding to the temperature of the color).
+**  Senses color in red, green & blue but creates a single output using 8-bit representation of color. This is the same color representation used by the RGB LED action module.
+**
 **
 **  ATtiny85 Pin Configurations:
 **
 **  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
-**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   N/U
+**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   SCK
 **  Pin 3 (D4/A2): N/U                   Pin 6 (D1/PWM/MISO): Module Output
-**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
+**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): SDA
 **
 **
-**  Created on 01/25/16.
+**  Created on 8/26/15.
 **  By Majeed Kazemitabaar
-**  Modified on 06/07/16
+**
+**  Modified on 01/25/16.
+**  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
 **
 */
+
 #include <TinyWireM.h>
 #include <ATtinyColorSensor.h>
 
-int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
+int filter_size = 15;                        //Noise reduction filter size
+byte gammatable[256];                        //gamma correction table
+
 ATtinyColorSensor sensor = ATtinyColorSensor(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
+
 byte meanRGB[8][3];
-int color_index = 0;  //each color corresponds to an index between 0 to 7.
 
 int findColorIndex(int rgb_val[])
 {
   int dist, min_dist = 9999;
   int best_color;
 
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < 7; i++)
   {
     dist = sqrt(pow(abs(meanRGB[i][0] - rgb_val[0]), 2) +
                 pow(abs(meanRGB[i][1] - rgb_val[1]), 2) +
@@ -54,62 +57,55 @@ int findColorIndex(int rgb_val[])
 }
 
 void setup() {
-  pinMode(input_pin, INPUT);
 
-  byte black[3] = {85, 85, 65};
-  byte blue[3] = {45, 75, 120};
-  byte cyan[3] = {55, 130, 135};
-  byte lime[3] = {60, 120, 60};
-  byte yellow[3] = {255, 255, 100};
-  byte red[3] = {165, 55, 60};
-  byte magenta[3] = {130, 55, 100};
-  byte white[3] = {255, 255, 255};
+  byte meanBlack[3] = {84, 84, 67};
+  byte meanBlue[3] = {47, 70, 117};
+  byte meanGreen[3] = {63, 112, 57};
+  byte meanYellow[3] = {255, 255, 130};
+  byte meanOrange[3] = {235, 85, 55};
+  byte meanRed[3] = {165, 58, 60};
+  byte meanWhite[3] = {255, 255, 255};
 
-  meanRGB[0][0] = black[0]; meanRGB[0][1] = black[1]; meanRGB[0][2] = black[2];
-  meanRGB[1][0] = blue[0];  meanRGB[1][1] = blue[1];  meanRGB[1][2] = blue[2];
-  meanRGB[2][0] = cyan[0];  meanRGB[2][1] = cyan[1];  meanRGB[2][2] = cyan[2];
-  meanRGB[3][0] = lime[0];  meanRGB[3][1] = lime[1];  meanRGB[3][2] = lime[2];
-  meanRGB[4][0] = yellow[0];  meanRGB[4][1] = yellow[1];  meanRGB[4][2] = yellow[2];
-  meanRGB[5][0] = red[0];  meanRGB[5][1] = red[1];  meanRGB[5][2] = red[2];
-  meanRGB[6][0] = magenta[0];  meanRGB[6][1] = magenta[1];  meanRGB[6][2] = magenta[2];
-  meanRGB[7][0] = white[0];  meanRGB[7][1] = white[1];  meanRGB[7][2] = white[2];
+  meanRGB[0][0] = meanBlack[0]; meanRGB[0][1] = meanBlack[1]; meanRGB[0][2] = meanBlack[2];
+  meanRGB[1][0] = meanBlue[0];  meanRGB[1][1] = meanBlue[1];  meanRGB[1][2] = meanBlue[2];
+  meanRGB[2][0] = meanGreen[0];  meanRGB[2][1] = meanGreen[1];  meanRGB[2][2] = meanGreen[2];
+  meanRGB[3][0] = meanYellow[0];  meanRGB[3][1] = meanYellow[1];  meanRGB[3][2] = meanYellow[2];
+  meanRGB[4][0] = meanRed[0];  meanRGB[4][1] = meanRed[1];  meanRGB[4][2] = meanRed[2];
+  meanRGB[5][0] = meanWhite[0];  meanRGB[5][1] = meanWhite[1];  meanRGB[5][2] = meanWhite[2];
+
+  //Gamma Correction:
+  for (int i = 0; i < 256; i++)
+  {
+    float x = i;
+    x /= 255;
+    x = pow(x, 2.5);
+    x *= 255;
+
+    gammatable[i] = x;
+  }
 }
 
 void loop() {
   uint16_t clear, red, green, blue;
 
-  if (digitalRead(input_pin))
-  {
-    sensor.setInterrupt(false); // turn on LED
-    delay(55);  // takes 50ms to read
-    sensor.getRawData(&red, &green, &blue, &clear);
-    sensor.setInterrupt(true);  // turn off LED
+  sensor.setInterrupt(false);      // turn on LED
 
-    uint32_t sum = clear;
-    float r, g, b;
+  delay(55);  // takes 50ms to read
 
-    r = red; r /= sum;
-    g = green; g /= sum;
-    b = blue; b /= sum;
-    r *= 256; g *= 256; b *= 256;
+  sensor.getRawData(&red, &green, &blue, &clear);
 
-    int rgb_val[3] = {r, g, b};
-    color_index = findColorIndex(rgb_val);
-  }
-  else
-  {
-    //color_index will retain its previous value.
-    sensor.setInterrupt(true);  // turn off LED
-  }
+  sensor.setInterrupt(true);  // turn off LED
 
-  int output_val = 0;
+  // Figure out some basic hex code for visualization
+  uint32_t sum = clear;
+  float r, g, b;
 
-  if (color_index == 0)
-    output_val = 0;
-  else if (color_index == 7)
-    output_val = 255;
-  else
-    output_val = color_index * 32 + 16;
+  r = red; r /= sum;
+  g = green; g /= sum;
+  b = blue; b /= sum;
+  r *= 256; g *= 256; b *= 256;
 
-  analogWrite(output_pin, output_val);
+  int rgb_val[3] = {r, g, b};
+
+  analogWrite(output_pin, output_value);
 }

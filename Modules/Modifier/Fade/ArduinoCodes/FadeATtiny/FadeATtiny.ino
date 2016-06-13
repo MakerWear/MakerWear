@@ -24,7 +24,7 @@
 **
 */
 
-#include <SignalProcessing.h>
+#include <FilteredAnalogInput.h>
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
@@ -36,9 +36,8 @@ int on_trigger = 0;
 int fading = 0;                              //if it is in fading phase
 int brightness = 0;
 int on_threshold = 10;                       //from 1023
-int temp = 0;
 
-SignalProcessing input(input_pin, filter_size);
+FilteredAnalogInput input(input_pin, filter_size);
 
 void setup() 
 {
@@ -48,8 +47,8 @@ void setup()
 void loop() 
 {
   int pot_value = analogRead(potentiometer_pin);
-  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/input_val);  
+  int fading_delay = map(pot_value, 0, 1023, 4, 40);
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
   if(input_val < 0)
     input_val = 0;
@@ -66,26 +65,17 @@ void loop()
   int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
   
-if(on_trigger == 1 && fading == 0)
+  if(fading == 0 && input_val > 25)
   {
     fading = 1;
-    brightness = input_val;
+    brightness = 255;
   }
-  else if(on_trigger == 1 && fading == 1 && brightness > upper_threshold && temp == 0){
-    brightness = input_val;
-    temp = 1;
-  }
-  else if(on_trigger == 1 && fading == 1 && brightness < upper_threshold && temp == 0)
-    brightness += add_value;
-  else if(on_trigger == 1 && fading == 1 && brightness >= 1 && temp == 1)
-    brightness--;
-  else if(on_trigger == 1 && fading == 1 && brightness < 1)
+  
+  if(fading == 1)
   {
-    on_trigger = 0;
-    brightness = 0;
-    fading = 0;
-    temp = 0;
-    delay(fading_delay);
+    brightness--;
+    if(brightness == 0)
+      fading = 0;
   }
   
   analogWrite(output_pin, brightness);

@@ -23,7 +23,7 @@
 **
 */
 
-#include <SignalProcessing.h>
+#include <FilteredAnalogInput.h>
 
 int input_pin = 3;
 int tilt_sensor = 0;
@@ -39,7 +39,7 @@ int lastTiltState = HIGH; // the previous reading from the input pin
 long lastDebounceTime = 0;  // the last time the output pin was toggled
 long debounceDelay = 50;    // the debounce time; increase if the output flickers
 
-SignalProcessing input(input_pin, filter_size);
+FilteredAnalogInput input(input_pin, filter_size);
 
 int input_val;
 
@@ -50,12 +50,12 @@ void setup() {
 
 void loop() {
   for(int i = 0; i < 5; i++)
-    input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+    input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  /*if(input_val < 0)
+  if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = 1023;*/
+    input_val = 1023;
 
   if(ledState == HIGH)
     analogWrite(output_pin, input_val/4);

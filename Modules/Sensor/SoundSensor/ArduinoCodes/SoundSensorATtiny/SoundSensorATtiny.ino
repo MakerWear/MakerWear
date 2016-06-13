@@ -24,7 +24,7 @@
 **
 */
 
-#include <SignalProcessing.h>
+#include <FilteredAnalogInput.h>
 //#include <SoftwareSerial.h>
 
 int input_pin = 3;
@@ -35,7 +35,7 @@ int filter_size = 15;                        //Noise reduction filter size
 const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
 int sample;
 
-SignalProcessing input(input_pin, filter_size);
+FilteredAnalogInput input(input_pin, filter_size);
 
 //const int rx = -1;
 //const int tx = 2;
@@ -52,12 +52,12 @@ void setup()
 }
 
 void loop() {
-  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  /*if (input_val < 0)
+  if (input_val < 0)
     input_val = 0;
   else if (input_val > 1023)
-    input_val = 1023;*/
+    input_val = 1023;
 
   long startMillis = millis();  // Start of sample window
   int peakToPeak = 0;   // peak-to-peak level
@@ -93,10 +93,18 @@ void loop() {
 
 
 
-  //int out_value = map(volts, 10, 75, 0, input_val / 4);
-  //analogWrite(output_pin, out_value);
+  // volts *= 100;
 
-  Serial.println(volts);
+  if (volts > 75)
+    volts = 75;
+  if (volts < 10)
+    volts = 10;
+
+
+  int out_value = map(volts, 10, 75, 0, input_val / 4);
+  analogWrite(output_pin, out_value);
+
+  //serial.println(out_value);
   
   delay(100);
 }

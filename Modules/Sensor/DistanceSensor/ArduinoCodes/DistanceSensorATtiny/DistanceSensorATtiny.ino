@@ -23,14 +23,14 @@
 **
 */
 
-#include <SignalProcessing.h>
+#include <FilteredAnalogInput.h>
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int ir_pin = 2;                              //Pin 3 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
 int filter_size = 15;                        //Noise reduction filter size
 
-SignalProcessing input(input_pin, filter_size);
+FilteredAnalogInput input(input_pin, filter_size);
 
 const float A = 0.051864544;
 const float B = 1.006515842;
@@ -41,12 +41,12 @@ void setup()
 
 void loop() 
 {
-  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   
-  /*if(input_val < 0)
+  if(input_val < 0)
     input_val = 0;
   else if(input_val > 1023)
-    input_val = 1023;*/
+    input_val = 1023;
 
     
   //TODO:
@@ -62,7 +62,7 @@ void loop()
   else if(distance > 17)
     distance = 17;
 
-  int output_val = cutAndMap(distance, 0, 17, input_val/4, 0);
+  int output_val = map(distance, 0, 17, input_val/4, 0);
 
   analogWrite(output_pin, output_val); 
 }
