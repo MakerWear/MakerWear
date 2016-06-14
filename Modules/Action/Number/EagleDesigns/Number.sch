@@ -9872,22 +9872,6 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <pinref part="C2" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="SDA" class="0">
-<segment>
-<pinref part="U2" gate="U$1" pin="PC4(ADC4/SDA)"/>
-<wire x1="208.28" y1="45.72" x2="220.98" y2="45.72" width="0.1524" layer="91"/>
-<junction x="220.98" y="45.72"/>
-<label x="213.36" y="45.72" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SCL" class="0">
-<segment>
-<pinref part="U2" gate="U$1" pin="PC5(ADC5/SCL)"/>
-<wire x1="208.28" y1="43.18" x2="220.98" y2="43.18" width="0.1524" layer="91"/>
-<junction x="220.98" y="43.18"/>
-<label x="213.36" y="43.18" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="7SEG-A" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="A"/>
