@@ -9486,6 +9486,18 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <wire x1="3" y1="1.6" x2="3" y2="-1.6" width="0.127" layer="21"/>
 <wire x1="3" y1="-1.6" x2="2.5" y2="-1.6" width="0.127" layer="21"/>
 </package>
+<package name="TSOP382XX,384XX">
+<wire x1="-2.5" y1="0" x2="-2" y2="0" width="0.127" layer="21"/>
+<wire x1="-2" y1="0" x2="2" y2="0" width="0.127" layer="21"/>
+<wire x1="2" y1="0" x2="2.5" y2="0" width="0.127" layer="21"/>
+<wire x1="2.5" y1="0" x2="2.5" y2="2.8" width="0.127" layer="21"/>
+<wire x1="2.5" y1="2.8" x2="-2.5" y2="2.8" width="0.127" layer="21"/>
+<wire x1="-2" y1="0" x2="2" y2="0" width="0.127" layer="21" curve="180"/>
+<wire x1="-2.5" y1="2.8" x2="-2.5" y2="0" width="0.127" layer="21"/>
+<smd name="GND" x="0" y="1.6" dx="1.27" dy="1.27" layer="1" roundness="100"/>
+<smd name="OUT" x="-2.54" y="1.6" dx="1.27" dy="1.27" layer="1" roundness="100"/>
+<smd name="VSS" x="2.54" y="1.6" dx="1.27" dy="1.27" layer="1" roundness="100"/>
+</package>
 </packages>
 <symbols>
 <symbol name="NX503">
@@ -9496,43 +9508,6 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <pin name="P$1" x="0" y="12.7" length="middle" rot="R270"/>
 <pin name="P$2" x="0" y="-12.7" length="middle" rot="R90"/>
 </symbol>
-</symbols>
-<devicesets>
-<deviceset name="NX503">
-<gates>
-<gate name="G$1" symbol="NX503" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="NX503">
-<connects>
-<connect gate="G$1" pin="P$1" pad="P$1"/>
-<connect gate="G$1" pin="P$2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="tsop">
-<description>IR Receiver and Demodulator</description>
-<packages>
-<package name="TSOP382XX,384XX">
-<wire x1="-2.5" y1="0" x2="-2" y2="0" width="0.127" layer="21"/>
-<wire x1="-2" y1="0" x2="2" y2="0" width="0.127" layer="21"/>
-<wire x1="2" y1="0" x2="2.5" y2="0" width="0.127" layer="21"/>
-<wire x1="2.5" y1="0" x2="2.5" y2="2.8" width="0.127" layer="21"/>
-<wire x1="2.5" y1="2.8" x2="-2.5" y2="2.8" width="0.127" layer="21"/>
-<wire x1="-2" y1="0" x2="2" y2="0" width="0.127" layer="21" curve="180"/>
-<pad name="OUT" x="-2.54" y="1.6" drill="0.82" shape="long" rot="R90"/>
-<wire x1="-2.5" y1="2.8" x2="-2.5" y2="0" width="0.127" layer="21"/>
-<pad name="GND" x="0" y="1.6" drill="0.82" shape="long" rot="R90"/>
-<pad name="VS" x="2.54" y="1.6" drill="0.82" shape="long" rot="R90"/>
-</package>
-</packages>
-<symbols>
 <symbol name="TSOP">
 <wire x1="-5.08" y1="-5.08" x2="-5.08" y2="5.08" width="0.254" layer="94" curve="-180"/>
 <wire x1="-15.24" y1="0" x2="-12.7" y2="0" width="0.254" layer="94"/>
@@ -9553,7 +9528,23 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="TSOP38238">
+<deviceset name="NX503">
+<gates>
+<gate name="G$1" symbol="NX503" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="NX503">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="IR-RECEIVER">
 <gates>
 <gate name="G$1" symbol="TSOP" x="0" y="0"/>
 </gates>
@@ -9562,7 +9553,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <connects>
 <connect gate="G$1" pin="GND" pad="GND"/>
 <connect gate="G$1" pin="OUT" pad="OUT"/>
-<connect gate="G$1" pin="V+" pad="VS"/>
+<connect gate="G$1" pin="V+" pad="VSS"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9605,10 +9596,10 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <part name="C2" library="adafruit" deviceset="C-US" device="C0603" value="22pF"/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="R4" library="adafruit" deviceset="R-US_" device="R0603" value="4.7K"/>
-<part name="U$1" library="tsop" deviceset="TSOP38238" device=""/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="C3" library="adafruit" deviceset="C-US" device="C0603" value="0.22uF"/>
+<part name="U$1" library="MakerWear" deviceset="IR-RECEIVER" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9638,10 +9629,10 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <instance part="C2" gate="G$1" x="121.92" y="-10.16"/>
 <instance part="GND3" gate="1" x="322.58" y="-17.78"/>
 <instance part="R4" gate="G$1" x="309.88" y="27.94" rot="R180"/>
-<instance part="U$1" gate="G$1" x="243.84" y="27.94"/>
 <instance part="GND4" gate="1" x="254" y="-17.78"/>
 <instance part="SUPPLY3" gate="G$1" x="254" y="73.66"/>
 <instance part="C3" gate="G$1" x="322.58" y="5.08"/>
+<instance part="U$1" gate="G$1" x="243.84" y="27.94"/>
 </instances>
 <busses>
 </busses>
@@ -9679,10 +9670,10 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <pinref part="SUPPLY8" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="V+"/>
 <wire x1="251.46" y1="33.02" x2="254" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="254" y1="33.02" x2="254" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="SUPPLY3" gate="G$1" pin="VCC"/>
+<pinref part="U$1" gate="G$1" pin="V+"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -9730,10 +9721,10 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <pinref part="C3" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="GND"/>
 <wire x1="251.46" y1="22.86" x2="254" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="254" y1="22.86" x2="254" y2="-15.24" width="0.1524" layer="91"/>
 <pinref part="GND4" gate="1" pin="GND"/>
+<pinref part="U$1" gate="G$1" pin="GND"/>
 </segment>
 </net>
 <net name="RESET" class="0">
@@ -9865,10 +9856,10 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <label x="213.36" y="10.16" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="OUT"/>
 <wire x1="251.46" y1="27.94" x2="266.7" y2="27.94" width="0.1524" layer="91"/>
 <junction x="266.7" y="27.94"/>
 <label x="259.08" y="27.94" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="OUT"/>
 </segment>
 </net>
 </nets>
