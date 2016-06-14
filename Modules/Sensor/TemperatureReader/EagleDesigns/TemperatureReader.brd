@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -2000,7 +2000,7 @@ design rules under a new name.</description>
 <elements>
 <element name="JP1" library="SparkFun-Connectors" package="1X04" value="" x="17.17" y="3.9" rot="R180"/>
 <element name="R1" library="adafruit" package="R0603" value="1M" x="7.79" y="6.53" rot="MR0"/>
-<element name="JP2" library="SparkFun-Connectors" package="1X03" value="" x="10.73" y="20.16"/>
+<element name="JP2" library="SparkFun-Connectors" package="1X03" value="" x="10.73" y="21.78"/>
 <element name="U2" library="SparkFun-DigitalIC" package="TQFP32-08" value="ATMEGA328P_TQFP" x="10.32" y="13.28" rot="MR0">
 <attribute name="PROD_ID" value="IC-09069" x="20.38" y="10.84" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
@@ -2090,29 +2090,32 @@ design rules under a new name.</description>
 <contactref element="JP2" pad="1"/>
 <contactref element="U2" pad="29"/>
 <contactref element="R2" pad="1"/>
-<wire x1="10.73" y1="20.16" x2="10.73" y2="17.5826" width="0.3048" layer="16"/>
+<wire x1="10.73" y1="21.78" x2="10.73" y2="17.5826" width="0.3048" layer="16"/>
 <wire x1="10.73" y1="17.5826" x2="10.72" y2="17.5726" width="0.3048" layer="16"/>
-<wire x1="6.8" y1="13.72" x2="6.8" y2="18.54" width="0.3048" layer="1"/>
-<wire x1="6.8" y1="18.54" x2="6.82" y2="18.56" width="0.3048" layer="1"/>
-<wire x1="6.82" y1="18.56" x2="7.72" y2="20.14" width="0.3048" layer="1"/>
-<wire x1="7.72" y1="20.14" x2="10.73" y2="20.16" width="0.3048" layer="1"/>
+<wire x1="6.8" y1="13.72" x2="6.8" y2="18.72" width="0.3048" layer="1"/>
+<wire x1="6.8" y1="18.72" x2="7.84" y2="20.48" width="0.3048" layer="1"/>
+<wire x1="7.84" y1="20.48" x2="10.48" y2="20.48" width="0.3048" layer="1"/>
+<wire x1="10.48" y1="20.48" x2="10.73" y2="20.73" width="0.3048" layer="1"/>
+<wire x1="10.73" y1="20.73" x2="10.73" y2="21.78" width="0.3048" layer="1"/>
 </signal>
 <signal name="RX">
 <contactref element="JP2" pad="2"/>
 <contactref element="U2" pad="30"/>
-<wire x1="13.27" y1="20.16" x2="12.97" y2="20.16" width="0.3048" layer="16"/>
-<wire x1="12.97" y1="20.16" x2="12.75" y2="19.95" width="0.3048" layer="16"/>
-<wire x1="12.75" y1="19.95" x2="11.52" y2="18.72" width="0.3048" layer="16"/>
-<wire x1="11.52" y1="18.72" x2="11.52" y2="17.5726" width="0.3048" layer="16"/>
+<wire x1="11.52" y1="17.5726" x2="11.52" y2="19.67" width="0.3048" layer="16"/>
+<wire x1="11.52" y1="19.67" x2="11.88" y2="20.03" width="0.3048" layer="16"/>
+<wire x1="11.88" y1="20.03" x2="12.99" y2="20.03" width="0.3048" layer="16"/>
+<wire x1="12.99" y1="20.03" x2="13.28" y2="20.32" width="0.3048" layer="16"/>
+<wire x1="13.28" y1="20.32" x2="13.28" y2="21.77" width="0.3048" layer="16"/>
+<wire x1="13.28" y1="21.77" x2="13.27" y2="21.78" width="0.3048" layer="16"/>
 </signal>
 <signal name="TX">
 <contactref element="JP2" pad="3"/>
 <contactref element="U2" pad="31"/>
-<wire x1="12.32" y1="17.5726" x2="12.32" y2="18.37" width="0.3048" layer="16"/>
-<wire x1="12.32" y1="18.37" x2="12.71" y2="18.76" width="0.3048" layer="16"/>
-<wire x1="12.71" y1="18.76" x2="15.7" y2="18.76" width="0.3048" layer="16"/>
-<wire x1="15.7" y1="18.76" x2="15.81" y2="18.87" width="0.3048" layer="16"/>
-<wire x1="15.81" y1="18.87" x2="15.81" y2="20.16" width="0.3048" layer="16"/>
+<wire x1="15.81" y1="21.78" x2="15.81" y2="19.38" width="0.3048" layer="16"/>
+<wire x1="15.81" y1="19.38" x2="15.5" y2="19.07" width="0.3048" layer="16"/>
+<wire x1="15.5" y1="19.07" x2="12.66" y2="19.07" width="0.3048" layer="16"/>
+<wire x1="12.66" y1="19.07" x2="12.32" y2="18.73" width="0.3048" layer="16"/>
+<wire x1="12.32" y1="18.73" x2="12.32" y2="17.5726" width="0.3048" layer="16"/>
 </signal>
 <signal name="1X3SIN">
 <contactref element="U2" pad="23"/>
