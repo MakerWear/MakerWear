@@ -24,7 +24,7 @@
 **
 */
 
-#include <SignalProcessing.h>
+#include <FilteredAnalogInput.h>
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
@@ -38,7 +38,7 @@ int brightness = 0;
 int on_threshold = 10;                       //from 1023
 int temp = 0;
 
-SignalProcessing input(input_pin, filter_size);
+FilteredAnalogInput input(input_pin, filter_size);
 
 void setup() 
 {
@@ -48,8 +48,8 @@ void setup()
 void loop() 
 {
   int pot_value = analogRead(potentiometer_pin);
-  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/input_val);  
+  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int fading_delay = map(pot_value, 0, 1023, 0, 50000/input_val);           //50000 experimentally determined
   
   if(input_val < 0)
     input_val = 0;
@@ -65,8 +65,8 @@ void loop()
   
   int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
-  
-if(on_trigger == 1 && fading == 0)
+    
+  if(on_trigger == 1 && fading == 0)
   {
     fading = 1;
     brightness = input_val;
@@ -87,29 +87,7 @@ if(on_trigger == 1 && fading == 0)
     temp = 0;
     delay(fading_delay);
   }
-  
-  analogWrite(output_pin, brightness);
-  
+
+  analogWrite(output_pin, brightness);  
   delay(fading_delay);
-  
-    /*
-  if(on_trigger == 1 && fading == 0)
-  {
-    //TODO: need to add debouncing here:
-    fading = 1;
-    brightness = input_val;
-  }
-  else if(on_trigger == 1 && fading == 1 && brightness > upper_threshold)
-    brightness = input_val;
-  //TODO: The next if statement is not working because of debouncing.
-  else if(on_trigger == 1 && fading == 1 && brightness < upper_threshold)
-    brightness += add_value;
-  else if(on_trigger == 0 && fading == 1 && brightness >= 1)
-    brightness--;
-  else if(on_trigger == 0 && fading == 1 && brightness < 1)
-  {
-    brightness = 0;
-    fading = 0;
-  }
-  */
 }
