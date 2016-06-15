@@ -37,7 +37,7 @@ Servo myservo;
 
 int input_pin = A0;                              //pin 23 on ATmega328
 int filter_size = 15;                        //Noise reduction filter size
-int servo_pin = 10; //D10
+int servo_pin = 9; //D9
 
 SignalProcessing input(input_pin, filter_size);
 
