@@ -16,10 +16,10 @@
 **  Pin 8  (GND):                            Pin 21  (AREF):
 **  Pin 9  (XTAL1):                          Pin 20  (AVCC):
 **  Pin 10 (XTAL2):                          Pin 19  (D13):
-**  Pin 11 (D5/PWM):                         Pin 18  (D12):
-**  Pin 12 (D6/PWM):                         Pin 17  (D11/PWM):
-**  Pin 13 (D7):                             Pin 16  (D10/PWM):  Servo Control
-**  Pin 14 (D8):                             Pin 15  (D9/PWM):
+**  Pin 11 (D5/PWM): SEG-B                   Pin 18  (D12):
+**  Pin 12 (D6/PWM): SEG-A                   Pin 17  (D11/PWM): SEG-G
+**  Pin 13 (D7): SEG-C                       Pin 16  (D10/PWM):  SEG-F
+**  Pin 14 (D8): SEG-D                       Pin 15  (D9/PWM): SEG-E
 **
 **
 **  Created on 6/13/16.
@@ -32,7 +32,7 @@
 
 #include <SignalProcessing.h>
 
-int display[7] = {2,3,4,5,6,7,8};             // Pins for Segments A-G
+int display[7] = {6,5,7,8,9,10,11};           // Pins for Segments A-G
 int input_pin = A0;                           // pin 23 on ATmega328
 int filter_size = 15;                         // Noise reduction filter size
 
