@@ -23,7 +23,7 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 
 int input_pin = A0;
 int potentiometer_pin = A1;
@@ -33,9 +33,9 @@ int on_trigger = 0;
 int fading = 0;
 int brightness = 0;
 int on_threshold = 10;                       //from 1023
-int temp = 0;
+int temp = 0;                                //if 1, currently fading. if 0 not fading
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup() 
 { 
