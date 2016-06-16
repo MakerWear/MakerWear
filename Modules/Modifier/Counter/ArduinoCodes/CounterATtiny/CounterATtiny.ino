@@ -25,6 +25,7 @@
 #include <SignalProcessing.h>
 
 #define THRESH_LOW 300          //any ADC value below this will be considered LOW
+#define THRESH_HIGH 700         //any ADC value above this will be considered HIGH
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
