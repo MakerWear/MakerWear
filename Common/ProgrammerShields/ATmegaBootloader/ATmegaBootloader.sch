@@ -1771,6 +1771,22 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="60.96" y1="-20.32" x2="60.96" y2="-27.94" width="0.1524" layer="91"/>
 </segment>
 </net>
+<net name="RX" class="0">
+<segment>
+<pinref part="J1" gate="G$1" pin="RX"/>
+<wire x1="12.7" y1="17.78" x2="25.4" y2="17.78" width="0.1524" layer="91"/>
+<junction x="25.4" y="17.78"/>
+<label x="20.32" y="17.78" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TX" class="0">
+<segment>
+<pinref part="J1" gate="G$1" pin="TX"/>
+<wire x1="12.7" y1="15.24" x2="25.4" y2="15.24" width="0.1524" layer="91"/>
+<junction x="25.4" y="15.24"/>
+<label x="20.32" y="15.24" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
