@@ -26,17 +26,22 @@
 
 #include <SignalProcessing.h>
 
+#define THRESH_LOW 300  //constants for when a signal is considered HIGH or LOW
+#define THRESH_HIGH 700
+
 int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
 
 int filter_size = 15;                        //Noise reduction filter size
 
-int on_trigger = 0;
-int fading = 0;                              //if it is in fading phase
-int brightness = 0;
-int on_threshold = 10;                       //from 1023
-int temp = 0;                                //if 1, currently fading. if 0 not fading
+int add_trigger = 0;
+int fading = 0;
+short brightness = 0;
+unsigned int fading_delay = 1;        //initialized at 1 
+int can_fade = 0;                     //1 if module is allowed to start fading
+int low_detect = 1;                   //1 if low signal has been found
+
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -47,47 +52,47 @@ void setup()
 
 void loop() 
 {
-  int pot_value = analogRead(potentiometer_pin);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int fading_delay = map(pot_value, 0, 1023, 0, 50000/input_val);           //50000 experimentally determined
-  
-  if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;
-  
-  if(input_val > on_threshold)
-    on_trigger = 1;
-  else
-    on_trigger = 0;
+  int pot_value;
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 4, 1023);
+
+  if(input_val > THRESH_HIGH){
+    can_fade = 1;
+  }
+  else{
+    can_fade = 0;
+    low_detect = 1;
+  }
   
   input_val /= 4;
   
-  int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
     
-  if(on_trigger == 1 && fading == 0)
-  {
+  if(can_fade == 1 && low_detect == 1 && fading == 0){  //start fading   
     fading = 1;
     brightness = input_val;
+    pot_value = analogRead(potentiometer_pin);
+    fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/(4*input_val));           //50000 experimentally determined
   }
-  else if(on_trigger == 1 && fading == 1 && brightness > upper_threshold && temp == 0){
-    brightness = input_val;
-    temp = 1;
-  }
-  else if(on_trigger == 1 && fading == 1 && brightness < upper_threshold && temp == 0)
+  else if(can_fade == 1 && add_trigger == 1 && fading == 1){   //add brightness if HIGH input comes mid-fade
     brightness += add_value;
-  else if(on_trigger == 1 && fading == 1 && brightness >= 1 && temp == 1)
+    add_trigger = 0;
+  }
+  else if(fading == 1 && brightness >= 1){  //fades           
+    if(can_fade == 0){
+      add_trigger = 1;
+    }
     brightness--;
-  else if(on_trigger == 1 && fading == 1 && brightness < 1)
+  }
+  else if(fading == 1 && brightness < 1)    //end fade
   {
-    on_trigger = 0;
+    add_trigger = 0;
+    low_detect = 0;
     brightness = 0;
     fading = 0;
-    temp = 0;
     delay(fading_delay);
   }
-
-  analogWrite(output_pin, brightness);  
+  
+  analogWrite(output_pin, brightness);
   delay(fading_delay);
+ 
 }

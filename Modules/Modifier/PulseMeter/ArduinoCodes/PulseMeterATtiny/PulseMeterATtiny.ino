@@ -1,15 +1,17 @@
 /*
 **  PulseMeterArduino.ino
-**  MakerWear Pulse Meter Module's Arduino Program.
+**  MakerWear Pulse Meter Module's ATtiny Program.
 **
 **  Changes output voltage based on input frequency. Measures frequency
 **  of HIGH pulses for last 10 seconds.
 **
 **
-**  Arduino Pin Configurations:  
+**  ATtiny85 Pin Configurations:  
 **
-**  Arduino Pin 11: Module Output
-**  Arduino Pin A0: Module Input
+**  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
+**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   N/U
+**  Pin 3 (D4/A2): Potentiometer         Pin 6 (D1/PWM/MISO): Module Output
+**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
 **
 **
 **  Created on 06/11/16.
@@ -22,35 +24,24 @@
 
 #include <SignalProcessing.h>
 
-//0-300 is LOW
-//700-1023 is HIGH
-
-#define THRESH_LOW 300
-#define THRESH_HIGH 500
+#define THRESH_LOW 300    //0-300 is LOW
+#define THRESH_HIGH 500   //700-1023 is HIGH
 #define WINDOWSIZE 20
 #define sampleRate 100    //time between samples in milliseconds
 
-int input_pin = A0;
-int output_pin = 11;
+int input_pin = 3;                           //Pin 2 on ATtiny
+int output_pin = 1;                          //Pin 6 on ATtiny
+
 int filter_size = 15;                        //Noise reduction filter size
 
 unsigned int counter=0;
 uint8_t wavelengths[WINDOWSIZE]={0};
 unsigned long pulseStart;
-short temp = 0;
+short temp = 0;                      //when temp=0, we are on first run after startup: array is still being filled
 short freq = 0;
 
 SignalProcessing input(input_pin, filter_size);
 
-int average(){
-  uint8_t i;
-  int total=0;
-  for(i=0; i<((temp == 0)?counter:WINDOWSIZE); i++){
-    total += wavelengths[i];
-  }
-  
-  return (int)(total/((temp == 0)?counter:WINDOWSIZE));
-}
 short processArray(){
   int i,j=0;
   for(i = 0; i<WINDOWSIZE; i++){
@@ -62,29 +53,20 @@ short processArray(){
 void setup()
 {
   pinMode(output_pin, OUTPUT);
-  //Just For Debugging:
-  //Serial.begin(9600);
 }
 
 void loop() 
 {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
  
-  /*if((input_val > THRESH_HIGH) && (countable == 1)){           //starts measuring from first HIGH pulse
-    pulseStart = millis();
-    countable = 0;   
-  }*/
   if((input_val > THRESH_HIGH)){     //checks if HIGH
     wavelengths[counter++] = 1;
-    //pulseStart = millis();
-    //countable = 0;
-    //avg = average();
   }
   else if((input_val < THRESH_LOW)){       //checks if LOW
     wavelengths[counter++] = 0;
   }
   
-  if(counter == WINDOWSIZE){
+  if(counter == WINDOWSIZE){               //makes sure counter does not get too high
     if(temp == 0){
       temp = 1;
     }                                  
@@ -92,7 +74,6 @@ void loop()
   }
   
   freq = processArray();
-  //Serial.println(avg);
   analogWrite(output_pin, cutAndMap(freq, 0, WINDOWSIZE, 0, 255));
   delay(sampleRate);
 }

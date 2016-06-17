@@ -17,7 +17,7 @@
 **  By Majeed Kazemitabaar
 **  Modified on 8/25/15.
 **  By Majeed Kazemitabaar
-**
+**  
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
 **
@@ -25,15 +25,21 @@
 
 #include <SignalProcessing.h>
 
+#define THRESH_LOW 300  //constants for when a signal is considered HIGH or LOW
+#define THRESH_HIGH 700
+
 int input_pin = A0;
 int potentiometer_pin = A1;
 int output_pin = 11;
+
 int filter_size = 15;                        //Noise reduction filter size
-int on_trigger = 0;
+
+int add_trigger = 0;
 int fading = 0;
-int brightness = 0;
-int on_threshold = 10;                       //from 1023
-int temp = 0;                                //if 1, currently fading. if 0 not fading
+short brightness = 0;
+unsigned int fading_delay = 1;        //initialized at 1 
+int can_fade = 0;                     //1 if module is allowed to start fading
+int low_detect = 1;                   //1 if low signal has been found
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -45,68 +51,68 @@ void setup()
 }
 
 void loop() {
-  int pot_value = analogRead(potentiometer_pin);
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int fading_delay = map(pot_value, 0, 1023, 0, 50000/input_val);           //50000 experimentally determined
-  
-  if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;
-  
-  if(input_val > on_threshold)
-    on_trigger = 1;
-  else
-    on_trigger = 0;
+  int pot_value;
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 4, 1023);
+
+  if(input_val > THRESH_HIGH){
+    can_fade = 1;
+  }
+  else{
+    can_fade = 0;
+    low_detect = 1;
+  }
   
   input_val /= 4;
   
-  int upper_threshold = (int)(0.75 * (float)(input_val));
   int add_value = (int)(0.25 * (float)(input_val));
     
-  if(on_trigger == 1 && fading == 0)
-  {
+  if(can_fade == 1 && low_detect == 1 && fading == 0){     //&& temp = 0 && brightness > upper_threshold
     fading = 1;
     brightness = input_val;
+    pot_value = analogRead(potentiometer_pin);
+    fading_delay = cutAndMap(pot_value, 0, 1023, 0, 10000/input_val);           //50000 experimentally determined
   }
-  else if(on_trigger == 1 && fading == 1 && brightness > upper_threshold && temp == 0){
-    brightness = input_val;
-    temp = 1;
-  }
-  else if(on_trigger == 1 && fading == 1 && brightness < upper_threshold && temp == 0)
+  else if(can_fade == 1 && add_trigger == 1 && fading == 1){
     brightness += add_value;
-  else if(on_trigger == 1 && fading == 1 && brightness >= 1 && temp == 1)
+    add_trigger = 0;
+  }
+  else if(fading == 1 && brightness >= 1){               //&& temp = 1
+    if(can_fade == 0){
+      add_trigger = 1;
+    }
     brightness--;
-  else if(on_trigger == 1 && fading == 1 && brightness < 1)
+  }
+  else if(fading == 1 && brightness < 1)
   {
-    on_trigger = 0;
+    add_trigger = 0;
+    low_detect = 0;
     brightness = 0;
     fading = 0;
-    temp = 0;
     delay(fading_delay);
   }
   
-  /*
+ /* 
   Serial.print("trig: ");  
-  Serial.print(on_trigger);
+  Serial.print(add_trigger);
   Serial.print(" fade: ");
   Serial.print(fading);
+  Serial.print(" temp: ");
+  Serial.print(temp);
   Serial.print(" bright:");
   Serial.print(brightness);
   Serial.print(" up_thr: ");
   Serial.print(upper_threshold);
-  Serial.print(" add_v: ");
-  Serial.print(add_value);
+  //Serial.print(" add_v: ");
+  //Serial.print(add_value);
   Serial.print(" inp_v: ");
   Serial.print(input_val);
   Serial.print(" delay: ");
   Serial.print(fading_delay);
   Serial.print(" pot: ");
-  Serial.println(pot_value);
+  Serial.print(pot_value);
   */
   
   analogWrite(output_pin, brightness);
-  
   delay(fading_delay);
   //delay(10);
 }
