@@ -5379,7 +5379,7 @@ Metric Code Size 5664</description>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="R1" library="adafruit" deviceset="R-US_" device="R0603" value="1M"/>
 <part name="R2" library="adafruit" deviceset="R-US_" device="R0603" value="4.7K"/>
-<part name="C1" library="adafruit" deviceset="C-US" device="C0402" value="0.22uF"/>
+<part name="C1" library="adafruit" deviceset="C-US" device="C0603" value="0.22uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -5397,7 +5397,7 @@ Metric Code Size 5664</description>
 <instance part="GND5" gate="1" x="53.34" y="-17.78"/>
 <instance part="R1" gate="G$1" x="53.34" y="-5.08" rot="R90"/>
 <instance part="R2" gate="G$1" x="177.8" y="7.62" rot="R180"/>
-<instance part="C1" gate="G$1" x="190.5" y="-5.08" rot="R180"/>
+<instance part="C1" gate="G$1" x="190.5" y="-2.54"/>
 </instances>
 <busses>
 </busses>
@@ -5455,7 +5455,7 @@ Metric Code Size 5664</description>
 <segment>
 <wire x1="190.5" y1="-7.62" x2="190.5" y2="-15.24" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
-<pinref part="C1" gate="G$1" pin="1"/>
+<pinref part="C1" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="GND5" gate="1" pin="GND"/>
@@ -5478,7 +5478,7 @@ Metric Code Size 5664</description>
 <junction x="213.36" y="7.62"/>
 <junction x="190.5" y="7.62"/>
 <pinref part="R2" gate="G$1" pin="1"/>
-<pinref part="C1" gate="G$1" pin="2"/>
+<pinref part="C1" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="OUT(MISO)" class="0">
