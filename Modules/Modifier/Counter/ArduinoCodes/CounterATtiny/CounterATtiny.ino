@@ -29,7 +29,7 @@
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 5;                        //Noise reduction filter size
 short countable = 1; 
 unsigned int counter;
 int output_val;

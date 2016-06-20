@@ -30,7 +30,7 @@
 
 int input_pin = A0;
 int output_pin = 11;
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 5;                        //Noise reduction filter size
 short countable = 1; 
 unsigned int counter;
 
