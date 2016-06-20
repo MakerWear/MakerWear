@@ -33,7 +33,7 @@ int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
 
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 5;                        //Noise reduction filter size
 
 int add_trigger = 0;
 int fading = 0;
@@ -58,7 +58,7 @@ void loop()
   if(input_val > THRESH_HIGH){
     can_fade = 1;
   }
-  else{
+  else if(input_val < THRESH_LOW){
     can_fade = 0;
     low_detect = 1;
   }

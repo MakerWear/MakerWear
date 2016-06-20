@@ -32,7 +32,7 @@ int input_pin = A0;
 int potentiometer_pin = A1;
 int output_pin = 11;
 
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 5;                        //Noise reduction filter size
 
 int add_trigger = 0;
 int fading = 0;
@@ -57,7 +57,7 @@ void loop() {
   if(input_val > THRESH_HIGH){
     can_fade = 1;
   }
-  else{
+  else if(input_val < THRESH_LOW){
     can_fade = 0;
     low_detect = 1;
   }
