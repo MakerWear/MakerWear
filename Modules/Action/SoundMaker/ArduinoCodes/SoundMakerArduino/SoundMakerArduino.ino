@@ -25,7 +25,7 @@
 **
 */
 
-#include <FilteredAnalogInput.h>
+#include <SignalProcessing.h>
 #include "Pitches.h"
 
 //Pin Configurations
@@ -35,7 +35,7 @@ int buzzer_pin = 11;
 //Piano Notes
 int notes[] = {NOTE_C6, NOTE_D6, NOTE_E6, NOTE_F6, NOTE_G6, NOTE_A6, NOTE_B6, NOTE_C7};
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, 15);
 
 void setup()
 {
@@ -45,12 +45,12 @@ void setup()
 
 void loop()
 {
-  int input_val = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int input_value = map(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;
+  if(input_value < 0)
+    input_value = 0;
+  else if(input_value > 1023)
+    input_value = 1023;
 
   int buzzer_value = notes[0];
   
