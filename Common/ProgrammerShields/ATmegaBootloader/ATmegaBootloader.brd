@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.3.0">
+<eagle version="7.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -79,7 +79,7 @@
 <layer number="114" name="Badge_Outline" color="11" fill="1" visible="no" active="no"/>
 <layer number="116" name="Patch_BOT" color="9" fill="4" visible="no" active="yes"/>
 <layer number="118" name="Rect_Pads" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="121" name="_tsilk" color="7" fill="1" visible="no" active="yes"/>
+<layer number="121" name="_tsilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="123" name="tTestmark" color="7" fill="1" visible="no" active="yes"/>
 <layer number="124" name="bTestmark" color="7" fill="1" visible="no" active="yes"/>
@@ -145,6 +145,8 @@
 <wire x1="100" y1="0" x2="100" y2="80" width="0" layer="20"/>
 <wire x1="100" y1="80" x2="0" y2="80" width="0" layer="20"/>
 <wire x1="0" y1="80" x2="0" y2="0" width="0" layer="20"/>
+<text x="73.4" y="62.5" size="1.27" layer="121" rot="R270">BOOT</text>
+<text x="59.4" y="62.5" size="1.27" layer="121" rot="R270">PROG</text>
 </plain>
 <libraries>
 <library name="SparkFun-Boards">
@@ -408,6 +410,28 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </package>
 </packages>
 </library>
+<library name="SparkFun-Electromechanical">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find anything that moves- switches, relays, buttons, potentiometers. Also, anything that goes on a board but isn't electrical in nature- screws, standoffs, etc.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
+&lt;br&gt;&lt;br&gt;
+You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="SWITCH-SPDT">
+<wire x1="2.175" y1="5.815" x2="-2.175" y2="5.815" width="0.2032" layer="21"/>
+<wire x1="-2.175" y1="5.815" x2="-2.175" y2="-5.815" width="0.2032" layer="21"/>
+<wire x1="-2.175" y1="-5.815" x2="2.175" y2="-5.815" width="0.2032" layer="21"/>
+<wire x1="2.175" y1="-5.815" x2="2.175" y2="5.815" width="0.2032" layer="21"/>
+<pad name="1" x="0" y="2.54" drill="1.016" diameter="1.8796"/>
+<pad name="2" x="0" y="0" drill="1.016" diameter="1.8796"/>
+<pad name="3" x="0" y="-2.54" drill="1.016" diameter="1.8796"/>
+<text x="-3.81" y="7.62" size="1.778" layer="25" ratio="10">&gt;NAME</text>
+<text x="-3.81" y="-9.525" size="1.778" layer="27" ratio="10">&gt;VALUE</text>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -609,6 +633,10 @@ design rules under a new name.</description>
 <attribute name="PROD_ID" value="RES-12182" x="42.5" y="53.3" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="U$1" library="MakerWear" package="TQFP32-BREAKOUT" value="ATMEGA-TQFP-BREAKOUT" x="60.9" y="31" rot="R90"/>
+<element name="RST-SW" library="SparkFun-Electromechanical" package="SWITCH-SPDT" value="" x="66.9" y="60.3" smashed="yes" rot="R270">
+<attribute name="PROD_ID" value="SWCH-08261" x="87.1" y="70.9" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="VALUE" x="57.375" y="64.11" size="1.778" layer="27" ratio="10" rot="R270"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -699,17 +727,19 @@ design rules under a new name.</description>
 <signal name="RESET">
 <contactref element="U$1" pad="29"/>
 <contactref element="R1" pad="P$2"/>
-<contactref element="J1" pad="D10"/>
-<wire x1="47.56" y1="14.34" x2="47.56" y2="16.94" width="0.4064" layer="16"/>
-<wire x1="47.56" y1="16.94" x2="47.1" y2="17.4" width="0.4064" layer="16"/>
-<wire x1="47.1" y1="17.4" x2="23.2" y2="17.4" width="0.4064" layer="16"/>
-<wire x1="23.2" y1="17.4" x2="22.8" y2="17.8" width="0.4064" layer="16"/>
-<wire x1="22.8" y1="17.8" x2="22.8" y2="31" width="0.4064" layer="16"/>
-<wire x1="38.69" y1="53.3" x2="19.7" y2="53.3" width="0.4064" layer="16"/>
-<wire x1="19.7" y1="53.3" x2="18.9" y2="52.5" width="0.4064" layer="16"/>
-<wire x1="18.9" y1="52.5" x2="18.9" y2="31.6" width="0.4064" layer="16"/>
-<wire x1="18.9" y1="31.6" x2="19.5" y2="31" width="0.4064" layer="16"/>
-<wire x1="19.5" y1="31" x2="22.8" y2="31" width="0.4064" layer="16"/>
+<contactref element="RST-SW" pad="2"/>
+<wire x1="66.9" y1="60.3" x2="66.9" y2="56.1" width="0.4064" layer="16"/>
+<wire x1="66.9" y1="56.1" x2="66.4" y2="55.6" width="0.4064" layer="16"/>
+<wire x1="66.4" y1="55.6" x2="39.5" y2="55.6" width="0.4064" layer="16"/>
+<wire x1="39.5" y1="55.6" x2="38.8" y2="54.9" width="0.4064" layer="16"/>
+<wire x1="38.8" y1="54.9" x2="38.8" y2="53.41" width="0.4064" layer="16"/>
+<wire x1="38.8" y1="53.41" x2="38.69" y2="53.3" width="0.4064" layer="16"/>
+<wire x1="38.69" y1="53.3" x2="21.9" y2="53.3" width="0.4064" layer="16"/>
+<wire x1="21.9" y1="53.3" x2="21.3" y2="52.7" width="0.4064" layer="16"/>
+<wire x1="21.3" y1="52.7" x2="21.3" y2="31.3" width="0.4064" layer="16"/>
+<wire x1="21.3" y1="31.3" x2="21.7" y2="30.9" width="0.4064" layer="16"/>
+<wire x1="21.7" y1="30.9" x2="22.7" y2="30.9" width="0.4064" layer="16"/>
+<wire x1="22.7" y1="30.9" x2="22.8" y2="31" width="0.4064" layer="16"/>
 </signal>
 <signal name="VCC">
 <contactref element="R1" pad="P$1"/>
@@ -756,9 +786,53 @@ design rules under a new name.</description>
 </signal>
 <signal name="RX">
 <contactref element="J1" pad="RX"/>
+<contactref element="U$1" pad="30"/>
+<wire x1="20.89" y1="14.34" x2="20.89" y2="26.09" width="0.4064" layer="1"/>
+<wire x1="20.89" y1="26.09" x2="21.3" y2="26.5" width="0.4064" layer="1"/>
+<wire x1="21.3" y1="26.5" x2="25" y2="26.5" width="0.4064" layer="1"/>
+<wire x1="25" y1="26.5" x2="25.4" y2="26.9" width="0.4064" layer="1"/>
+<wire x1="25.4" y1="26.9" x2="25.4" y2="30.94" width="0.4064" layer="1"/>
+<wire x1="25.4" y1="30.94" x2="25.34" y2="31" width="0.4064" layer="1"/>
 </signal>
 <signal name="TX">
 <contactref element="J1" pad="TX"/>
+<contactref element="U$1" pad="31"/>
+<wire x1="23.43" y1="14.34" x2="23.43" y2="24.53" width="0.4064" layer="1"/>
+<wire x1="23.43" y1="24.53" x2="23.8" y2="24.9" width="0.4064" layer="1"/>
+<wire x1="23.8" y1="24.9" x2="27" y2="24.9" width="0.4064" layer="1"/>
+<wire x1="27" y1="24.9" x2="27.8" y2="25.7" width="0.4064" layer="1"/>
+<wire x1="27.8" y1="25.7" x2="27.8" y2="30.92" width="0.4064" layer="1"/>
+<wire x1="27.8" y1="30.92" x2="27.88" y2="31" width="0.4064" layer="1"/>
+</signal>
+<signal name="RESET_BOOT">
+<contactref element="J1" pad="D10"/>
+<contactref element="RST-SW" pad="1"/>
+<wire x1="69.44" y1="60.3" x2="69.44" y2="62.66" width="0.4064" layer="16"/>
+<wire x1="69.44" y1="62.66" x2="68.9" y2="63.2" width="0.4064" layer="16"/>
+<wire x1="68.9" y1="63.2" x2="60.5" y2="63.2" width="0.4064" layer="16"/>
+<wire x1="60.5" y1="63.2" x2="60" y2="62.7" width="0.4064" layer="16"/>
+<wire x1="60" y1="62.7" x2="60" y2="57.1" width="0.4064" layer="16"/>
+<wire x1="60" y1="57.1" x2="59.6" y2="56.7" width="0.4064" layer="16"/>
+<wire x1="59.6" y1="56.7" x2="19.1" y2="56.7" width="0.4064" layer="16"/>
+<wire x1="19.1" y1="56.7" x2="18.6" y2="56.2" width="0.4064" layer="16"/>
+<wire x1="18.6" y1="56.2" x2="18.6" y2="25.6" width="0.4064" layer="16"/>
+<wire x1="18.6" y1="25.6" x2="19.1" y2="25.1" width="0.4064" layer="16"/>
+<wire x1="19.1" y1="25.1" x2="37.7" y2="25.1" width="0.4064" layer="16"/>
+<wire x1="37.7" y1="25.1" x2="38.2" y2="24.6" width="0.4064" layer="16"/>
+<wire x1="38.2" y1="24.6" x2="38.2" y2="18.5" width="0.4064" layer="16"/>
+<wire x1="38.2" y1="18.5" x2="38.7" y2="18" width="0.4064" layer="16"/>
+<wire x1="38.7" y1="18" x2="47.1" y2="18" width="0.4064" layer="16"/>
+<wire x1="47.1" y1="18" x2="47.5" y2="17.6" width="0.4064" layer="16"/>
+<wire x1="47.5" y1="17.6" x2="47.5" y2="14.4" width="0.4064" layer="16"/>
+<wire x1="47.5" y1="14.4" x2="47.56" y2="14.34" width="0.4064" layer="16"/>
+</signal>
+<signal name="RESET_PROG">
+<contactref element="J1" pad="RES"/>
+<contactref element="RST-SW" pad="3"/>
+<wire x1="51.37" y1="62.6" x2="51.37" y2="61.03" width="0.4064" layer="1"/>
+<wire x1="51.37" y1="61.03" x2="52.2" y2="60.2" width="0.4064" layer="1"/>
+<wire x1="52.2" y1="60.2" x2="64.26" y2="60.2" width="0.4064" layer="1"/>
+<wire x1="64.26" y1="60.2" x2="64.36" y2="60.3" width="0.4064" layer="1"/>
 </signal>
 </signals>
 </board>
