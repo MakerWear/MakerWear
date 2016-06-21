@@ -27,7 +27,7 @@
 
 #include <SignalProcessing.h>
 
-const uint8_t gamma[] = {
+const uint8_t PROGMEM gamma[] = {
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,
     1,  1,  1,  1,  1,  1,  1,  1,  1,  2,  2,  2,  2,  2,  2,  2,
@@ -45,6 +45,8 @@ const uint8_t gamma[] = {
   177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 };
 
+
+
 //Pin Configurations
 int input_pin = 3;                           //pin 2 on ATtiny
 int led_pin = 1;                             //pin 6 on ATtiny
@@ -56,7 +58,6 @@ void setup()
 {  
   pinMode(led_pin, OUTPUT);
   pinMode(input_pin, INPUT);
-  digitalWrite(input_pin, LOW);
 }
 
 void loop() 
@@ -67,7 +68,7 @@ void loop()
     input_val = 0;
   else if(input_val > 1023)
     input_val = 1023;*/
-         
-  analogWrite(led_pin, gamma[(int)(input_val/4)]);
+  int led_val = pgm_read_byte(&gamma[input_val/4]);
+  analogWrite(led_pin, led_val);
 }
 
