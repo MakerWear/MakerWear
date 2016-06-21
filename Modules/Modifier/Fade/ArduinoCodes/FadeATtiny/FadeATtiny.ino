@@ -18,6 +18,8 @@
 **  By Majeed Kazemitabaar
 **  Modified on 8/25/15.
 **  By Majeed Kazemitabaar
+**  Modified on 6/21/16  
+**  By Alex Jiao
 **
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
@@ -54,7 +56,9 @@ void loop()
 {
   int pot_value;
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 4, 1023);
-
+  pot_value = analogRead(potentiometer_pin);
+  fading_delay = cutAndMap(pot_value, 0, 1023, 50000/(900), 0);           //50000 experimentally determined
+  
   if(input_val > THRESH_HIGH){
     can_fade = 1;
   }
@@ -70,8 +74,8 @@ void loop()
   if(can_fade == 1 && low_detect == 1 && fading == 0){  //start fading   
     fading = 1;
     brightness = input_val;
-    pot_value = analogRead(potentiometer_pin);
-    fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/(4*input_val));           //50000 experimentally determined
+    /*pot_value = analogRead(potentiometer_pin);
+    fading_delay = cutAndMap(pot_value, 0, 1023, 50000/(4*input_val), 0);   */        //50000 experimentally determined
   }
   else if(can_fade == 1 && add_trigger == 1 && fading == 1){   //add brightness if HIGH input comes mid-fade
     brightness += add_value;
