@@ -50,7 +50,7 @@ const uint8_t PROGMEM gamma[] = {
 //Pin Configurations
 int input_pin = 3;                           //pin 2 on ATtiny
 int led_pin = 1;                             //pin 6 on ATtiny
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 25;                        //Noise reduction filter size
 
 SignalProcessing input(input_pin, filter_size);
 
