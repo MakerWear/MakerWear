@@ -17,7 +17,7 @@
 **
 **  Created on 8/10/15.
 **  By Majeed Kazemitabaar
-**  Modified on 8/25/15.
+**  Last modified and tested on 6/21/16.
 **  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
@@ -41,39 +41,49 @@ void setup()
   pinMode(blue_pin, OUTPUT);
 }
 
+int state = 0;
+int threshold = 10;
+  
 void loop() {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-
-  /*if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;*/
+  
     
   int red = LOW, green = LOW, blue = LOW;
   
   //We are only mapping 0-1023 from ADC to 0-255
-  int color_code = 0;// = map(input_val, 0, 1023, 0, 7);
   
   //int input_val = analogRead(input_pin);
   
-  if(input_val < 128)
-    color_code = 0;
-  else if(input_val > 128 && input_val <= 256)
-    color_code = 1;
-  else if(input_val > 256 && input_val <= 384)
-    color_code = 2;
-  else if(input_val > 384 && input_val <= 512)
-    color_code = 3;
-  else if(input_val > 512 && input_val <= 640)
-    color_code = 4;
-  else if(input_val > 640 && input_val <= 768)
-    color_code = 5;
-  else if(input_val > 768 && input_val <= 896)
-    color_code = 6;
-  else if(input_val > 896)
-    color_code = 7;
+  if(state == 0 && input_val > 128 + threshold)
+    state = 1;
+  else if(state == 1 && input_val < 128 - threshold)
+    state = 0;
+  else if(state == 1 && input_val > 256 + threshold)
+    state = 2;
+  else if(state == 2 && input_val < 256 - threshold)
+    state = 1;
+  else if(state == 2 && input_val > 384 + threshold)
+    state = 3;
+  else if(state == 3 && input_val < 384 - threshold)
+    state = 2;
+  else if(state == 3 && input_val > 512 + threshold)
+    state = 4;
+  else if(state == 4 && input_val < 512 - threshold)
+    state = 3;
+  else if(state == 4 && input_val > 640 + threshold)
+    state = 5;
+  else if(state == 5 && input_val < 640 - threshold)
+    state = 4;
+  else if(state == 5 && input_val > 768 + threshold)
+    state = 6;
+  else if(state == 6 && input_val < 768 - threshold)
+    state = 5;
+  else if(state == 6 && input_val > 896 + threshold)
+    state = 7;
+  else if(state == 7 && input_val < 896 - threshold)
+    state = 6;
   
-  switch(color_code)
+  switch(state)
   {
     case 0://black
       red = LOW, green = LOW, blue = LOW;
