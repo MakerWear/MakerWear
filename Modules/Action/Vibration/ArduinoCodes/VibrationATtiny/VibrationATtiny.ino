@@ -15,8 +15,8 @@
 **
 **  Created on 8/10/15.
 **  By Majeed Kazemitabaar
-**  Modified on 8/25/15.
-**  By Majeed Kazemitabaar
+**  Modified on 6/21/16.
+**  By Jason McPeak
 **
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
@@ -38,12 +38,7 @@ void setup()
 
 void loop() 
 {
-  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-
-  /*if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;*/
-    
+  /* map the value from 170 to 1023, because motor does not turn on until 170 */
+  int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 170, 1023);
   analogWrite(vibro_pin, input_val/4);
 }

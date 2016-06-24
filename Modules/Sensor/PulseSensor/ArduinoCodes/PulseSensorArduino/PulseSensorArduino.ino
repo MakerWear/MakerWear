@@ -28,7 +28,7 @@
 
 //  Variables
 int input_pin = A0;                  // module input
-int pulse_pin = A5;                  // Pulse Sensor purple wire connected to analog pin 0
+int pulse_pin = A1;                  // Pulse Sensor purple wire connected to analog pin 0
 int output_pin = 9;                  // module output
 int filter_size = 15;    
 
@@ -41,6 +41,7 @@ volatile int IBI = 600;             // int that holds the time interval between 
 volatile boolean Pulse = false;     // "True" when User's live heartbeat is detected. "False" when not a "live beat". 
 volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
 
+volatile int input_val;
 volatile boolean blinkFlag = false;
 
 void setup(){
@@ -49,10 +50,12 @@ void setup(){
 }
 
 
-int input_val;
+//int input_val;
 int output_val;
 void loop(){
-  input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  
+  //input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  //input_val = digitalRead(input_pin);
   if (QS == true){      // Quantified Self "QS" true when arduino finds a heartbeat
     QS = false;         // reset the Quantified Self flag for next time    
     if (blinkFlag) {
@@ -60,14 +63,15 @@ void loop(){
 
 
       output_val = cutAndMap(input_val, 0, 1023, 0, 255);
-      
+
       analogWrite(output_pin, output_val);
       delay(100);
-      analogWrite(output_pin, 0);
+      
       
     }
   }
-
+  analogWrite(output_pin, 0);
+  
 }
 
 

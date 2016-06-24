@@ -22,7 +22,7 @@
 **
 **  Created on 8/10/15.
 **  By Majeed Kazemitabaar
-**  Modified on 8/25/15.
+**  Last modified and tested on 6/21/16.
 **  By Majeed Kazemitabaar
 **
 **  MakerWear Link:
@@ -36,7 +36,7 @@
 //Pin Configurations
 int input_pin = 3;                           //pin 2 on ATtiny
 int buzzer_pin = 1;                          //pin 6 on ATtiny
-int filter_size = 15;                        //Noise reduction filter size
+int filter_size = 25;                        //Noise reduction filter size
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -45,33 +45,75 @@ void setup()
   pinMode(buzzer_pin, OUTPUT);
 }
 
+int state = 0;
+int threshold = 18;
+
 void loop() 
 {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  /*if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;*/
+  if(state == 0 && input_val > 128 + threshold)
+    state = 1;
+  else if(state == 1 && input_val < 128 - threshold)
+    state = 0;
+  else if(state == 1 && input_val > 256 + threshold)
+    state = 2;
+  else if(state == 2 && input_val < 256 - threshold)
+    state = 1;
+  else if(state == 2 && input_val > 384 + threshold)
+    state = 3;
+  else if(state == 3 && input_val < 384 - threshold)
+    state = 2;
+  else if(state == 3 && input_val > 512 + threshold)
+    state = 4;
+  else if(state == 4 && input_val < 512 - threshold)
+    state = 3;
+  else if(state == 4 && input_val > 640 + threshold)
+    state = 5;
+  else if(state == 5 && input_val < 640 - threshold)
+    state = 4;
+  else if(state == 5 && input_val > 768 + threshold)
+    state = 6;
+  else if(state == 6 && input_val < 768 - threshold)
+    state = 5;
+  else if(state == 6 && input_val > 896 + threshold)
+    state = 7;
+  else if(state == 7 && input_val < 896 - threshold)
+    state = 6;
     
-  //TODO: Change it to a map function + switch/case to make it more scalable.
-  
-  if (input_val < 128){
-     noTinyTone();
-  } else if (input_val > 128 && input_val <= 256){
-     tinyTone(Note_C, 6);
-  } else if (input_val > 256 && input_val <= 384){
-    tinyTone(Note_D, 6);
-  } else if (input_val > 384 && input_val <= 512){
-    tinyTone(Note_E, 6);
-  } else if (input_val > 512 && input_val <= 640){
-    tinyTone(Note_F, 6);
-  } else if (input_val > 640 && input_val <= 768){
-    tinyTone(Note_G, 6);
-  } else if (input_val > 768 && input_val <= 896){
-    tinyTone(Note_A, 6);
-  } else if (input_val > 896){
-    tinyTone(Note_B, 6);
+  switch(state)
+  {
+    case 0:
+      noTinyTone();
+      break;
+    
+    case 1:
+      tinyTone(Note_C, 6);
+      break;
+
+    case 2:
+      tinyTone(Note_D, 6);
+      break;
+
+    case 3:
+      tinyTone(Note_E, 6);
+      break;
+
+    case 4:
+      tinyTone(Note_F, 6);
+      break;
+
+    case 5:
+      tinyTone(Note_G, 6);
+      break;
+
+    case 6:
+      tinyTone(Note_A, 6);
+      break;
+
+    case 7:
+      tinyTone(Note_B, 6);
+      break;
   }
 }
 
