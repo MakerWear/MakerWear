@@ -60,21 +60,28 @@ void setup() {
   pinMode(input_pin, INPUT);
 }
 
-int input_val;
-int number; 
-// the loop function runs over and over again forever
+int input_val;      // input value from previous module
+int number;         // current number being displayed
+int change_val;     // value on last state change
+
 void loop() {
   input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int pos = cutAndMap(input_val, 0, 1023, 0, 180);
 
-  number = cutAndMap(input_val, 0, 1023, 0, 9);
+  // only change the number if the value is significantly different from when it was last changed
+  if (abs(change_val - input_val) > 50) {
+    number = input_val / 105;               //using 105 will map 0-1023 to 0-9
+    change_val = input_val;
+  }
+  
   write_digit(number);
 }
 
+/* writes the specified digit to the display */
 void write_digit(int digit) {
   write_pattern(digit_patterns[digit]);
 }
 
+/* writes the specified anode pattern to the segments */ 
 void write_pattern(const bool* segments) {
   for (int i = 0; i < 7; i++) {
     if (segments[i] == true) {
