@@ -26,7 +26,7 @@ void interruptSetup(){
 // Timer 2 makes sure that we take a reading every 2 miliseconds
 ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts to 124
   cli();                                      // disable interrupts while we do this
-  Signal = analogRead(pulse_pin);              // read the Pulse Sensor 
+  Signal = analogRead(pulse_pin);             // read the Pulse Sensor 
   sampleCounter += 2;                         // keep track of the time in mS with this variable
   int N = sampleCounter - lastBeatTime;       // monitor the time since the last beat to avoid noise
 
@@ -100,6 +100,10 @@ ISR(TIMER2_COMPA_vect){                         // triggered when Timer2 counts 
   }
 
   sei();                                   // enable interrupts when youre done!
+
+  //read the input value here so the ADC is not interrupted!
+  input_val = analogRead(input_pin);//cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  
 }// end isr
 
 
