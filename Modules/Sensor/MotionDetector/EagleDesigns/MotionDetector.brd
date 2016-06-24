@@ -2217,7 +2217,7 @@
 <text x="3.4544" y="11.9888" size="0.6" layer="21">VCC</text>
 <text x="22.3901" y="11.9126" size="0.6" layer="21">GND</text>
 <text x="7.3279" y="19.4056" size="0.6" layer="21">SDA</text>
-<text x="18.4912" y="19.4691" size="0.6" layer="21">SCK</text>
+<text x="18.4912" y="19.4691" size="0.6" layer="21">SCL</text>
 <text x="15.24" y="20.193" size="0.8" layer="22" rot="MR0">MW-V3</text>
 <text x="9.0678" y="11.0617" size="0.8" layer="21">Movement Sensor</text>
 </plain>

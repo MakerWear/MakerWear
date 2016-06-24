@@ -17,7 +17,7 @@
 **
 **  Created on 01/25/16.
 **  By Majeed Kazemitabaar
-**  Modified on 06/07/16
+**  Last modified and tested on 06/22/16
 **
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
@@ -53,9 +53,8 @@ int findColorIndex(int rgb_val[])
   return best_color;
 }
 
-void setup() {
-  pinMode(input_pin, INPUT);
-
+void setup()
+{
   byte black[3] = {85, 85, 65};
   byte blue[3] = {45, 75, 120};
   byte cyan[3] = {55, 130, 135};
@@ -73,12 +72,15 @@ void setup() {
   meanRGB[5][0] = red[0];  meanRGB[5][1] = red[1];  meanRGB[5][2] = red[2];
   meanRGB[6][0] = magenta[0];  meanRGB[6][1] = magenta[1];  meanRGB[6][2] = magenta[2];
   meanRGB[7][0] = white[0];  meanRGB[7][1] = white[1];  meanRGB[7][2] = white[2];
+  
+  sensor.begin();
+  sensor.setInterrupt(true);  // turn off LED
 }
 
 void loop() {
   uint16_t clear, red, green, blue;
 
-  if (digitalRead(input_pin))
+  if (analogRead(input_pin) > 900)
   {
     sensor.setInterrupt(false); // turn on LED
     delay(55);  // takes 50ms to read
