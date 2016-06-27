@@ -1,3 +1,5 @@
+
+
 /*
 **  ModuleNameATmega.ino
 **  MakerWear ModuleName Module's ATmega Program.
@@ -37,11 +39,58 @@
 
 #include <IRremote.h>
 
-int input_pin = A0;                              //pin 23 on ATmega328
-int filter_size = 25;                        //Noise reduction filter size                        
 //Library automatically uses D3 to send signal
+int input_pin = A0;                              //pin 23 on ATmega328
+const int SIZE = 15;                        //Noise reduction filter size                        
 
-SignalProcessing input(input_pin, filter_size);
+int queue[SIZE];
+int qHead = 0, qTail = 0;
+
+void enqueue(int new_val)
+{
+  if(qHead == (qTail + 1) % SIZE)
+  {
+    dequeue();
+    queue[qTail] = new_val;
+    qTail = (qTail + 1) % SIZE;
+  }
+  else
+  {
+    queue[qTail] = new_val;
+    qTail = (qTail + 1) % SIZE;
+  }
+}
+
+int dequeue()
+{
+  int val;
+  
+  if(qHead == qTail)
+  {
+    //whoops! should never happen
+  }
+  
+  val = queue[qHead];
+  qHead = (qHead + 1) % SIZE;
+
+  return val;
+}
+
+int AveragedAnalogRead(int pinNumber)
+{
+  int new_val = analogRead(pinNumber);
+
+  enqueue(new_val);
+
+  int avg_val = 0;
+
+  for(int i = 0; i < SIZE; i++)
+  {
+    avg_val += queue[i];
+  }
+
+  return avg_val/SIZE;
+}
 
 IRsend irsend;
 
@@ -52,7 +101,11 @@ void setup()
 
 void loop()
 {
- int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+   int input_val = AveragedAnalogRead(input_pin);
+   input_val = map(input_val, 50, 975, 0, 1023);
+   
+   if(input_val < 0) input_val = 0;
+   else if(input_val > 1023) input_val = 1023;
     
    if(input_val < 128)
     sendIR(0x111);
