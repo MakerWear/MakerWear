@@ -35,49 +35,49 @@
 **
 */
 
-//#include <FilteredAnalogInput.h>
-#include <IRremote2.h>
+#include <SignalProcessing.h>
+#include <IRremote.h>
 
 int input_pin = A0;                              //pin 23 on ATmega328
-int filter_size = 15;                        //Noise reduction filter size
-//int ir_pin = 11;                            //pin 17 on ATmega328
+int filter_size = 25;                        //Noise reduction filter size                        
 //Library automatically uses D3 to send signal
 
-//FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 IRsend irsend;
 
 void setup()
 {
-  Serial.begin(9600);
+  //Serial.begin(9600);
 }
 
 void loop()
 {
- int input_val = analogRead(input_pin);
+ int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
     
    if(input_val < 128)
-    sendIR(0x001,12);
+    sendIR(0x111);
    else if(input_val > 128 && input_val <= 256)
-    sendIR(0x002,12);
+    sendIR(0x222);
    else if(input_val > 256 && input_val <= 384)
-    sendIR(0x004,12);
+    sendIR(0x444);
    else if(input_val > 384 && input_val <= 512)
-    sendIR(0x008,12);
+    sendIR(0x666);
    else if(input_val > 512 && input_val <= 640)
-    sendIR(0x010,12);
+    sendIR(0x888);
    else if(input_val > 640 && input_val <= 768)
-    sendIR(0x020,12);
+    sendIR(0xAAA);
    else if(input_val > 768 && input_val <= 896)
-    sendIR(0x040,12);
+    sendIR(0xCCC);
    else if(input_val > 896)
-    sendIR(0x080,12);
+    sendIR(0xEEE);
 }
 
-void sendIR(unsigned long hex, int nbits){
-    for (int i = 0; i < 3; i++) {
-      irsend.sendSony(hex, nbits); // Sony TV power code
+void sendIR(unsigned int hex){
+    const int nbits = 12;
+    for(int i = 0; i<3; i++){
+      irsend.sendSony(hex,nbits);
       delay(40);
     }
-    Serial.println(hex,HEX);
+  
 }
