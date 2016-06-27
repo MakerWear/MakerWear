@@ -22,7 +22,7 @@
 **  Pin 11 (D5/PWM):                         Pin 18  (D12):
 **  Pin 12 (D6/PWM):                         Pin 17  (D11/PWM):
 **  Pin 13 (D7):                             Pin 16  (D10/PWM):
-**  Pin 14 (D8):                             Pin 15  (D9/PWM):
+**  Pin 14 (D8):                             Pin 15  (D9/PWM):   Module Output
 **
 **
 **  Created on xx/yy/zz.
@@ -45,12 +45,11 @@ int input_pin = A0;                         //pin 23 on ATmega328
 int filter_size = 15;                       //Noise reduction filter size
 int output_pin = 9;                         //pin PB1 (OC1A) PWM
 
-FilteredAnalogInput input(input_pin, filter_size);
+SignalProcessing input(input_pin, filter_size);
 
 void setup()
 {
   mlx.begin();
-  Serial.begin(9600);
 }
 
 void loop()
@@ -58,6 +57,10 @@ void loop()
     int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
 
-    int temperature = mlx.readObjectTempC();
-    Serial.println(temperature);
+    int temperature = mlx.readObjectTempF();
+
+    //mapping everything to: 32F - 150F
+    
+    int output_val = cutAndMap(temperature, 32, 150, 0, 255);
+    analogWrite(output_pin, output_val);
 }
