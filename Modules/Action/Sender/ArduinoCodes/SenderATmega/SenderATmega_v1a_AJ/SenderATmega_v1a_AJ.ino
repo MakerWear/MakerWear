@@ -1,3 +1,4 @@
+
 /*
 **  ModuleNameATmega.ino
 **  MakerWear ModuleName Module's ATmega Program.
@@ -34,7 +35,6 @@
 **  Github Link:      github.com/myjeeed/MakerWear
 **
 */
-
 #include <SignalProcessing.h>
 #include <IRremote.h>
 
