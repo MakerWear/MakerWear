@@ -59,11 +59,11 @@ void loop()
 {
  //shouldn't do anything when input voltage is 0
  
-  /*if(cutAndMap(input.filteredAnalogRead(AVERAGE),50,975,0,1023) < 1){
+  if(cutAndMap(input.filteredAnalogRead(AVERAGE),50,975,0,1023) <= 1){
     output_val = 0;
-  }*/
+  }
   
-  /*else*/ if (irrecv.decode(&results)) {
+  else if (irrecv.decode(&results)) {
     Serial.println(results.value,HEX);
     
     switch(results.value){
@@ -95,14 +95,8 @@ void loop()
         output_val = 6 * 32 + 16;
         break;
 
-      case 0xEEEs:
+      case 0xEEE:
         output_val = 255;
-        break;
-      
-      default:
-        digitalWrite(output_pin, HIGH);
-        delay(1000);
-        digitalWrite(output_pin, LOW);
         break;
     }
     //Serial.println(output_val);
