@@ -51,33 +51,38 @@ void setup()
   //Serial.begin(9600);
 }
 
+int prev_val = 1029;
+
 void loop()
 {
- int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-    
-   if(input_val < 128)
-    sendIR(0x111);
-   else if(input_val > 128 && input_val <= 256)
-    sendIR(0x222);
-   else if(input_val > 256 && input_val <= 384)
-    sendIR(0x444);
-   else if(input_val > 384 && input_val <= 512)
-    sendIR(0x666);
-   else if(input_val > 512 && input_val <= 640)
-    sendIR(0x888);
-   else if(input_val > 640 && input_val <= 768)
-    sendIR(0xAAA);
-   else if(input_val > 768 && input_val <= 896)
-    sendIR(0xCCC);
-   else if(input_val > 896)
-    sendIR(0xEEE);
+   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+     if(input_val <= 128)
+      code = 0x111;
+     else if(input_val > 128 && input_val <= 256)
+      code = 0x222;
+     else if(input_val > 256 && input_val <= 384)
+      code = 0x444;
+     else if(input_val > 384 && input_val <= 512)
+      code = 0x666;
+     else if(input_val > 512 && input_val <= 640)
+      code = 0x888;
+     else if(input_val > 640 && input_val <= 768)
+      code = 0xAAA;
+     else if(input_val > 768 && input_val <= 896)
+      code = 0xCCC;
+     else if(input_val > 896)
+      code = 0xEEE;
+
+     sendIR(code);
+   }
+   
 }
 
 void sendIR(unsigned int hex){
     const int nbits = 12;
-    for(int i = 0; i<3; i++){
+    for(int i = 0; i < 3; i++){
       irsend.sendSony(hex,nbits);
       delay(40);
     }
-  
+ 
 }
