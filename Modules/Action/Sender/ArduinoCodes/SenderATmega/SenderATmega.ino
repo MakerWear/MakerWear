@@ -39,7 +39,8 @@
 #include <IRremote.h>
 
 int input_pin = A0;                              //pin 23 on ATmega328
-int filter_size = 25;                        //Noise reduction filter size                        
+//TODO: this needs to be fixed!
+int filter_size = 5;                        //Noise reduction filter size                        
 //Library automatically uses D3 to send signal
 
 SignalProcessing input(input_pin, filter_size);
@@ -51,38 +52,94 @@ void setup()
   //Serial.begin(9600);
 }
 
-int prev_val = 1029;
+int state = 0;
+int prev_state = 0;
+int threshold = 10;
+int code = 0;
 
 void loop()
 {
    int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-     if(input_val <= 128)
-      code = 0x111;
-     else if(input_val > 128 && input_val <= 256)
-      code = 0x222;
-     else if(input_val > 256 && input_val <= 384)
-      code = 0x444;
-     else if(input_val > 384 && input_val <= 512)
-      code = 0x666;
-     else if(input_val > 512 && input_val <= 640)
-      code = 0x888;
-     else if(input_val > 640 && input_val <= 768)
-      code = 0xAAA;
-     else if(input_val > 768 && input_val <= 896)
-      code = 0xCCC;
-     else if(input_val > 896)
-      code = 0xEEE;
-
-     sendIR(code);
-   }
    
+  if(state == 0 && input_val > 128 + threshold)
+    state = 1;
+  else if(state == 1 && input_val < 128 - threshold)
+    state = 0;
+  else if(state == 1 && input_val > 256 + threshold)
+    state = 2;
+  else if(state == 2 && input_val < 256 - threshold)
+    state = 1;
+  else if(state == 2 && input_val > 384 + threshold)
+    state = 3;
+  else if(state == 3 && input_val < 384 - threshold)
+    state = 2;
+  else if(state == 3 && input_val > 512 + threshold)
+    state = 4;
+  else if(state == 4 && input_val < 512 - threshold)
+    state = 3;
+  else if(state == 4 && input_val > 640 + threshold)
+    state = 5;
+  else if(state == 5 && input_val < 640 - threshold)
+    state = 4;
+  else if(state == 5 && input_val > 768 + threshold)
+    state = 6;
+  else if(state == 6 && input_val < 768 - threshold)
+    state = 5;
+  else if(state == 6 && input_val > 896 + threshold)
+    state = 7;
+  else if(state == 7 && input_val < 896 - threshold)
+    state = 6;
+  
+  switch(state)
+  {
+    case 0:
+      code = 0x111;
+    break;
+    
+    case 1:
+      code = 0x222;
+    break;
+    
+    case 2:
+      code = 0x444;
+    break;
+    
+    case 3:
+      code = 0x666;
+    break;
+    
+    case 4:
+      code = 0x888;
+    break;
+    
+    case 5:
+      code = 0xAAA;
+    break;
+    
+    case 6:
+      code = 0xCCC;
+    break;
+    
+    case 7:
+      code = 0xEEE;
+    break;    
+  }
+//
+//  if(prev_state != state)
+//  {
+//    prev_state = state;
+//    
+//  }
+
+  sendIR(code);
 }
 
 void sendIR(unsigned int hex){
     const int nbits = 12;
-    for(int i = 0; i < 3; i++){
+    
+    for(int i = 0; i < 3; i++)
+    {
       irsend.sendSony(hex,nbits);
       delay(40);
     }
- 
 }
