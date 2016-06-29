@@ -40,7 +40,7 @@
 
 int input_pin = A0;                              //pin 23 on ATmega328
 //TODO: this needs to be fixed!
-int filter_size = 5;                        //Noise reduction filter size                        
+int filter_size = 7;                        //Noise reduction filter size                        
 //Library automatically uses D3 to send signal
 
 SignalProcessing input(input_pin, filter_size);
@@ -54,7 +54,7 @@ void setup()
 
 int state = 0;
 int prev_state = 0;
-int threshold = 10;
+int threshold = 15;
 int code = 0;
 
 void loop()
