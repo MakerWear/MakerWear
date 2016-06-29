@@ -46,6 +46,8 @@ void setup()
   myservo.attach(servo_pin);
 }
 
+int prev_pos = 0;
+
 void loop()
 {
     int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
@@ -55,7 +57,9 @@ void loop()
       input_val = 1023;*/
 
     int pos = cutAndMap(input_val, 0, 1023, 0, 180);
-
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
+    if (abs(pos - prev_pos) > 10) {    // only move if change is more than 10
+      prev_pos = pos;
+      myservo.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(15);                       // waits 15ms for the servo to reach the position
+    }
 }
