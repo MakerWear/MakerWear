@@ -57,9 +57,8 @@ void setup()
 int output_val = 0;
 void loop()
 {
- //shouldn't do anything when input voltage is 0
  
-  if(cutAndMap(input.filteredAnalogRead(AVERAGE),50,975,0,1023) <= 1){
+  if(cutAndMap(input.filteredAnalogRead(AVERAGE),50,975,0,1023) <= 1){        //shouldn't do anything when input voltage is 0
     output_val = 0;
   }
   
