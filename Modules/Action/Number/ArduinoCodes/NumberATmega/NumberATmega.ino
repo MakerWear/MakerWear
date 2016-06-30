@@ -32,7 +32,7 @@
 
 #include <SignalProcessing.h>
 
-int display[7] = {6,5,7,8,9,10,11};           // Pins for Segments A-G
+int display[7] = {10,9,0,1,2,8,5};           // Pins for Segments A-G
 int input_pin = A0;                           // pin 23 on ATmega328
 int filter_size = 15;                         // Noise reduction filter size
 
