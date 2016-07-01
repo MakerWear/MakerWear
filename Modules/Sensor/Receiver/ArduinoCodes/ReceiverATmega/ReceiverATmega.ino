@@ -27,8 +27,8 @@
 **
 **  Created on 6/8/16.
 **  By Alex Jiao
-**  Modified on   
-**  By
+**  Modified on 6/30/16
+**  By Jason McPeak
 **
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
@@ -38,23 +38,22 @@
 #include <SignalProcessing.h>
 #include <IRremote.h>
 
-int input_pin = A0;                              //pin 23 on ATmega328
-int filter_size = 15;                        //Noise reduction filter size
-int ir_pin = 8;                               //D8 which is pin 14 on ATmega
-int output_pin = 9;                          //pin 15 on ATmega
+int input_pin = A0;       // pin 23 on ATmega328
+int filter_size = 15;     // Noise reduction filter size
+int ir_pin = 8;           // D8 which is pin 14 on ATmega
+int output_pin = 9;       // pin 15 on ATmega
 
 SignalProcessing input(input_pin, filter_size);
 
-IRrecv irrecv(ir_pin);
+IRrecv irrecv(ir_pin);    // uses interrupt to check for incoming tranmissions
+decode_results results;   // object where interrupt stores results
 
-decode_results results;
-void setup()
-{
- Serial.begin(9600);
-   irrecv.enableIRIn(); // Start the receiver
+void setup() {
+  irrecv.enableIRIn();    // Start the receiver
 }
 
 int output_val = 0;
+<<<<<<< HEAD
 void loop()
 {
  
@@ -89,18 +88,26 @@ void loop()
       case 0xAAA:
         output_val = 5 * 32 + 16;
         break;
+=======
+int data;
+>>>>>>> origin/version-1.2
 
-      case 0xCCC:
-        output_val = 6 * 32 + 16;
-        break;
-
-      case 0xEEE:
-        output_val = 255;
-        break;
+void loop() {  
+  if (irrecv.decode(&results)) {
+    data = results.value;
+    
+    // check that data is the correct length
+    if ((results.bits > 0) && (results.bits <= 12)) {
+      output_val = (data & 0x3FF)/4;
     }
-    //Serial.println(output_val);
+    
     irrecv.resume(); // Receive the next value
   }
-  //delay(100);
-  analogWrite(output_pin, output_val);
+
+  // shouldn't do anything when input voltage is 0
+  if(cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023) <= 15)
+    analogWrite(output_pin, 0);
+  else
+    analogWrite(output_pin, output_val);
+    
 }
