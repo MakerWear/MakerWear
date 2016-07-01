@@ -59,7 +59,7 @@ void loop() {
   int amplitude = input_val/4;
   int pot_val = analogRead(pot_pin);
   int freq = cutAndMap(pot_val, 0, 1023, 1, 30);
-  int output_val = 
+  int output_val = cutAndMap(sawtooth(), 0, 232, 0, amplitude);
   
   analogWrite(output_pin, output_val);
   delay(freq);
