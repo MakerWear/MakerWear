@@ -22,14 +22,6 @@
 */
 #include <SignalProcessing.h>
 
-int input_pin = 3;                           //Pin 2 on ATtiny
-int pot_pin = 2;
-int output_pin = 1;                          //Pin 6 on ATtiny
-int filter_size = 5;                        //Noise reduction filter size
-int i = 0;
-
-SignalProcessing input(input_pin, filter_size);
-
 const uint8_t PROGMEM sinTable[] = {
 127,130,133,136,139,143,146,149,152,155,158,161,164,167,170,173,176,178,181,184,187,190,192,195,198,200,203,205,208,210,212,215,
 217,219,221,223,225,227,229,231,233,234,236,238,239,240,242,243,244,245,247,248,249,249,250,251,252,252,253,253,253,254,254,254,
@@ -40,6 +32,18 @@ const uint8_t PROGMEM sinTable[] = {
 33,35,37,39,42,44,46,49,51,54,56,59,62,64,67,70,73,76,78,81,84,87,90,93,96,99,102,105,108,111,115,118,121,124
 };
 
+int input_pin = 3;                           //Pin 2 on ATtiny
+int pot_pin = 2;
+int output_pin = 1;                          //Pin 6 on ATtiny
+int filter_size = 5;                        //Noise reduction filter size
+int i = 0;
+unsigned long interval = 1000;
+unsigned long previousMillis = 0;
+int min_period = 25;
+int max_period = 1000;
+int output_val = 0;
+
+SignalProcessing input(input_pin, filter_size);
 
 void setup() {
   pinMode(output_pin, OUTPUT);
@@ -52,14 +56,17 @@ void loop() {
     i = 0;
   }
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int amplitude = input_val/4;
   int pot_val = analogRead(pot_pin);
-  int freq = cutAndMap(pot_val, 0, 1023, 1, 30);
-  int output_val = cutAndMap(pgm_read_byte(&sinTable[i++]), 0, 254, 0, amplitude);
+
+  int amplitude = input_val/4;
+  interval = map(pot_val, 0, 1023, max_period, min_period);   //need second map because input_val is used below
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval){
+    output_val = cutAndMap(pgm_read_byte(&sinTable[i++]), 0, 254, 0, amplitude);
+  }
   
   analogWrite(output_pin, output_val);
- 
-  delay(freq);
 }
 
 
