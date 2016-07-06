@@ -30,7 +30,7 @@ const uint8_t PROGMEM sinTable[] = {
 127,124,121,118,115,111,108,105,102,99,96,93,90,87,84,81,78,76,73,70,67,64,62,59,56,54,51,49,46,44,42,39,37,35,33,31,29,27,25,23,
 21,20,18,16,15,14,12,11,10,9,7,6,5,5,4,3,2,2,1,1,1,0,0,0,0,0,0,0,1,1,1,2,2,3,4,5,5,6,7,9,10,11,12,14,15,16,18,20,21,23,25,27,29,31,
 33,35,37,39,42,44,46,49,51,54,56,59,62,64,67,70,73,76,78,81,84,87,90,93,96,99,102,105,108,111,115,118,121,124
-};
+};                                            //table holding all sine values
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int pot_pin = 2;
@@ -52,7 +52,7 @@ void setup() {
 
 void loop() {
   
-  if(i >= 256){
+  if(i >= 256){                  //table has 256 values, reset i to 0 to simulate periodicity
     i = 0;
   }
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
@@ -63,9 +63,10 @@ void loop() {
   unsigned long currentMillis = millis();
 
   if (currentMillis - previousMillis >= interval){
-    output_val = cutAndMap(pgm_read_byte(&sinTable[i++]), 0, 254, 0, amplitude);
+    output_val = cutAndMap(pgm_read_byte(&sinTable[i++]), 0, 254, 0, amplitude);     //get next value from table and output it.  254 because that is the largest value in the table
+    previousMillis = currentMillis;                             // save the last time you changed values
   }
-  
+  //if it is not time to change values, output will remain the same
   analogWrite(output_pin, output_val);
 }
 
