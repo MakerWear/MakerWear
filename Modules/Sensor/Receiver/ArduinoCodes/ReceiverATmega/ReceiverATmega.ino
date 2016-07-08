@@ -53,44 +53,7 @@ void setup() {
 }
 
 int output_val = 0;
-<<<<<<< HEAD
-void loop()
-{
- 
-  if(cutAndMap(input.filteredAnalogRead(AVERAGE),50,975,0,1023) <= 1){        //shouldn't do anything when input voltage is 0
-    output_val = 0;
-  }
-  
-  else if (irrecv.decode(&results)) {
-    Serial.println(results.value,HEX);
-    
-    switch(results.value){
-      case 0x111:
-        output_val = 0;
-        break;
-        
-      case 0x222:
-        output_val = 1 * 32 + 16;
-        break;
-        
-      case 0x444:
-        output_val = 2 * 32 + 16;
-        break;
-
-      case 0x666:
-        output_val = 3 * 32 + 16;
-        break;
-
-      case 0x888:
-        output_val = 4 * 32 + 16;
-        break;
-
-      case 0xAAA:
-        output_val = 5 * 32 + 16;
-        break;
-=======
 int data;
->>>>>>> origin/version-1.2
 
 void loop() {  
   if (irrecv.decode(&results)) {
