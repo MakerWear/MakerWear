@@ -62,5 +62,10 @@ void loop()
     //mapping everything to: 32F - 150F
     
     int output_val = cutAndMap(temperature, 32, 150, 0, 255);
-    analogWrite(output_pin, output_val);
+    
+    // shouldn't do anything when input voltage is 0
+    if(cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023) <= 15)
+      analogWrite(output_pin, 0);
+    else
+      analogWrite(output_pin, output_val);
 }
