@@ -35,6 +35,7 @@
 int display[7] = {10,9,0,1,2,8,5};           // Pins for Segments A-G
 int input_pin = A0;                           // pin 23 on ATmega328
 int filter_size = 15;                         // Noise reduction filter size
+int threshold = 25;
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -68,7 +69,7 @@ void loop() {
   input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
   // only change the number if the value is significantly different from when it was last changed
-  if (abs(change_val - input_val) > 50) {
+  if (abs(change_val - input_val) > threshold) {
     number = input_val / 105;               //using 105 will map 0-1023 to 0-9
     change_val = input_val;
   }
