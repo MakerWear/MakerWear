@@ -1,4 +1,3 @@
-
 /*
 **  ModuleNameATmega.ino
 **  MakerWear ModuleName Module's ATmega Program.
@@ -23,46 +22,45 @@
 **  Pin 11 (D5/PWM):                         Pin 18  (D12):
 **  Pin 12 (D6/PWM):                         Pin 17  (D11/PWM):
 **  Pin 13 (D7):                             Pin 16  (D10/PWM):
-**  Pin 14 (D8):                             Pin 15  (D9/PWM):
+**  Pin 14 (D8):                             Pin 15  (D9/PWM):   Module Output
 **
 **
-**  Created on 6/8/16.
-**  By Alex Jiao
-**  Modified on 6/30/16
-**  By Jason McPeak
+**  Created on xx/yy/zz.
+**  By Akbar Akbari
+**  Modified on xx/yy/zz.
+**  By Asghar Asghari
 **
 **  MakerWear Link:
 **  Github Link:      github.com/myjeeed/MakerWear
 **
 */
-#include <SignalProcessing.h>
-#include <IRremote.h>
 
-const int input_pin = A0;       // pin 23 on ATmega328
-const int filter_size = 10;     // Noise reduction filter size                        
-unsigned int code = 0;          // IR code to transmit
+#include <SignalProcessing.h>
+#include <Wire.h>
+#include <Adafruit_MLX90614.h>
+
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
+
+int input_pin = A0;                         //pin 23 on ATmega328
+int filter_size = 15;                       //Noise reduction filter size
+int output_pin = 9;                         //pin PB1 (OC1A) PWM
 
 SignalProcessing input(input_pin, filter_size);
 
-IRsend irsend;                  //Library automatically uses D3 to send signal
-
-void setup() {
-
+void setup()
+{
+  mlx.begin();
 }
 
-void loop() {
+void loop()
+{
+    int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  int input_val = constrain(input.filteredAnalogRead(AVERAGE),0,1023);
 
-  // this will send a hex code between 0x000 and 0x3FF
-  irsend.sendRC5(input_val, 12);
-  delay(10);
+    int temperature = mlx.readObjectTempF();
 
-  // delay extra when the value is close to zero, because lower values are harder for the reciever to 
-  // decode for some strange reason
-  if (input_val < 100) {
-    delay(40);
-  }
-  
-}              
-
+    //mapping everything to: 32F - 150F
+    
+    int output_val = cutAndMap(temperature, 32, 150, 0, 255);
+    analogWrite(output_pin, output_val);
+}

@@ -2202,8 +2202,8 @@
 <wire x1="5.39964375" y1="12.2703625" x2="5.39633125" y2="12.4011625" width="0" layer="21"/>
 <wire x1="5.39633125" y1="12.4011625" x2="5.395496875" y2="12.46676875" width="0" layer="21"/>
 <wire x1="5.395496875" y1="12.46676875" x2="5.395496875" y2="12.53256875" width="0" layer="21"/>
-<text x="21.336" y="12.3571" size="0.6" layer="21">VCC</text>
-<text x="2.9845" y="12.2936" size="0.6" layer="21">GND</text>
+<text x="21.336" y="12.3571" size="0.6" layer="21">GND</text>
+<text x="2.9845" y="12.2936" size="0.6" layer="21">VCC</text>
 <text x="6.9088" y="19.5834" size="0.6" layer="21">SDA</text>
 <text x="17.4371" y="19.5961" size="0.6" layer="21">SCK</text>
 <text x="14.5542" y="20.7391" size="0.8" layer="22" rot="MR0">MW-V3</text>
