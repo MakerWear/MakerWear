@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.6.0">
+<eagle version="7.3.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -1514,6 +1514,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="J2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J1" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 </parts>
 <sheets>
@@ -1524,7 +1525,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="JP1" gate="G$1" x="5.08" y="5.08"/>
 <instance part="SUPPLY1" gate="G$1" x="40.64" y="27.94"/>
 <instance part="GND1" gate="1" x="40.64" y="-17.78"/>
-<instance part="J1" gate="G$1" x="58.42" y="5.08"/>
+<instance part="J2" gate="G$1" x="71.12" y="5.08"/>
+<instance part="J1" gate="G$1" x="124.46" y="5.08"/>
 </instances>
 <busses>
 </busses>
@@ -1548,8 +1550,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </segment>
 <segment>
 <pinref part="J1" gate="G$1" pin="1"/>
-<wire x1="66.04" y1="5.08" x2="73.66" y2="5.08" width="0.1524" layer="91"/>
-<label x="74.422" y="4.064" size="1.778" layer="95"/>
+<wire x1="132.08" y1="5.08" x2="144.78" y2="5.08" width="0.1524" layer="91"/>
+<junction x="144.78" y="5.08"/>
+<label x="137.16" y="5.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SIN" class="0">
@@ -1558,6 +1561,12 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="10.16" y1="10.16" x2="35.56" y2="10.16" width="0.1524" layer="91"/>
 <label x="17.78" y="10.16" size="1.778" layer="95"/>
 <junction x="35.56" y="10.16"/>
+</segment>
+<segment>
+<pinref part="J2" gate="G$1" pin="2"/>
+<wire x1="78.74" y1="7.62" x2="91.44" y2="7.62" width="0.1524" layer="91"/>
+<junction x="91.44" y="7.62"/>
+<label x="83.82" y="7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SOUT" class="0">
@@ -1568,9 +1577,16 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <junction x="35.56" y="2.54"/>
 </segment>
 <segment>
+<pinref part="J2" gate="G$1" pin="1"/>
+<wire x1="78.74" y1="5.08" x2="91.44" y2="5.08" width="0.1524" layer="91"/>
+<junction x="91.44" y="5.08"/>
+<label x="83.82" y="5.08" size="1.778" layer="95"/>
+</segment>
+<segment>
 <pinref part="J1" gate="G$1" pin="2"/>
-<wire x1="66.04" y1="7.62" x2="73.66" y2="7.62" width="0.1524" layer="91"/>
-<label x="74.168" y="6.858" size="1.778" layer="95"/>
+<wire x1="132.08" y1="7.62" x2="144.78" y2="7.62" width="0.1524" layer="91"/>
+<junction x="144.78" y="7.62"/>
+<label x="137.16" y="7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
