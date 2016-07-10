@@ -29,6 +29,7 @@
 
 int input_pin = 3;                           //Pin 2 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
+int pot_pin = 2;
 int filter_size = 2;                        //Noise reduction filter size
 int min_period = 25;
 int max_period = 1000;
@@ -48,13 +49,9 @@ void setup()
 void loop()
 {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  
-  /*if(input_val < 0)
-    input_val = 0;
-  else if(input_val > 1023)
-    input_val = 1023;*/
+  int pot_val = analogRead(pot_pin);
 
-  interval = map(input_val, 0, 1023, max_period, min_period);   //need second map because input_val is used below
+  interval = map(pot_val, 0, 1023, max_period, min_period);   //need second map because input_val is used below
   unsigned long currentMillis = millis();
   
   if (currentMillis - previousMillis >= interval) {
