@@ -10,9 +10,9 @@
 **  Arduino Pin Configurations:  
 **
 **  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
-**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   IR LED
+**  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   N/U
 **  Pin 3 (D4/A2): IR Receiver           Pin 6 (D1/PWM/MISO): Module Output
-**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
+**  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): IR LEDs
 **
 **
 **  Created on 7/5/16.
@@ -32,8 +32,8 @@ const float B = -.6762;
 int filter_size = 15;
 int input_pin = A3;
 int output_pin = 1;
-int ir_pin = A2;               // IR photodiode on analog pin A2
-int led_pin = 2;               // IR emitter LED on digital pin 2
+int ir_pin = A2;               // IR photodiode on ATtiny pin 3
+int led_pin = 0;               // IR emitter LED on ATtiny pin 5
 
 SignalProcessing input(input_pin, filter_size);
 
