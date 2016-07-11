@@ -52,7 +52,7 @@ void loop(){
   int val = readIR(20);                        // calling the function that will read the distance and passing the "accuracy" to it
   int distance = A*pow(val, B);                //converting to distance
   //Serial.println(distance);
-  int output_val = cutAndMap(distance, 5, 65, input_val/4, 0);
+  int output_val = cutAndMap(distance, 6, 85, input_val/4, 0);
   //Serial.println(output_val);
   analogWrite(output_pin, output_val);
 }
