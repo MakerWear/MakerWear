@@ -39,6 +39,7 @@ SignalProcessing input(input_pin, filter_size);
 
 void setup(){
   //Serial.begin(9600);         // initializing Serial monitor
+  
   pinMode(led_pin, OUTPUT);     // IR emitter LED on digital pin 2
   digitalWrite(led_pin, LOW);   // setup IR LED as off
 }
@@ -50,10 +51,12 @@ void loop(){
     return;
   }
   int val = readIR(20);                        // calling the function that will read the distance and passing the "accuracy" to it
+  if(val < 1){                                 //if val is 0, the distance function gets messed up
+    val = 1;
+  }
   int distance = A*pow(val, B);                //converting to distance
   //Serial.println(distance);
-  int output_val = cutAndMap(distance, 6, 85, input_val/4, 0);
-  //Serial.println(output_val);
+  int output_val = cutAndMap(distance, 6, 85, input_val/4, 0);  
   analogWrite(output_pin, output_val);
 }
 
@@ -78,4 +81,9 @@ int readIR(int times){
   }
   return(total/times);                   // return the average
 }
+
+
+
+
+
 
