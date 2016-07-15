@@ -51,7 +51,7 @@ void loop()
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   int pot_val = analogRead(pot_pin);
 
-  interval = map(pot_val, 0, 1023, max_period, min_period);   //need second map because input_val is used below
+  interval = map(pot_val, 0, 1023, min_period, max_period);   //need second map because input_val is used below
   unsigned long currentMillis = millis();
   
   if (currentMillis - previousMillis >= interval) {
