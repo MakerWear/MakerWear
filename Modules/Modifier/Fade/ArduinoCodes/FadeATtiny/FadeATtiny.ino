@@ -57,7 +57,7 @@ void loop()
   int pot_value;
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 4, 1023);
   pot_value = analogRead(potentiometer_pin);
-  fading_delay = cutAndMap(pot_value, 0, 1023, 50000/(900), 0);           //50000 experimentally determined
+  fading_delay = cutAndMap(pot_value, 0, 1023, 0, 50000/900);           //50000 experimentally determined
   
   if(input_val > THRESH_HIGH){
     can_fade = 1;
