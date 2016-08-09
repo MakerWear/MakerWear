@@ -20,12 +20,13 @@
 **
 */
 #include "SignalProcessing.h"
-#define DEBUG 1
+#define DEBUG 0                 //0 -> no serial output
 
 int output_pin = 3;
 int input_pin = A0;
 int sensor_pin = A1;
 int filter_size = 15;                        //Noise reduction filter size
+const int sample_window = 50;                // Sample window width in mS (50 mS = 20Hz)
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -39,16 +40,33 @@ void setup() {
 void loop() {
 
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int sensor_val = analogRead(A0);
-  int output_val = cutAndMap(input_val, 350, 475, 0, 255);              //350 and 475 experimentally determined
+  int sensor_val;
+  int output_val;              
+  unsigned long start_millis= millis();                       // Start of sample window
+  unsigned int signal_max = 0;
+  unsigned int signal_min = 1024;
   
-  for(int i = output_val; i >= 25; i-=25){                            //fade output slightly
-    analogWrite(output_pin , i);
-    delay(16);
+  while (millis() - start_millis < sample_window){
+      sensor_val = analogRead(sensor_pin);
+      if (sensor_val < 1024){  // toss out spurious readings
+         if (sensor_val > signal_max){
+            signal_max = sensor_val;  // save the max levels
+         }
+         else if (sample < signal_min){
+            signal_min = sensor_val;  // save the min levels
+         }
+      }
   }
-  analogWrite(3, 0);
+  if(signal_max - signal_min <= 20){            //when there is only background noise, output nothing
+      output_val = 0;
+  }
+  else{ 
+      output_val = cutAndMap(signal_max-signal_min, 20, 350, 0, 255);
+  }
+  analogWrite(output_pin, output_val);
+  
   #if DEBUG
-   Serial.println(input_val);
+   Serial.print(signal_max - signal_min);
    Serial.print(" ");
    Serial.println(output_val);
   #endif
