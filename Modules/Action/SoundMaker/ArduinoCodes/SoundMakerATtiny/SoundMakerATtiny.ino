@@ -52,34 +52,38 @@ void loop()
 {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
 
-  if(state == 0 && input_val > 128 + threshold)
+  if(state == 0 && input_val > 114 + threshold)
     state = 1;
-  else if(state == 1 && input_val < 128 - threshold)
+  else if(state == 1 && input_val < 114 - threshold)
     state = 0;
-  else if(state == 1 && input_val > 256 + threshold)
+  else if(state == 1 && input_val > 227 + threshold)
     state = 2;
-  else if(state == 2 && input_val < 256 - threshold)
+  else if(state == 2 && input_val < 227 - threshold)
     state = 1;
-  else if(state == 2 && input_val > 384 + threshold)
+  else if(state == 2 && input_val > 341 + threshold)
     state = 3;
-  else if(state == 3 && input_val < 384 - threshold)
+  else if(state == 3 && input_val < 341 - threshold)
     state = 2;
-  else if(state == 3 && input_val > 512 + threshold)
+  else if(state == 3 && input_val > 454 + threshold)
     state = 4;
-  else if(state == 4 && input_val < 512 - threshold)
+  else if(state == 4 && input_val < 454 - threshold)
     state = 3;
-  else if(state == 4 && input_val > 640 + threshold)
+  else if(state == 4 && input_val > 567 + threshold)
     state = 5;
-  else if(state == 5 && input_val < 640 - threshold)
+  else if(state == 5 && input_val < 567 - threshold)
     state = 4;
-  else if(state == 5 && input_val > 768 + threshold)
+  else if(state == 5 && input_val > 681 + threshold)
     state = 6;
-  else if(state == 6 && input_val < 768 - threshold)
+  else if(state == 6 && input_val < 681 - threshold)
     state = 5;
-  else if(state == 6 && input_val > 896 + threshold)
+  else if(state == 6 && input_val > 794 + threshold)
     state = 7;
-  else if(state == 7 && input_val < 896 - threshold)
+  else if(state == 7 && input_val < 794 - threshold)
     state = 6;
+  else if(state == 7 && input_val > 908 + threshold)
+    state = 8;
+  else if(state == 8 && input_val < 908 - threshold)
+    state = 7;
     
   switch(state)
   {
@@ -113,6 +117,10 @@ void loop()
 
     case 7:
       tinyTone(Note_B, 6);
+      break;
+
+    case 8:
+      tinyTone(Note_C, 7);
       break;
   }
 }
