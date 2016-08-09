@@ -60,7 +60,6 @@ void loop() {
       output_val = 0;
   }
   else{ 
-      output_val = cutAndMap(signal_max-signal_min, 20, 350, 0, input_val/4);
   }
   analogWrite(output_pin, output_val);
 }
