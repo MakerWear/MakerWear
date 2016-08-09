@@ -9,7 +9,7 @@
 **
 **  Pin 1 (Reset): N/U                   Pin 8 (PWR):         5V
 **  Pin 2 (D3/A3): Module Input          Pin 7 (D2/A1/SCK):   N/U
-**  Pin 3 (D4/A2): N/U                   Pin 6 (D1/PWM/MISO): Module Output
+**  Pin 3 (D4/A2): Sound Sensor          Pin 6 (D1/PWM/MISO): Module Output
 **  Pin 4 (GND):   GND                   Pin 5 (D0/PWM/MOSI): N/U
 **
 **
@@ -40,7 +40,7 @@ void loop() {
 
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   int sensor_val = analogRead(A0);
-  int output_val = cutAndMap(input_val, 300, 400, 0, 255);              //350 and 475 experimentally determined
+  int output_val = cutAndMap(sensor_val, 300, 400, 0, 255);              //350 and 475 experimentally determined
 
   analogWrite(output_pin, output_val);
   /*for(int i = output_val; i >= 25; i-=25){                            //fade output slightly
