@@ -24,9 +24,9 @@
 #include "SignalProcessing.h"
 
 //Pin Configurations:
-int output_pin = 1;
-int input_pin = A3;
-int sensor_pin = A2;
+int output_pin = 1;                      //Pin 6 on ATtiny
+int input_pin = A3;                      //Pin 2 on ATtiny  
+int sensor_pin = A2;                     //Pin 3 on ATtiny   
 int filter_size = 15;                        //Noise reduction filter size
 
 SignalProcessing input(input_pin, filter_size);
@@ -40,11 +40,12 @@ void loop() {
 
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
   int sensor_val = analogRead(A0);
-  int output_val = cutAndMap(input_val, 350, 475, 0, 255);              //350 and 475 experimentally determined
-  
-  for(int i = output_val; i >= 25; i-=25){                            //fade output slightly
+  int output_val = cutAndMap(input_val, 300, 400, 0, 255);              //350 and 475 experimentally determined
+
+  analogWrite(output_pin, output_val);
+  /*for(int i = output_val; i >= 25; i-=25){                            //fade output slightly
     analogWrite(output_pin , i);
     delay(16);
   }
-  analogWrite(3, 0);
+  analogWrite(3, 0);*/
 }
