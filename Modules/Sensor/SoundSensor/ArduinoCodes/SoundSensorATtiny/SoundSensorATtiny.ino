@@ -28,7 +28,6 @@ int input_pin = A3;                          //Pin 2
 int sensor_pin = A2;                         //Pin 3
 int filter_size = 15;                        //Noise reduction filter size
 const int sample_window = 50;                // Sample window width in mS (50 mS = 20Hz)
-unsigned int sample;
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -44,23 +43,31 @@ void loop() {
   unsigned long start_millis= millis();                       // Start of sample window
   unsigned int signal_max = 0;
   unsigned int signal_min = 1024;
-  
-  while (millis() - start_millis < sample_window){
-      sensor_val = analogRead(sensor_pin);
-      if (sensor_val < 1024){  // toss out spurious readings
-         if (sensor_val > signal_max){
-            signal_max = sensor_val;  // save the max levels
-         }
-         else if (sensor_val < signal_min){
-            signal_min = sensor_val;  // save the min levels
-         }
-      }
+
+  if(input_val > 1){
+    while (millis() - start_millis < sample_window){
+        sensor_val = analogRead(sensor_pin);
+        if (sensor_val < 1024){  // toss out spurious readings
+           if (sensor_val > signal_max){
+              signal_max = sensor_val;  // save the max levels
+           }
+           else if (sensor_val < signal_min){
+              signal_min = sensor_val;  // save the min levels
+           }
+        }
+    }
+    if(signal_max - signal_min <= 10){            //when there is only background noise, output nothing
+        output_val = 0;
+    }
+    else if(signal_max - signal_min <=100){
+      output_val = cutAndMap(signal_max-signal_min, 10, 100, 28, 200);
+    }
+    else{ 
+        output_val = cutAndMap(signal_max-signal_min, 100, 350, 200, 255);
+    }
+    analogWrite(output_pin, output_val);
   }
-  if(signal_max - signal_min <= 20){            //when there is only background noise, output nothing
-      output_val = 0;
+  else{
+    return;
   }
-  else{ 
-      output_val = cutAndMap(signal_max-signal_min, 20, 350, 5, 255);
-  }
-  analogWrite(output_pin, output_val);
 }
