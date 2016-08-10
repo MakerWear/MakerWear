@@ -32,7 +32,7 @@ const int sample_window = 50;                // Sample window width in mS (50 mS
 SignalProcessing input(input_pin, filter_size);
 
 void setup() {
-  pinMode(output_pin, OUTPUT);
+  pinMode(output_pin, OUTPUT);  
 }
 
 void loop() {
@@ -44,30 +44,27 @@ void loop() {
   unsigned int signal_max = 0;
   unsigned int signal_min = 1024;
 
-  if(input_val > 1){
-    while (millis() - start_millis < sample_window){
-        sensor_val = analogRead(sensor_pin);
-        if (sensor_val < 1024){  // toss out spurious readings
-           if (sensor_val > signal_max){
-              signal_max = sensor_val;  // save the max levels
-           }
-           else if (sensor_val < signal_min){
-              signal_min = sensor_val;  // save the min levels
-           }
-        }
-    }
-    if(signal_max - signal_min <= 10){            //when there is only background noise, output nothing
-        output_val = 0;
-    }
-    else if(signal_max - signal_min <=100){
-      output_val = cutAndMap(signal_max-signal_min, 10, 100, 28, 200);
-    }
-    else{ 
-        output_val = cutAndMap(signal_max-signal_min, 100, 350, 200, 255);
-    }
-    analogWrite(output_pin, output_val);
+
+  while (millis() - start_millis < sample_window){
+      sensor_val = analogRead(sensor_pin);
+      if (sensor_val < 1024){  // toss out spurious readings
+         if (sensor_val > signal_max){
+            signal_max = sensor_val;  // save the max levels
+         }
+         else if (sensor_val < signal_min){
+            signal_min = sensor_val;  // save the min levels
+         }
+      }
   }
-  else{
-    return;
+  if(signal_max - signal_min <= 10){            //when there is only background noise, output nothing
+      output_val = 0;
   }
+  else if(signal_max - signal_min <=100){
+    output_val = cutAndMap(signal_max-signal_min, 10, 100, input_val/36, input_val/5);
+  }
+  else{ 
+      output_val = cutAndMap(signal_max-signal_min, 100, 350, input_val/5, input_val/4);
+  }
+  analogWrite(output_pin, output_val);
+
 }
