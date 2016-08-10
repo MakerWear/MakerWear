@@ -1,5 +1,5 @@
 /*
-**  SoundSensorArduino.ino
+**  SoundSensorATtiny.ino
 **  MakerWear Sound Sensor Module's ATtiny Program.
 **
 **  A microphone/sound sensor that detects sound levels and outputs voltage accordingly.
@@ -60,7 +60,7 @@ void loop() {
       output_val = 0;
   }
   else{ 
-      output_val = cutAndMap(signal_max-signal_min, 20, 350, 20, input_val/4);
+      output_val = cutAndMap(signal_max-signal_min, 20, 350, 5, 255);
   }
   analogWrite(output_pin, output_val);
 }
