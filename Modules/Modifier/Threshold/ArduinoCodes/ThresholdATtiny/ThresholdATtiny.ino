@@ -42,6 +42,7 @@ int threshold = 25;
 void loop()
 {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
+  int output_val = 0;
   
   /*if(input_val < 0)
     input_val = 0;
@@ -52,9 +53,15 @@ void loop()
   pot_val = cutAndMap(pot_val, 0, 1023, 1023, 0);
   
   if(state == LOW && input_val > pot_val+threshold)
+  {
     state = HIGH;
+    output_val = input_val/4;
+  }
   else if(state == HIGH && input_val < pot_val-threshold)
+  {
     state = LOW;
+    output_val = 0;
+  }
   
-  digitalWrite(output_pin, state);
+  digitalWrite(output_pin, output_val);
 }
