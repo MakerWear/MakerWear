@@ -29,6 +29,7 @@ int input_pin = 3;                           //Pin 2 on ATtiny
 int potentiometer_pin = 2;                   //Pin 3 on ATtiny
 int output_pin = 1;                          //Pin 6 on ATtiny
 int filter_size = 50;                        //Noise reduction filter size
+int output_val = 0;
 
 SignalProcessing input(input_pin, filter_size);
 
@@ -42,7 +43,6 @@ int threshold = 25;
 void loop()
 {
   int input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 975, 0, 1023);
-  int output_val = 0;
   
   /*if(input_val < 0)
     input_val = 0;
@@ -55,13 +55,17 @@ void loop()
   if(state == LOW && input_val > pot_val+threshold)
   {
     state = HIGH;
-    output_val = input_val/4;
   }
   else if(state == HIGH && input_val < pot_val-threshold)
   {
     state = LOW;
     output_val = 0;
   }
+
+  if(state == HIGH)
+  {
+    output_val = input_val/4;
+  }
   
-  digitalWrite(output_pin, output_val);
+  analogWrite(output_pin, output_val);
 }
