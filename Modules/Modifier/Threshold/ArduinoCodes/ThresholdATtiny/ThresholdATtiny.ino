@@ -52,7 +52,7 @@ void loop()
   int pot_val = analogRead(potentiometer_pin);
   pot_val = cutAndMap(pot_val, 0, 1023, 1023, 0);
   
-  if(state == LOW && input_val > pot_val+threshold)
+  if(state == LOW && input_val > pot_val+threshold)//this won't let it to turn HIGH when input_val = 1023 because of the big threshold value and also the greater than sign.
   {
     state = HIGH;
   }
