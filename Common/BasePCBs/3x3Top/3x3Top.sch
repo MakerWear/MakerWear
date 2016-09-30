@@ -9,8 +9,6 @@
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
@@ -813,58 +811,6 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </deviceset>
 </devicesets>
 </library>
-<library name="SparkFun-Aesthetics">
-<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
-In this library you'll find non-functional items- supply symbols, logos, notations, frame blocks, etc.&lt;br&gt;&lt;br&gt;
-We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
-&lt;br&gt;&lt;br&gt;
-&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
-&lt;br&gt;&lt;br&gt;
-You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
-<packages>
-</packages>
-<symbols>
-<symbol name="VCC">
-<wire x1="0.762" y1="1.27" x2="0" y2="2.54" width="0.254" layer="94"/>
-<wire x1="0" y1="2.54" x2="-0.762" y2="1.27" width="0.254" layer="94"/>
-<text x="-1.016" y="3.556" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="VCC" x="0" y="0" visible="off" length="short" direction="sup" rot="R90"/>
-</symbol>
-<symbol name="DGND">
-<wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
-<text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="VCC" prefix="SUPPLY">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="G$1" symbol="VCC" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="GND" prefix="GND">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="DGND" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -876,8 +822,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </classes>
 <parts>
 <part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
-<part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 </parts>
 <sheets>
@@ -886,77 +830,73 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </plain>
 <instances>
 <instance part="JP1" gate="G$1" x="5.08" y="5.08"/>
-<instance part="SUPPLY1" gate="G$1" x="40.64" y="27.94"/>
-<instance part="GND1" gate="1" x="40.64" y="-17.78"/>
-<instance part="JP2" gate="G$1" x="231.14" y="5.08"/>
+<instance part="JP2" gate="G$1" x="5.08" y="30.48"/>
 </instances>
 <busses>
 </busses>
 <nets>
-<net name="1X3SIN" class="0">
+<net name="SIN3" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="4"/>
-<wire x1="10.16" y1="10.16" x2="35.56" y2="10.16" width="0.1524" layer="91"/>
-<label x="22.86" y="10.16" size="1.778" layer="95"/>
-<junction x="35.56" y="10.16"/>
+<pinref part="JP2" gate="G$1" pin="4"/>
+<wire x1="10.16" y1="35.56" x2="22.86" y2="35.56" width="0.1524" layer="91"/>
+<junction x="22.86" y="35.56"/>
+<label x="15.24" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="VCC" class="0">
+<net name="SOUT3" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="3"/>
-<wire x1="10.16" y1="7.62" x2="40.64" y2="7.62" width="0.1524" layer="91"/>
-<label x="22.86" y="7.62" size="1.778" layer="95"/>
-<pinref part="SUPPLY1" gate="G$1" pin="VCC"/>
-<wire x1="40.64" y1="7.62" x2="40.64" y2="27.94" width="0.1524" layer="91"/>
+<pinref part="JP2" gate="G$1" pin="3"/>
+<wire x1="10.16" y1="33.02" x2="22.86" y2="33.02" width="0.1524" layer="91"/>
+<junction x="22.86" y="33.02"/>
+<label x="12.7" y="33.02" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR" class="0">
+<segment>
+<pinref part="JP2" gate="G$1" pin="2"/>
+<wire x1="10.16" y1="30.48" x2="22.86" y2="30.48" width="0.1524" layer="91"/>
+<junction x="22.86" y="30.48"/>
+<label x="15.24" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GND" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="2"/>
-<wire x1="10.16" y1="5.08" x2="40.64" y2="5.08" width="0.1524" layer="91"/>
-<label x="22.86" y="5.08" size="1.778" layer="95"/>
-<pinref part="GND1" gate="1" pin="GND"/>
-<wire x1="40.64" y1="5.08" x2="40.64" y2="-15.24" width="0.1524" layer="91"/>
+<pinref part="JP2" gate="G$1" pin="1"/>
+<wire x1="10.16" y1="27.94" x2="22.86" y2="27.94" width="0.1524" layer="91"/>
+<junction x="22.86" y="27.94"/>
+<label x="15.24" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="1X3SOUT" class="0">
+<net name="SOUT2" class="0">
+<segment>
+<pinref part="JP1" gate="G$1" pin="4"/>
+<wire x1="10.16" y1="10.16" x2="22.86" y2="10.16" width="0.1524" layer="91"/>
+<junction x="22.86" y="10.16"/>
+<label x="12.7" y="10.16" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SIN2" class="0">
+<segment>
+<pinref part="JP1" gate="G$1" pin="3"/>
+<wire x1="10.16" y1="7.62" x2="22.86" y2="7.62" width="0.1524" layer="91"/>
+<junction x="22.86" y="7.62"/>
+<label x="15.24" y="7.62" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SOUT1" class="0">
+<segment>
+<pinref part="JP1" gate="G$1" pin="2"/>
+<wire x1="10.16" y1="5.08" x2="22.86" y2="5.08" width="0.1524" layer="91"/>
+<junction x="22.86" y="5.08"/>
+<label x="12.7" y="5.08" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SIN1" class="0">
 <segment>
 <pinref part="JP1" gate="G$1" pin="1"/>
-<wire x1="10.16" y1="2.54" x2="35.56" y2="2.54" width="0.1524" layer="91"/>
-<label x="22.86" y="2.54" size="1.778" layer="95"/>
-<junction x="35.56" y="2.54"/>
-</segment>
-</net>
-<net name="OUT(MISO)" class="0">
-<segment>
-<pinref part="JP2" gate="G$1" pin="3"/>
-<label x="238.76" y="7.62" size="1.778" layer="95"/>
-<wire x1="236.22" y1="7.62" x2="251.46" y2="7.62" width="0.1524" layer="91"/>
-<junction x="251.46" y="7.62"/>
-</segment>
-</net>
-<net name="MOSI" class="0">
-<segment>
-<pinref part="JP2" gate="G$1" pin="2"/>
-<label x="238.76" y="5.08" size="1.778" layer="95"/>
-<wire x1="236.22" y1="5.08" x2="251.46" y2="5.08" width="0.1524" layer="91"/>
-<junction x="251.46" y="5.08"/>
-</segment>
-</net>
-<net name="SCK" class="0">
-<segment>
-<pinref part="JP2" gate="G$1" pin="4"/>
-<label x="238.76" y="10.16" size="1.778" layer="95"/>
-<wire x1="236.22" y1="10.16" x2="251.46" y2="10.16" width="0.1524" layer="91"/>
-<junction x="251.46" y="10.16"/>
-</segment>
-</net>
-<net name="NRES" class="0">
-<segment>
-<pinref part="JP2" gate="G$1" pin="1"/>
-<label x="238.76" y="2.54" size="1.778" layer="95"/>
-<wire x1="236.22" y1="2.54" x2="251.46" y2="2.54" width="0.1524" layer="91"/>
-<junction x="251.46" y="2.54"/>
+<wire x1="10.16" y1="2.54" x2="22.86" y2="2.54" width="0.1524" layer="91"/>
+<junction x="22.86" y="2.54"/>
+<label x="15.24" y="2.54" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
@@ -964,7 +904,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </sheets>
 <errors>
 <approved hash="113,1,6.94267,7.81473,JP1,,,,,"/>
-<approved hash="113,1,207.603,7.81473,JP2,,,,,"/>
+<approved hash="113,1,100.33,7.94173,D1,,,,,"/>
+<approved hash="113,1,210.143,7.81473,JP2,,,,,"/>
 </errors>
 </schematic>
 </drawing>
