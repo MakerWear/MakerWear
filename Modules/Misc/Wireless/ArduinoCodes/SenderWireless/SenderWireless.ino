@@ -18,8 +18,6 @@ RF24 radio(7,8);
 
 byte addresses[][6] = {"1Node","2Node"};
 
-// Used to control whether this node is sending or receiving
-bool role = 0;
 
 #include <SignalProcessing.h>
 
@@ -55,13 +53,11 @@ void loop() {
 
   input_val = cutAndMap(input.filteredAnalogRead(AVERAGE), 50, 900, 0, 1023);  
   
-  if (role == 1)  {
-    //Now sending
+
      if (!radio.write( &input_val, sizeof(int) )){
        //print failed
      }
-     //otherwise success 
-  }
+     //otherwise success
 
   delay(50);
 } // Loop
