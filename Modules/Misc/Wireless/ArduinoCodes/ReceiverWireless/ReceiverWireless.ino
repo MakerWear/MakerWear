@@ -16,18 +16,10 @@ bool radioNumber = 1;
 RF24 radio(7,8);
 /**********************************************************/
 
-byte addresses[][6] = {"1Node","2Node"};
-
-
-#include <SignalProcessing.h>
-
-const int input_pin = A0;       // pin 23 on ATmega328
-const int filter_size = 10;     // Noise reduction filter size                        
-
-SignalProcessing input(input_pin, filter_size);
+byte addresses[][6] = {"Pipe1"};
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   radio.begin();
 
   // Set the PA Level low to prevent power supply related issues since this is a
@@ -35,13 +27,8 @@ void setup() {
   radio.setPALevel(RF24_PA_LOW);
   
   // Open a writing and reading pipe on each radio, with opposite addresses
-  if(radioNumber){
-    radio.openWritingPipe(addresses[1]);
     radio.openReadingPipe(1,addresses[0]);
-  }else{
-    radio.openWritingPipe(addresses[0]);
-    radio.openReadingPipe(1,addresses[1]);
-  }
+
   
   // Start the radio listening for data
   radio.startListening();
@@ -52,6 +39,8 @@ int input_val;
 void loop() {
     boolean timeout = false;                                   // Set up a variable to indicate if a response was received or not
     unsigned long started_waiting_at = micros();               // Set up a timeout period, get the current microseconds
+
+    radio.startListening();
     
     while ( ! radio.available() ){                             // While nothing is received
       if (micros() - started_waiting_at > 200000 ){            // If waited longer than 200ms, indicate timeout and exit while loop
@@ -68,5 +57,7 @@ void loop() {
 
         Serial.println(received_val);
     }
+
+    radio.stopListening();
 }
 
