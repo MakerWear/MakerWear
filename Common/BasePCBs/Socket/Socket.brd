@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.001" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -2099,10 +2099,10 @@ design rules under a new name.</description>
 <vertex x="19.051853125" y="-3.212990625"/>
 </polygon>
 <polygon width="0" layer="1">
-<vertex x="19.554275" y="-8.389759375"/>
-<vertex x="18.054275" y="-5.79168125"/>
-<vertex x="19.3533125" y="-5.04168125"/>
-<vertex x="20.8533125" y="-7.639759375"/>
+<vertex x="19.454275" y="-8.789759375"/>
+<vertex x="17.654275" y="-5.69168125"/>
+<vertex x="19.4533125" y="-4.64168125"/>
+<vertex x="21.2533125" y="-7.739759375"/>
 </polygon>
 <wire x1="18.28" y1="-4.7" x2="19.54" y2="-6.92" width="0.5" layer="1"/>
 <wire x1="18.27" y1="-4.66" x2="18.28" y2="-4.7" width="0" layer="19" extent="1-1"/>
@@ -2126,10 +2126,10 @@ design rules under a new name.</description>
 </polygon>
 <via x="7.11" y="-10.88" extent="1-16" drill="0.5"/>
 <polygon width="0" layer="1">
-<vertex x="4.68049375" y="-11.6313"/>
-<vertex x="1.68049375" y="-11.6313"/>
-<vertex x="1.68049375" y="-10.1313"/>
-<vertex x="4.68049375" y="-10.1313"/>
+<vertex x="4.98049375" y="-11.9313"/>
+<vertex x="1.38049375" y="-11.9313"/>
+<vertex x="1.38049375" y="-9.8313"/>
+<vertex x="4.98049375" y="-9.8313"/>
 </polygon>
 <wire x1="7.13" y1="-10.88" x2="3.15" y2="-10.88" width="0.5" layer="1"/>
 <wire x1="7.11" y1="-10.88" x2="7.13" y2="-10.88" width="0" layer="19" extent="1-1"/>
@@ -2143,20 +2143,20 @@ design rules under a new name.</description>
 </polygon>
 <via x="9.87" y="-2.55" extent="1-16" drill="0.5"/>
 <polygon width="0" layer="1">
-<vertex x="13.738796875" y="-3.300140625"/>
-<vertex x="10.738796875" y="-3.300140625"/>
-<vertex x="10.738796875" y="-1.800140625"/>
-<vertex x="13.738796875" y="-1.800140625"/>
+<vertex x="14.038796875" y="-3.600140625"/>
+<vertex x="10.438796875" y="-3.600140625"/>
+<vertex x="10.438796875" y="-1.500140625"/>
+<vertex x="14.038796875" y="-1.500140625"/>
 </polygon>
 <wire x1="9.89" y1="-2.55" x2="12.21" y2="-2.55" width="0.5" layer="1"/>
 <wire x1="9.87" y1="-2.55" x2="9.89" y2="-2.55" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="S3">
 <polygon width="0" layer="1">
-<vertex x="18.054275" y="-15.97091875"/>
-<vertex x="19.554275" y="-13.372840625"/>
-<vertex x="20.8533125" y="-14.122840625"/>
-<vertex x="19.3533125" y="-16.72091875"/>
+<vertex x="17.654275" y="-16.07091875"/>
+<vertex x="19.454275" y="-12.972840625"/>
+<vertex x="21.2533125" y="-14.022840625"/>
+<vertex x="19.4533125" y="-17.12091875"/>
 </polygon>
 <polygon width="0" layer="16">
 <vertex x="19.051775" y="-18.549740625"/>
@@ -2176,10 +2176,10 @@ design rules under a new name.</description>
 <vertex x="15.473221875" y="-20.615734375"/>
 </polygon>
 <polygon width="0" layer="1">
-<vertex x="10.738796875" y="-18.4624625"/>
-<vertex x="13.738796875" y="-18.4624625"/>
-<vertex x="13.738796875" y="-19.9624625"/>
-<vertex x="10.738796875" y="-19.9624625"/>
+<vertex x="10.438796875" y="-18.1624625"/>
+<vertex x="14.038796875" y="-18.1624625"/>
+<vertex x="14.038796875" y="-20.2624625"/>
+<vertex x="10.438796875" y="-20.2624625"/>
 </polygon>
 <via x="14.6" y="-19.21" extent="1-16" drill="0.5"/>
 <wire x1="14.6" y1="-19.23" x2="12.2" y2="-19.23" width="0.5" layer="1"/>
@@ -2194,10 +2194,10 @@ design rules under a new name.</description>
 <vertex x="5.42574375" y="-18.549609375"/>
 </polygon>
 <polygon width="0" layer="1">
-<vertex x="4.923321875" y="-13.372840625"/>
-<vertex x="6.423321875" y="-15.97091875"/>
-<vertex x="5.124284375" y="-16.72091875"/>
-<vertex x="3.624284375" y="-14.122840625"/>
+<vertex x="5.023321875" y="-12.972840625"/>
+<vertex x="6.823321875" y="-16.07091875"/>
+<vertex x="5.024284375" y="-17.12091875"/>
+<vertex x="3.224284375" y="-14.022840625"/>
 </polygon>
 <via x="6.21" y="-17.1" extent="1-16" drill="0.5"/>
 <wire x1="6.22" y1="-17.1" x2="4.94" y2="-14.84" width="0.5" layer="1"/>
@@ -2212,10 +2212,10 @@ design rules under a new name.</description>
 </polygon>
 <via x="3.84" y="-8.77" extent="1-16" drill="0.5"/>
 <polygon width="0" layer="1">
-<vertex x="6.423321875" y="-5.79168125"/>
-<vertex x="4.923321875" y="-8.389759375"/>
-<vertex x="3.624284375" y="-7.639759375"/>
-<vertex x="5.124284375" y="-5.04168125"/>
+<vertex x="6.823321875" y="-5.69168125"/>
+<vertex x="5.023321875" y="-8.789759375"/>
+<vertex x="3.224284375" y="-7.739759375"/>
+<vertex x="5.024284375" y="-4.64168125"/>
 </polygon>
 <wire x1="3.83" y1="-8.77" x2="5" y2="-6.75" width="0.5" layer="1"/>
 <wire x1="3.84" y1="-8.77" x2="3.83" y2="-8.77" width="0" layer="19" extent="1-1"/>
@@ -2224,10 +2224,10 @@ design rules under a new name.</description>
 <wire x1="12.25" y1="-10.89" x2="21.35" y2="-10.89" width="0.5" layer="1"/>
 <wire x1="21.35" y1="-10.89" x2="21.35" y2="-10.93" width="0.5" layer="1"/>
 <polygon width="0" layer="1">
-<vertex x="19.797103125" y="-10.1313"/>
-<vertex x="22.797103125" y="-10.1313"/>
-<vertex x="22.797103125" y="-11.6313"/>
-<vertex x="19.797103125" y="-11.6313"/>
+<vertex x="19.497103125" y="-9.8313"/>
+<vertex x="23.097103125" y="-9.8313"/>
+<vertex x="23.097103125" y="-11.9313"/>
+<vertex x="19.497103125" y="-11.9313"/>
 </polygon>
 <polygon width="0" layer="16">
 <vertex x="14.488796875" y="-10.889653125"/>
