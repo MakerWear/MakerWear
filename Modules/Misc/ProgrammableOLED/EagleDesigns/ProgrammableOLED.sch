@@ -14,7 +14,7 @@
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="16" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
@@ -44,7 +44,7 @@
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="14" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
@@ -282,8 +282,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <smd name="VBUS1" x="2.7" y="1.3" dx="0.4" dy="1.4" layer="1" rot="R90"/>
 <smd name="ID1" x="2.7" y="-0.65" dx="0.4" dy="1.4" layer="1" rot="R90"/>
 <smd name="GND1" x="2.7" y="-1.3" dx="0.4" dy="1.4" layer="1" rot="R90"/>
-<hole x="2.2" y="1.9" drill="0.85"/>
-<hole x="2.2" y="-1.9" drill="0.85"/>
 <rectangle x1="-0.75" y1="2.784" x2="0.75" y2="4.584" layer="31"/>
 <rectangle x1="-0.35" y1="-0.75" x2="0.35" y2="0.75" layer="31"/>
 <rectangle x1="-0.75" y1="-4.584" x2="0.75" y2="-2.784" layer="31"/>
@@ -5065,8 +5063,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="8.82" y="-20.07" size="0.8128" layer="52" rot="R180" align="center">Active Area 0.66"
 64 x 48 Pixels
 (Facing Bottom)</text>
-<hole x="17.15" y="-3.4" drill="0.8"/>
-<hole x="0.4" y="-3.4" drill="0.8"/>
 </package>
 </packages>
 <symbols>
