@@ -32,6 +32,7 @@ ATtinyColorSensor sensor = ATtinyColorSensor(TCS34725_INTEGRATIONTIME_50MS, TCS3
 byte meanRGB[8][3];
 int color_index = 0;  //each color corresponds to an index between 0 to 7.
 
+//This is a 1-nearest neighbor classifier on the cluster centers for each color:
 int findColorIndex(int rgb_val[])
 {
   int dist, min_dist = 9999;
